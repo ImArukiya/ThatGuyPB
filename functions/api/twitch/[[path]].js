@@ -52,6 +52,7 @@ const ROUTES = {
   videos:    { endpoint: '/videos',             params: ['user_id', 'first', 'type'] },
   clips:     { endpoint: '/clips',              params: ['broadcaster_id', 'first', 'game_id'] },
   game:      { endpoint: '/games',              params: ['id', 'name'] },
+  games:     { endpoint: '/games',              params: ['id', 'name'] },   // alias for bulk id[] forwarding
 };
 
 export async function onRequestGet({ request, env, params }) {
@@ -89,11 +90,13 @@ export async function onRequestGet({ request, env, params }) {
     if (u) outgoing.set('login', u);
   } else {
     for (const key of route.params) {
-      if (incoming.has(key)) outgoing.set(key, incoming.get(key));
+      // Support repeated params (e.g. id=1&id=2 for bulk /games lookup)
+      const vals = incoming.getAll(key);
+      vals.forEach(v => outgoing.append(key, v));
     }
   }
 
-  // Default 'first' to 20 if not provided (Helix default is also 20, but let's be explicit)
+  // Default 'first' to 20 if not provided
   if (['videos', 'clips'].includes(routeKey) && !outgoing.has('first')) {
     outgoing.set('first', '20');
   }
