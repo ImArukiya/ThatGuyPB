@@ -468,25 +468,145 @@
   .clip-label span:first-child{overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
   .clip-label span:last-child{color:#6B7288; flex-shrink:0;}
 
-  /* ── schedule / episodes ── */
-  .schedule{padding:90px 40px 40px; max-width:1320px; margin:0 auto;}
-  .schedule-grid{display:grid; grid-template-columns: repeat(3, 1fr); gap:16px;}
-  .ep-card{border:1.5px solid var(--ink); transition:border-color 0.15s; display:flex; flex-direction:column;}
-  .ep-card:hover{border-color:var(--coral);}
-  .ep-thumb{aspect-ratio:16/9; width:100%; position:relative; display:flex; align-items:flex-start; justify-content:flex-end; padding:10px; background-size:cover; background-position:center top; overflow:hidden; flex-shrink:0;}
-  /* dim overlay so text stays readable on any thumbnail */
-  .ep-thumb::before{content:''; position:absolute; inset:0; background:linear-gradient(to top, rgba(0,0,0,0.58) 0%, rgba(0,0,0,0.0) 55%); pointer-events:none; z-index:1;}
-  .ep-thumb > *{position:relative; z-index:2;}
-  .ep-thumb svg{position:absolute; bottom:14px; left:14px; width:14%; stroke:rgba(255,255,255,0.9); fill:none; stroke-width:1.4; filter:drop-shadow(0 2px 6px rgba(0,0,0,0.6));}
-  .tag{font-family:'Space Mono', monospace; font-size:10px; background:var(--paper); color:var(--ink); padding:3px 8px; border:1px solid var(--ink);}
-  .tag.new{background:var(--coral); color:var(--paper); border-color:var(--coral);}
-  .e1{background:linear-gradient(160deg,#6E7793,#3B4257);}
-  .e2{background:linear-gradient(160deg,#8A93AB,#525A70);}
-  .e3{background:linear-gradient(160deg,#4A5368,#22242E);}
-  .e4{background:linear-gradient(160deg,#7A8298,#454C60);}
-  .ep-info{padding:12px 14px; height:58px; overflow:hidden; flex-shrink:0; display:flex; flex-direction:column; justify-content:center;}
-  .ep-info h4{font-size:13px; font-weight:600; margin-bottom:3px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
-  .ep-info p{font-family:'Space Mono', monospace; font-size:10.5px; color:var(--ink-soft); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+  /* ── episodes / vods ── */
+  .episodes-section{padding:80px 0 80px; border-top:1.5px solid var(--ink);}
+  .episodes-head{
+    display:flex; align-items:baseline; justify-content:space-between;
+    padding:0 40px 32px;
+    max-width:1320px; margin:0 auto;
+  }
+  .episodes-head h2{font-family:'Bebas Neue', sans-serif; font-size:40px;}
+  .episodes-head p{font-size:12px; color:var(--ink-soft); max-width:260px; text-align:right; line-height:1.5;}
+
+  /* scroll track */
+  .episodes-scroll-wrap{
+    overflow-x:auto;
+    overflow-y:visible;
+    -webkit-overflow-scrolling:touch;
+    scrollbar-width:none;
+  }
+  .episodes-scroll-wrap::-webkit-scrollbar{display:none;}
+  .episodes-scroll{
+    display:flex;
+    gap:0;
+    padding:0 40px;
+    width:max-content;
+  }
+
+  /* every card in the strip */
+  .vod-card{
+    flex-shrink:0;
+    width:340px;
+    border:1.5px solid var(--ink);
+    border-right:none;
+    display:flex;
+    flex-direction:column;
+    transition:border-color 0.15s;
+    background:var(--paper);
+  }
+  .vod-card:last-child{border-right:1.5px solid var(--ink);}
+  .vod-card:hover{border-color:var(--coral); z-index:1; position:relative;}
+
+  /* featured first card is wider */
+  .vod-card.vod-featured{width:520px;}
+
+  .vod-thumb{
+    aspect-ratio:16/9;
+    width:100%;
+    position:relative;
+    overflow:hidden;
+    background:#2a2a2e;
+    flex-shrink:0;
+  }
+  .vod-thumb img{
+    width:100%; height:100%;
+    object-fit:cover;
+    object-position:center top;
+    display:block;
+  }
+  /* gradient overlay */
+  .vod-thumb::after{
+    content:'';
+    position:absolute; inset:0;
+    background:linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 50%);
+    pointer-events:none;
+  }
+  /* play button */
+  .vod-play{
+    position:absolute; inset:0;
+    display:flex; align-items:center; justify-content:center;
+    z-index:2;
+    opacity:0;
+    transition:opacity 0.15s;
+  }
+  .vod-card:hover .vod-play{opacity:1;}
+  .vod-play svg{
+    width:48px; height:48px;
+    stroke:var(--paper); fill:none; stroke-width:1.3;
+    filter:drop-shadow(0 2px 10px rgba(0,0,0,0.7));
+  }
+  /* tags top-right */
+  .vod-tag-wrap{
+    position:absolute; top:10px; right:10px;
+    z-index:3;
+    display:flex; gap:6px;
+  }
+  .vod-tag{
+    font-family:'Space Mono', monospace;
+    font-size:10px;
+    padding:3px 8px;
+    background:var(--paper);
+    color:var(--ink);
+    border:1px solid var(--ink);
+  }
+  .vod-tag.new{background:var(--coral); color:var(--paper); border-color:var(--coral);}
+  /* duration bottom-right */
+  .vod-dur{
+    position:absolute; bottom:10px; right:10px;
+    z-index:3;
+    font-family:'Space Mono', monospace;
+    font-size:10px;
+    color:#fff;
+    background:rgba(0,0,0,0.65);
+    padding:2px 7px;
+  }
+
+  .vod-info{
+    padding:14px 16px 16px;
+    border-top:1.5px solid var(--ink);
+    flex:1;
+    display:flex;
+    flex-direction:column;
+    gap:5px;
+  }
+  .vod-title{
+    font-size:13px;
+    font-weight:600;
+    line-height:1.35;
+    display:-webkit-box;
+    -webkit-line-clamp:2;
+    -webkit-box-orient:vertical;
+    overflow:hidden;
+  }
+  .vod-card.vod-featured .vod-title{font-size:15px;}
+  .vod-meta{
+    font-family:'Space Mono', monospace;
+    font-size:10.5px;
+    color:var(--ink-soft);
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    margin-top:auto;
+    padding-top:6px;
+  }
+
+  /* bottom row: "view all" after the scroll */
+  .episodes-footer{
+    padding:24px 40px 0;
+    max-width:1320px; margin:0 auto;
+    display:flex; justify-content:flex-end;
+  }
+
   .view-all-wrap{text-align:center; margin:40px 0 10px;}
   .btn-outline{display:inline-block; border:1.5px solid var(--ink); padding:13px 34px; font-size:12px; font-weight:700; letter-spacing:0.08em; transition:background 0.15s ease, color 0.15s ease;}
   .btn-outline:hover{background:var(--ink); color:var(--paper);}
@@ -698,7 +818,7 @@
     .twitch-inner{grid-template-columns:1fr 280px; height:460px;}
   }
   @media (max-width: 900px){
-    .wrap, nav, .hero-content, .section-head, .collage, .cta-bar, .about, .gear, .editorial, .testimonials, .clip-strip, .schedule, .sponsors, .faq, footer, .genres-section, .milestones, .community{padding-left:20px; padding-right:20px;}
+    .wrap, nav, .hero-content, .section-head, .collage, .cta-bar, .about, .gear, .editorial, .testimonials, .clip-strip, .sponsors, .faq, footer, .genres-section, .milestones, .community{padding-left:20px; padding-right:20px;}
     nav{grid-template-columns:auto 1fr auto;}
     .nav-links{display:none;}
     .stats-bar{grid-template-columns:repeat(2,1fr);}
@@ -707,7 +827,10 @@
     .gear-grid, .testi-grid{grid-template-columns:1fr;}
     .genres-grid{grid-template-columns:1fr;}
     .milestone-list{grid-template-columns:repeat(2,1fr);}
-    .clip-grid, .schedule-grid{grid-template-columns:1fr 1fr;}
+    .clip-grid{grid-template-columns:1fr 1fr;}
+    .episodes-head{padding-left:20px; padding-right:20px;}
+    .episodes-scroll{padding-left:20px; padding-right:20px;}
+    .episodes-footer{padding-left:20px; padding-right:20px;}
     .section-head{flex-direction:column; gap:10px;}
     .section-head p{text-align:left;}
     .footer-grid{flex-direction:column;}
@@ -718,8 +841,10 @@
     .live-banner{padding:14px 20px;}
   }
   @media (max-width: 540px){
-    .clip-grid, .schedule-grid{grid-template-columns:1fr;}
+    .clip-grid{grid-template-columns:1fr;}
     .milestone-list{grid-template-columns:1fr 1fr;}
+    .vod-card{width:80vw;}
+    .vod-card.vod-featured{width:90vw;}
   }
 
 </style>
@@ -1105,30 +1230,59 @@
   </div>
 
   <!-- ── EPISODES ── -->
-  <section class="schedule" id="schedule">
-    <div class="section-head" style="padding-left:0; padding-right:0; border-top:none;">
+  <section class="episodes-section" id="schedule">
+    <div class="episodes-head">
       <h2>recent episodes</h2>
       <p>catch up on the last few streams, freshly cut and captioned</p>
     </div>
-    <div class="schedule-grid" id="episodes-grid">
-      <div class="ep-card">
-        <div class="ep-thumb e1"><span class="tag new">NEW</span><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M10 8l6 4-6 4V8z"/></svg></div>
-        <div class="ep-info"><h4>ep. 214 — the losing streak continues</h4><p>03:42:10 · TUE</p></div>
-      </div>
-      <div class="ep-card">
-        <div class="ep-thumb e2"><span class="tag">VOD</span><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M10 8l6 4-6 4V8z"/></svg></div>
-        <div class="ep-info"><h4>ep. 213 — chat picks the game</h4><p>02:58:44 · SAT</p></div>
-      </div>
-      <div class="ep-card">
-        <div class="ep-thumb e3"><span class="tag">VOD</span><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M10 8l6 4-6 4V8z"/></svg></div>
-        <div class="ep-info"><h4>ep. 212 — community game night</h4><p>04:10:02 · THU</p></div>
-      </div>
-      <div class="ep-card">
-        <div class="ep-thumb e4"><span class="tag">VOD</span><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M10 8l6 4-6 4V8z"/></svg></div>
-        <div class="ep-info"><h4>ep. 211 — the desk rebuild</h4><p>01:47:30 · TUE</p></div>
+    <div class="episodes-scroll-wrap">
+      <div class="episodes-scroll" id="episodes-grid">
+        <!-- JS populates this -->
+        <div class="vod-card vod-featured">
+          <div class="vod-thumb" style="background:linear-gradient(160deg,#6E7793,#3B4257)">
+            <div class="vod-tag-wrap"><span class="vod-tag new">NEW</span></div>
+            <div class="vod-play"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M10 8l6 4-6 4V8z"/></svg></div>
+          </div>
+          <div class="vod-info">
+            <div class="vod-title">ep. 214 — the losing streak continues</div>
+            <div class="vod-meta">03:42:10 · TUE</div>
+          </div>
+        </div>
+        <div class="vod-card">
+          <div class="vod-thumb" style="background:linear-gradient(160deg,#8A93AB,#525A70)">
+            <div class="vod-tag-wrap"><span class="vod-tag">VOD</span></div>
+            <div class="vod-play"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M10 8l6 4-6 4V8z"/></svg></div>
+          </div>
+          <div class="vod-info">
+            <div class="vod-title">ep. 213 — chat picks the game</div>
+            <div class="vod-meta">02:58:44 · SAT</div>
+          </div>
+        </div>
+        <div class="vod-card">
+          <div class="vod-thumb" style="background:linear-gradient(160deg,#4A5368,#22242E)">
+            <div class="vod-tag-wrap"><span class="vod-tag">VOD</span></div>
+            <div class="vod-play"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M10 8l6 4-6 4V8z"/></svg></div>
+          </div>
+          <div class="vod-info">
+            <div class="vod-title">ep. 212 — community game night</div>
+            <div class="vod-meta">04:10:02 · THU</div>
+          </div>
+        </div>
+        <div class="vod-card">
+          <div class="vod-thumb" style="background:linear-gradient(160deg,#7A8298,#454C60)">
+            <div class="vod-tag-wrap"><span class="vod-tag">VOD</span></div>
+            <div class="vod-play"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M10 8l6 4-6 4V8z"/></svg></div>
+          </div>
+          <div class="vod-info">
+            <div class="vod-title">ep. 211 — the desk rebuild</div>
+            <div class="vod-meta">01:47:30 · TUE</div>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="view-all-wrap"><a href="https://twitch.tv/thatguypb_/videos" target="_blank" rel="noopener" class="btn-outline">View all episodes</a></div>
+    <div class="episodes-footer">
+      <a href="https://twitch.tv/thatguypb_/videos" target="_blank" rel="noopener" class="btn-outline">View all episodes</a>
+    </div>
   </section>
 
   <!-- ── COMMUNITY ── -->
@@ -1695,25 +1849,26 @@
       if(hm) hm.innerHTML = `VOD #${videos.length}<br>RUNTIME ${fmtHMS(parseDuration(videos[0].duration))}`;
     }
 
-    // render episode cards — up to 6 (2 rows × 3 cols)
-    grid.innerHTML = videos.slice(0,6).map((v,i)=>`
-      <div class="ep-card">
-        <a href="${escHtml(v.url)}" target="_blank" rel="noopener" aria-label="${escHtml(v.title)}">
-          <div class="ep-thumb"
-               style="${v.thumbnail_url
-                 ? 'background-image:url(\''+sizedThumb(v.thumbnail_url,640,360)+'\')'
-                 : 'background:linear-gradient(160deg,#6E7793,#3B4257)'}">
-            <span class="tag ${i===0?'new':''}">${i===0?'NEW':'VOD'}</span>
-            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M10 8l6 4-6 4V8z"/></svg>
+    // render episode cards — horizontal scroll strip, up to 8
+    grid.innerHTML = videos.slice(0,8).map((v,i)=>`
+      <div class="vod-card${i===0?' vod-featured':''}">
+        <a href="${escHtml(v.url)}" target="_blank" rel="noopener" aria-label="${escHtml(v.title)}" style="display:contents;">
+          <div class="vod-thumb">
+            ${v.thumbnail_url
+              ? `<img src="${sizedThumb(v.thumbnail_url,640,360)}" alt="" loading="lazy">`
+              : `<div style="width:100%;height:100%;background:linear-gradient(160deg,#6E7793,#3B4257)"></div>`}
+            <div class="vod-tag-wrap"><span class="vod-tag${i===0?' new':''}">${i===0?'NEW':'VOD'}</span></div>
+            <div class="vod-play"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M10 8l6 4-6 4V8z"/></svg></div>
+            <div class="vod-dur">${fmtHMS(parseDuration(v.duration))}</div>
           </div>
         </a>
-        <div class="ep-info">
-          <h4 title="${escHtml(v.title)}">${escHtml(v.title)}</h4>
-          <p>${fmtHMS(parseDuration(v.duration))} · ${new Date(v.created_at).toLocaleDateString()}</p>
+        <div class="vod-info">
+          <div class="vod-title" title="${escHtml(v.title)}">${escHtml(v.title)}</div>
+          <div class="vod-meta">${new Date(v.created_at).toLocaleDateString()}</div>
         </div>
       </div>`).join('');
 
-    // grid columns handled by CSS (3-col layout)
+    // grid columns handled by CSS (horizontal scroll)
   }
 
   /* ═══════════════════════════════════════════════════════════════════
