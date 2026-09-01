@@ -455,9 +455,11 @@
   .clip-grid{display:grid; grid-template-columns: repeat(4, 1fr); gap:20px; max-width:1320px; margin:0 auto;}
   .clip-card{border:1.5px solid #3A3F4E; background:#1D1F29; transition:border-color 0.15s;}
   .clip-card:hover{border-color:#6B7288;}
-  .clip-thumb{aspect-ratio:4/5; position:relative; display:flex; align-items:center; justify-content:center; overflow:hidden; background-size:cover; background-position:center;}
-  .clip-thumb svg{width:30%; stroke:rgba(255,255,255,0.9); fill:none; stroke-width:1.3; position:relative; z-index:2;}
-  .clip-thumb .dur{position:absolute; bottom:8px; right:8px; font-family:'Space Mono',monospace; color:#fff; font-size:10px; background:rgba(0,0,0,0.55); padding:2px 6px; z-index:2;}
+  .clip-thumb{aspect-ratio:16/9; position:relative; display:flex; align-items:center; justify-content:center; overflow:hidden; background-size:cover; background-position:center top;}
+  .clip-thumb::before{content:''; position:absolute; inset:0; background:linear-gradient(to top, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.05) 60%); pointer-events:none; z-index:1;}
+  .clip-thumb > *{position:relative; z-index:2;}
+  .clip-thumb svg{width:18%; stroke:rgba(255,255,255,0.9); fill:none; stroke-width:1.3; position:relative; z-index:2; filter:drop-shadow(0 2px 6px rgba(0,0,0,0.6));}
+  .clip-thumb .dur{position:absolute; bottom:8px; right:8px; font-family:'Space Mono',monospace; color:#fff; font-size:10px; background:rgba(0,0,0,0.65); padding:2px 7px; z-index:2;}
   .clip-c1{background:linear-gradient(160deg,#524A6A,#241F32);}
   .clip-c2{background:linear-gradient(160deg,#2E5350,#132320);}
   .clip-c3{background:linear-gradient(160deg,#5A4030,#241A12);}
@@ -468,11 +470,14 @@
 
   /* ── schedule / episodes ── */
   .schedule{padding:90px 40px 40px; max-width:1320px; margin:0 auto;}
-  .schedule-grid{display:grid; grid-template-columns: repeat(4, 1fr); gap:22px;}
+  .schedule-grid{display:grid; grid-template-columns: repeat(4, 1fr); gap:18px;}
   .ep-card{border:1.5px solid var(--ink); transition:border-color 0.15s;}
   .ep-card:hover{border-color:var(--coral);}
-  .ep-thumb{aspect-ratio:1/1.2; position:relative; display:flex; align-items:flex-start; justify-content:flex-end; padding:10px; background-size:cover; background-position:center;}
-  .ep-thumb svg{position:absolute; bottom:14px; left:14px; width:24%; stroke:rgba(255,255,255,0.85); fill:none; stroke-width:1.4;}
+  .ep-thumb{aspect-ratio:16/9; position:relative; display:flex; align-items:flex-start; justify-content:flex-end; padding:10px; background-size:cover; background-position:center top; overflow:hidden;}
+  /* dim overlay so text stays readable on any thumbnail */
+  .ep-thumb::before{content:''; position:absolute; inset:0; background:linear-gradient(to top, rgba(0,0,0,0.58) 0%, rgba(0,0,0,0.0) 55%); pointer-events:none; z-index:1;}
+  .ep-thumb > *{position:relative; z-index:2;}
+  .ep-thumb svg{position:absolute; bottom:14px; left:14px; width:14%; stroke:rgba(255,255,255,0.9); fill:none; stroke-width:1.4; filter:drop-shadow(0 2px 6px rgba(0,0,0,0.6));}
   .tag{font-family:'Space Mono', monospace; font-size:10px; background:var(--paper); color:var(--ink); padding:3px 8px; border:1px solid var(--ink);}
   .tag.new{background:var(--coral); color:var(--paper); border-color:var(--coral);}
   .e1{background:linear-gradient(160deg,#6E7793,#3B4257);}
@@ -750,7 +755,7 @@
         </a>
       </div>
 
-      <img style="height: 2vh;" class="logo-img" alt="ThatGuyPB logo" src="assets/TGPB.png">
+      <img style="height: 2vh;" alt="ThatGuyPB logo" src="assets/TGPB.png">
 
       <div class="nav-links">
         <a href="#about-section">about</a>
@@ -1640,7 +1645,7 @@
       <div class="clip-card">
         <a href="${escHtml(c.url)}" target="_blank" rel="noopener" aria-label="${escHtml(c.title)}">
           <div class="clip-thumb ${pal[i%4]}"
-               style="${c.thumbnail_url?'background-image:url(\''+sizedThumb(c.thumbnail_url,480,272)+'\')':''}"
+               style="${c.thumbnail_url?'background-image:url(\''+sizedThumb(c.thumbnail_url,640,360)+'\')':''}"
                role="img">
             <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M10 8l6 4-6 4V8z"/></svg>
             <div class="dur">${Math.round(c.duration||0)}s</div>
@@ -1696,7 +1701,7 @@
         <a href="${escHtml(v.url)}" target="_blank" rel="noopener" aria-label="${escHtml(v.title)}">
           <div class="ep-thumb"
                style="${v.thumbnail_url
-                 ? 'background-image:url(\''+sizedThumb(v.thumbnail_url,440,248)+'\')'
+                 ? 'background-image:url(\''+sizedThumb(v.thumbnail_url,640,360)+'\')'
                  : 'background:linear-gradient(160deg,#6E7793,#3B4257)'}">
             <span class="tag ${i===0?'new':''}">${i===0?'NEW':'VOD'}</span>
             <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M10 8l6 4-6 4V8z"/></svg>
@@ -1738,9 +1743,8 @@
   function applyUser(user){
     if(!user) return;
 
-    // profile images — nav logo + about card
+    // profile image — about card only
     if(user.profile_image_url){
-      document.querySelectorAll('.logo-img').forEach(img => img.src = user.profile_image_url);
       const profileImg = $('profile-img');
       if(profileImg){
         profileImg.src = user.profile_image_url;
