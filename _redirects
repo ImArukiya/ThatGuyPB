@@ -1,0 +1,3 @@
+# Cloudflare Pages redirect rules
+# SPA fallback — not strictly needed for a single-page site but good to have
+/index  /  301

@@ -1,0 +1,1926 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ThatGuyPB — currently probably losing</title>
+<meta name="description" content="Variety streamer, night owl, professional loser of ranked games. Streaming Tues / Thurs / Sat.">
+<meta property="og:title" content="ThatGuyPB — currently probably losing">
+<meta property="og:description" content="Variety streamer, night owl, professional loser of ranked games.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+
+  :root{
+    --paper:#ECE7DA;
+    --paper-dark:#E1DACB;
+    --ink:#211F1B;
+    --ink-soft:#524E45;
+    --lavender:#B9AEDB;
+    --coral:#FF4D6D;
+    --teal:#2A9D8F;
+    --slate:#7C8698;
+    --slate-2:#5B6478;
+    --slate-3:#9AA3B5;
+    --paper-line: rgba(33,31,27,0.14);
+    --purple:#9B6DFF;
+  }
+
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Space Grotesk', sans-serif;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+
+  body::before{
+    content:"";
+    position:fixed; inset:0;
+    pointer-events:none;
+    z-index:999;
+    opacity:0.04;
+    mix-blend-mode:multiply;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  .display{font-family:'Bebas Neue', sans-serif; letter-spacing:0.01em;}
+  .mono{font-family:'Space Mono', monospace;}
+  a{color:inherit; text-decoration:none;}
+  button{font-family:inherit; cursor:pointer; border:none; background:none;}
+  .wrap{max-width:1320px; margin:0 auto; padding:0 40px;}
+
+  /* ── live-only / offline-only visibility ── */
+  .show-live{ display:none !important; }
+  .hide-live{ display:block; }
+  body.is-live .show-live{ display:block !important; }
+  body.is-live .hide-live{ display:none !important; }
+  body.is-live .show-live-flex{ display:flex !important; }
+
+  /* ── announcement bar ── */
+  .announce{
+    background:var(--ink);
+    color:var(--paper);
+    text-align:center;
+    font-family:'Space Mono', monospace;
+    font-size:11px;
+    letter-spacing:0.06em;
+    padding:9px 12px;
+    overflow:hidden;
+    white-space:nowrap;
+  }
+  .announce span{opacity:0.45; margin:0 10px;}
+  /* live version replaces offline version via JS */
+  #announce-live{
+    display:none;
+    background: linear-gradient(90deg, #FF4D6D 0%, #c0283e 100%);
+  }
+  body.is-live #announce-offline{ display:none; }
+  body.is-live #announce-live{ display:block; }
+
+  /* ── nav ── */
+  header{
+    position:sticky; top:0; z-index:100;
+    background:var(--paper);
+    border-bottom:1.5px solid var(--ink);
+  }
+  nav{
+    display:grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items:center;
+    padding:14px 40px;
+    max-width:1320px; margin:0 auto;
+  }
+  .nav-socials{
+    justify-self:start;
+    display:flex; gap:16px; align-items:center;
+  }
+  .nav-socials a svg{width:17px; height:17px; stroke:var(--ink); fill:none; stroke-width:1.6; transition:stroke 0.15s ease, transform 0.15s ease;}
+  .nav-socials a:hover svg{stroke:var(--coral); transform:translateY(-1px);}
+
+  .nav-logo{justify-self:center; display:flex; align-items:center;}
+  .nav-logo img{
+    height:38px; width:38px;
+    border-radius:50%;
+    object-fit:cover;
+    border:1.5px solid var(--ink);
+    display:block;
+  }
+
+  .nav-links{
+    justify-self:end;
+    display:flex; gap:26px; align-items:center;
+    font-size:12.5px; font-weight:600; letter-spacing:0.02em;
+  }
+  .nav-links a{position:relative; padding-bottom:2px;}
+  .nav-links a:hover{color:var(--coral);}
+  .nav-status{
+    display:flex; align-items:center; gap:6px;
+    font-family:'Space Mono', monospace;
+    font-size:10.5px;
+    border:1px solid var(--ink);
+    padding:5px 9px;
+    transition:background 0.2s, color 0.2s, border-color 0.2s;
+  }
+  .nav-status .dot{width:7px; height:7px; border-radius:50%; background:var(--slate); display:inline-block;}
+  .nav-status.is-live{background:var(--coral); color:var(--paper); border-color:var(--coral);}
+  .nav-status.is-live .dot{background:var(--paper); animation:pulse 1.4s infinite;}
+  @keyframes pulse{0%,100%{opacity:1; transform:scale(1);} 50%{opacity:0.35; transform:scale(0.8);}}
+
+  /* ── hero ── */
+  .hero{
+    position:relative;
+    height:88vh; min-height:580px;
+    display:flex; align-items:flex-end;
+    overflow:hidden;
+    background:
+      linear-gradient(to top,  rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.18) 45%, rgba(0,0,0,0.0) 100%),
+      linear-gradient(to right, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.0) 38%),
+      url('assets/bg.png') center center / cover no-repeat;
+  }
+
+  /* keep image behind hero-content text but above bg layers */
+  .hero-content{ z-index:3; }
+  #live-badge{ z-index:4; }
+
+  .hero-scan{
+    position:absolute; inset:0;
+    background:repeating-linear-gradient(0deg, rgba(0,0,0,0.06) 0px, rgba(0,0,0,0.06) 1px, transparent 1px, transparent 3px);
+    mix-blend-mode:multiply;
+    pointer-events:none;
+  }
+  .hero-grid-glow{
+    position:absolute; inset:0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+    background-size:46px 46px;
+    mask-image:radial-gradient(ellipse at 65% 35%, black 0%, transparent 55%);
+    pointer-events:none;
+  }
+  #live-badge{
+    position:absolute; top:38px; left:40px;
+    display:flex; align-items:center; gap:8px;
+    background:var(--slate-2);
+    color:var(--paper);
+    font-family:'Space Mono', monospace;
+    font-size:11px; letter-spacing:0.06em;
+    padding:7px 12px;
+    transform:rotate(-2deg);
+    transition:background 0.2s ease;
+  }
+  #live-badge.is-live{background:var(--coral);}
+  #live-badge .live-dot{width:7px; height:7px; border-radius:50%; background:var(--paper); animation:pulse 1.4s infinite;}
+
+  .hero-content{
+    position:relative; z-index:3;
+    padding:0 40px 64px;
+    max-width:1320px; margin:0 auto; width:100%;
+    display:flex; justify-content:space-between; align-items:flex-end; gap:40px;
+  }
+  .hero-content > div:first-child{ max-width:460px; }
+  .hero-content h1{
+    font-family:'Bebas Neue', sans-serif;
+    color:var(--paper);
+    font-size:clamp(58px, 9vw, 128px);
+    line-height:0.86;
+    letter-spacing:0.005em;
+  }
+  .hero-sub{
+    color:#C7CCDA;
+    font-size:14px;
+    max-width:300px;
+    margin-top:14px;
+    line-height:1.55;
+  }
+  .hero-right{display:flex; flex-direction:column; align-items:flex-end; gap:14px;}
+  .btn-primary{
+    background:var(--paper);
+    color:var(--ink);
+    font-size:12px; font-weight:700; letter-spacing:0.08em;
+    padding:15px 30px;
+    display:inline-flex; align-items:center; gap:8px;
+    transition:transform 0.15s ease, background 0.15s ease;
+  }
+  .btn-primary:hover{background:var(--coral); color:var(--paper); transform:translateY(-2px);}
+  .btn-primary.live-cta{background:var(--coral); color:var(--paper);}
+  .btn-primary.live-cta:hover{background:#ff1a45; transform:translateY(-2px);}
+  .hero-meta{color:#9AA1B4; font-family:'Space Mono',monospace; font-size:11px; text-align:right; line-height:1.6;}
+
+  /* ── LIVE NOW banner (only when live) ── */
+  .live-banner{
+    display:none;
+    background:var(--coral);
+    color:var(--paper);
+    padding:14px 40px;
+    align-items:center;
+    justify-content:space-between;
+    gap:16px;
+    flex-wrap:wrap;
+  }
+  body.is-live .live-banner{ display:flex; }
+  .live-banner-left{display:flex; align-items:center; gap:12px;}
+  .live-banner-dot{width:10px; height:10px; border-radius:50%; background:var(--paper); animation:pulse 1.2s infinite; flex-shrink:0;}
+  .live-banner-title{font-family:'Bebas Neue', sans-serif; font-size:22px; letter-spacing:0.03em;}
+  .live-banner-sub{font-family:'Space Mono', monospace; font-size:11px; opacity:0.85;}
+  .live-banner-count{font-family:'Space Mono', monospace; font-size:12px; border:1px solid rgba(236,231,218,0.5); padding:6px 12px;}
+
+  /* ── TWITCH EMBED (live-only) ── */
+  .twitch-section{
+    display:none;
+    background:#0e0e10;
+    padding:0 0 0;
+    border-bottom:1.5px solid var(--ink);
+  }
+  body.is-live .twitch-section{ display:block; }
+  .twitch-inner{
+    max-width:1320px; margin:0 auto;
+    display:grid;
+    grid-template-columns: 1fr 340px;
+    height:520px;
+  }
+  .twitch-player-wrap{
+    position:relative;
+    overflow:hidden;
+    border-right:1.5px solid #2a2a2e;
+  }
+  .twitch-player-wrap iframe{
+    width:100%; height:100%;
+    display:block;
+    border:none;
+  }
+  .twitch-chat-wrap{
+    display:flex;
+    flex-direction:column;
+  }
+  .twitch-chat-wrap iframe{
+    flex:1;
+    width:100%;
+    border:none;
+    display:block;
+  }
+  .twitch-bar{
+    background:#18181b;
+    border-top:1px solid #2a2a2e;
+    padding:10px 16px;
+    display:flex; align-items:center; justify-content:space-between;
+    gap:12px;
+  }
+  .twitch-bar-label{font-family:'Space Mono', monospace; font-size:10px; color:#adadb8;}
+  .twitch-bar a{
+    font-family:'Space Mono', monospace; font-size:11px; font-weight:700;
+    color:var(--paper);
+    background:var(--coral);
+    padding:8px 14px;
+    display:inline-block;
+    letter-spacing:0.05em;
+    transition:background 0.15s;
+  }
+  .twitch-bar a:hover{background:#ff1a45;}
+  .twitch-header{
+    background:#18181b;
+    padding:12px 16px;
+    border-bottom:1px solid #2a2a2e;
+    display:flex; align-items:center; gap:10px;
+  }
+  .twitch-header-dot{width:8px; height:8px; border-radius:50%; background:var(--coral); animation:pulse 1.2s infinite;}
+  .twitch-header-text{font-family:'Space Mono', monospace; font-size:11px; color:#adadb8;}
+  #twitch-live-title{color:#efeff1; font-weight:700;}
+  .twitch-game-tag{background:#2a2a2e; color:#adadb8; font-family:'Space Mono', monospace; font-size:10px; padding:3px 8px;}
+
+  /* ── stats bar ── */
+  .stats-bar{
+    border-top:1.5px solid var(--ink);
+    border-bottom:1.5px solid var(--ink);
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+  }
+  .stat{
+    padding:26px 30px;
+    border-right:1.5px solid var(--ink);
+    text-align:center;
+  }
+  .stat:last-child{border-right:none;}
+  .stat b{display:block; font-family:'Bebas Neue',sans-serif; font-size:38px; transition:color 0.3s;}
+  .stat span{font-family:'Space Mono',monospace; font-size:10.5px; color:var(--ink-soft); letter-spacing:0.05em;}
+
+  /* ── section labels ── */
+  .section-head{
+    display:flex; align-items:baseline; justify-content:space-between;
+    padding:64px 40px 28px;
+    max-width:1320px; margin:0 auto;
+    border-top:1.5px solid var(--ink);
+  }
+  .section-head h2{font-family:'Bebas Neue', sans-serif; font-size:40px;}
+  .section-head p{font-size:12px; color:var(--ink-soft); max-width:280px; text-align:right; line-height:1.5;}
+
+  /* ── about ── */
+  .about{padding:0 40px 90px; max-width:1320px; margin:0 auto;}
+  .about-grid{display:grid; grid-template-columns: 300px 1fr; gap:40px; align-items:start;}
+  .about-copy p{font-size:14.5px; line-height:1.75; color:var(--ink-soft); max-width:640px; margin-bottom:16px;}
+  .fact-list{display:grid; grid-template-columns:repeat(3,1fr); gap:18px; margin-top:26px; max-width:640px;}
+  .fact-list div{border-top:1.5px solid var(--ink); padding-top:10px;}
+  .fact-list b{display:block; font-size:13px;}
+  .fact-list span{font-family:'Space Mono',monospace; font-size:10.5px; color:var(--ink-soft);}
+
+  /* ── GENRES ── */
+  .genres-section{padding:80px 40px; max-width:1320px; margin:0 auto;}
+  .genres-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:1.5px; background:var(--ink); border:1.5px solid var(--ink); margin-top:28px;}
+  .genre-card{
+    background:var(--paper);
+    padding:28px 26px;
+    position:relative;
+    overflow:hidden;
+    transition:background 0.15s;
+  }
+  .genre-card:hover{background:var(--paper-dark);}
+  .genre-card::before{
+    content:'';
+    position:absolute; top:0; left:0; right:0;
+    height:3px;
+  }
+  .genre-card.g-fps::before{background:var(--coral);}
+  .genre-card.g-rpg::before{background:var(--teal);}
+  .genre-card.g-horror::before{background:#9B6DFF;}
+  .genre-card.g-coop::before{background:var(--lavender);}
+  .genre-card.g-indie::before{background:#f4a261;}
+  .genre-card.g-ranked::before{background:#e76f51;}
+  .genre-top{display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:14px;}
+  .genre-icon{width:36px; height:36px; stroke:var(--ink); fill:none; stroke-width:1.3;}
+  .genre-freq{font-family:'Space Mono',monospace; font-size:10px; color:var(--ink-soft); background:var(--paper-dark); padding:3px 7px; border:1px solid var(--paper-line);}
+  .genre-name{font-family:'Bebas Neue',sans-serif; font-size:26px; letter-spacing:0.02em; margin-bottom:6px;}
+  .genre-desc{font-size:12px; color:var(--ink-soft); line-height:1.5; margin-bottom:14px;}
+  .genre-games{display:flex; flex-wrap:wrap; gap:6px;}
+  .genre-tag{font-family:'Space Mono',monospace; font-size:10px; padding:3px 8px; border:1px solid var(--paper-line); color:var(--ink-soft);}
+  .genre-bar-wrap{margin-top:16px;}
+  .genre-bar-label{font-family:'Space Mono',monospace; font-size:9px; color:var(--ink-soft); letter-spacing:0.05em; margin-bottom:5px;}
+  .genre-bar{height:3px; background:var(--paper-line); border-radius:2px; overflow:hidden;}
+  .genre-bar-fill{height:100%; border-radius:2px; transition:width 0.6s ease;}
+  .g-fps .genre-bar-fill{background:var(--coral); width:78%;}
+  .g-rpg .genre-bar-fill{background:var(--teal); width:60%;}
+  .g-horror .genre-bar-fill{background:#9B6DFF; width:45%;}
+  .g-coop .genre-bar-fill{background:var(--lavender); width:55%;}
+  .g-indie .genre-bar-fill{background:#f4a261; width:40%;}
+  .g-ranked .genre-bar-fill{background:#e76f51; width:70%;}
+
+  /* ── collage / desk ── */
+  .collage{position:relative; padding:10px 40px 90px; max-width:1320px; margin:0 auto;}
+  .collage-grid{display:grid; grid-template-columns: 260px 1fr; gap:24px;}
+  .collage-stack{display:flex; flex-direction:column; gap:24px;}
+  .photo-card{position:relative; border:1.5px solid var(--ink); overflow:hidden; background:#565f74;}
+  .photo-fill{position:relative; display:flex; align-items:center; justify-content:center; width:100%; height:100%;}
+  .photo-fill svg{width:34%; opacity:0.85; stroke:rgba(255,255,255,0.85); fill:none; stroke-width:1.3;}
+  .photo-fill::after{content:""; position:absolute; inset:0; background:repeating-linear-gradient(0deg, rgba(0,0,0,0.08) 0px, transparent 1px, transparent 3px); mix-blend-mode:overlay;}
+  .p1{aspect-ratio:1/1.15; background:linear-gradient(150deg,#6C7593,#454E66);}
+  .p2{aspect-ratio:1/0.9; background:linear-gradient(150deg,#8A93AB,#5A6377);}
+  .p3{aspect-ratio:1.55/1; background:linear-gradient(120deg,#3B4258,#232838 60%, #6C7593);}
+  .caption-tag{position:absolute; bottom:10px; left:10px; background:var(--paper); color:var(--ink); font-family:'Space Mono', monospace; font-size:10px; padding:4px 8px; border:1px solid var(--ink);}
+  .sticker{position:absolute; font-family:'Bebas Neue', sans-serif; color:var(--coral); font-size:22px; transform:rotate(-8deg); pointer-events:none;}
+  .sticker.s1{top:-6px; right:26%;}
+  .sticker.s2{bottom:-14px; left:6%; color:var(--teal); transform:rotate(6deg); font-size:18px;}
+
+  /* ── windows ── */
+  .windows{display:grid; grid-template-columns: 1fr 1fr; gap:24px; margin-top:24px;}
+  .win{border:1.5px solid var(--ink); background:#F4F1E9;}
+  .win-bar{display:flex; align-items:center; gap:8px; padding:9px 12px; border-bottom:1.5px solid var(--ink); background:var(--paper-dark);}
+  .win-dots{display:flex; gap:6px;}
+  .win-dots span{width:9px; height:9px; border-radius:50%; background:var(--ink); opacity:0.7;}
+  .win-title{font-family:'Space Mono', monospace; font-size:11px; color:var(--ink-soft); margin:0 auto;}
+  .chat-window .win-body{padding:14px 16px; height:260px; overflow:hidden; background:#1B1D24; color:#DCE0EA; font-family:'Space Mono', monospace; font-size:12px; display:flex; flex-direction:column; gap:9px;}
+  .chat-line b{color:var(--lavender);}
+  .chat-line.hl b{color:var(--coral);}
+  .chat-line.sub{color:#8FE3D2;}
+  .obs-window .win-body{height:260px; background:linear-gradient(150deg,#4B5670,#22273A); position:relative; display:flex; align-items:center; justify-content:center;}
+  .obs-window .win-body svg{width:70px; opacity:0.7; stroke:#D8DCE8; fill:none; stroke-width:1.2;}
+  .obs-hud{position:absolute; top:12px; left:12px; font-family:'Space Mono', monospace; font-size:10px; color:#DDE1EC; background:rgba(0,0,0,0.35); padding:4px 8px; display:flex; gap:6px; align-items:center;}
+  .obs-hud .rec{width:6px; height:6px; border-radius:50%; background:var(--coral);}
+  #obs-caption{position:absolute; bottom:12px; right:12px; font-family:'Space Mono', monospace; font-size:10px; color:#DDE1EC; background:rgba(0,0,0,0.35); padding:4px 8px;}
+
+  /* ── cta bar ── */
+  .cta-bar{background:var(--ink); color:var(--paper); padding:70px 40px; text-align:center;}
+  .cta-bar .eyebrow{font-family:'Space Mono',monospace; font-size:11px; letter-spacing:0.08em; color:var(--slate-3); margin-bottom:12px;}
+  .cta-bar h2{font-family:'Bebas Neue', sans-serif; font-size:clamp(38px, 6vw, 74px); line-height:0.95; max-width:900px; margin:0 auto;}
+  .cta-schedule{display:flex; justify-content:center; gap:26px; margin-top:34px; font-family:'Space Mono', monospace; font-size:12px; flex-wrap:wrap;}
+  .cta-schedule div{border:1px solid rgba(236,231,218,0.35); padding:10px 18px;}
+  .cta-schedule b{display:block; font-family:'Bebas Neue',sans-serif; font-size:22px; letter-spacing:0.03em; margin-top:4px;}
+  .cta-live-note{
+    display:none;
+    margin-top:24px;
+    font-family:'Space Mono', monospace;
+    font-size:12px;
+    color:var(--coral);
+    animation:pulse 1.4s infinite;
+  }
+  body.is-live .cta-live-note{ display:block; }
+  body.is-live .cta-bar .eyebrow::before{ content:"🔴 "; }
+
+  /* ── gear ── */
+  .gear{padding:80px 40px; max-width:1320px; margin:0 auto;}
+  .gear-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:1.5px; background:var(--ink); border:1.5px solid var(--ink);}
+  .gear-item{background:var(--paper); padding:26px; display:flex; gap:16px; align-items:flex-start;}
+  .gear-item svg{width:30px; height:30px; flex-shrink:0; stroke:var(--ink); fill:none; stroke-width:1.3;}
+  .gear-item h4{font-size:14px; margin-bottom:5px;}
+  .gear-item p{font-size:12px; color:var(--ink-soft); line-height:1.5;}
+  .gear-item .gear-spec{font-family:'Space Mono',monospace; font-size:10px; color:var(--coral); margin-top:6px;}
+
+  /* ── milestones ── */
+  .milestones{padding:80px 40px; max-width:1320px; margin:0 auto;}
+  .milestone-list{display:grid; grid-template-columns:repeat(4,1fr); gap:1.5px; background:var(--ink); border:1.5px solid var(--ink); margin-top:28px;}
+  .milestone-item{background:var(--paper); padding:24px; position:relative;}
+  .milestone-item::after{content:''; position:absolute; bottom:0; left:0; right:0; height:0; background:var(--coral); transition:height 0.2s;}
+  .milestone-item:hover::after{height:3px;}
+  .milestone-year{font-family:'Space Mono',monospace; font-size:10px; color:var(--ink-soft); letter-spacing:0.05em; margin-bottom:8px;}
+  .milestone-num{font-family:'Bebas Neue',sans-serif; font-size:42px; line-height:1; color:var(--ink);}
+  .milestone-label{font-size:12px; color:var(--ink-soft); margin-top:6px; line-height:1.4;}
+
+  /* ── editorial ── */
+  .editorial{padding:80px 40px; max-width:1320px; margin:0 auto;}
+  .editorial-grid{display:grid; grid-template-columns: 1.15fr 1fr; gap:24px; align-items:start;}
+  .editorial-left{display:flex; flex-direction:column; gap:24px;}
+  .editorial-left .tall{aspect-ratio:0.86/1; background:linear-gradient(165deg,#3E465D,#20232F 70%);}
+  .editorial-right{display:flex; flex-direction:column; gap:24px;}
+  .editorial-right .wide{aspect-ratio:1.4/1; background:linear-gradient(140deg,#8A93AB,#525C74);}
+  .quote-card{border:1.5px solid var(--ink); background:var(--paper-dark); padding:24px; position:relative;}
+  .quote-card .quote{font-family:'Space Mono', monospace; font-size:13px; line-height:1.6;}
+  .quote-card .who{margin-top:14px; font-size:11px; color:var(--ink-soft);}
+
+  /* ── testimonials ── */
+  .testimonials{padding:0 40px 90px; max-width:1320px; margin:0 auto;}
+  .testi-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:20px;}
+  @media (max-width:700px){ .testi-grid{grid-template-columns:1fr;} }
+
+  /* ── clip strip ── */
+  .clip-strip{background:#14151B; padding:70px 40px; position:relative;}
+  .clip-strip-head{
+    max-width:1320px; margin:0 auto 34px;
+    display:flex; align-items:center; justify-content:space-between;
+  }
+  .clip-strip-head-label{font-family:'Space Mono', monospace; color:#6B7288; font-size:11px; letter-spacing:0.1em;}
+  .clip-strip-head a{font-family:'Space Mono',monospace; font-size:11px; color:#adadb8; border:1px solid #3A3F4E; padding:6px 12px; transition:color 0.15s, border-color 0.15s;}
+  .clip-strip-head a:hover{color:#fff; border-color:#fff;}
+  .clip-grid{display:grid; grid-template-columns: repeat(4, 1fr); gap:20px; max-width:1320px; margin:0 auto;}
+  .clip-card{border:1.5px solid #3A3F4E; background:#1D1F29; transition:border-color 0.15s;}
+  .clip-card:hover{border-color:#6B7288;}
+  .clip-thumb{aspect-ratio:4/5; position:relative; display:flex; align-items:center; justify-content:center; overflow:hidden; background-size:cover; background-position:center;}
+  .clip-thumb svg{width:30%; stroke:rgba(255,255,255,0.9); fill:none; stroke-width:1.3; position:relative; z-index:2;}
+  .clip-thumb .dur{position:absolute; bottom:8px; right:8px; font-family:'Space Mono',monospace; color:#fff; font-size:10px; background:rgba(0,0,0,0.55); padding:2px 6px; z-index:2;}
+  .clip-c1{background:linear-gradient(160deg,#524A6A,#241F32);}
+  .clip-c2{background:linear-gradient(160deg,#2E5350,#132320);}
+  .clip-c3{background:linear-gradient(160deg,#5A4030,#241A12);}
+  .clip-c4{background:linear-gradient(160deg,#3A4B63,#161C27);}
+  .clip-label{padding:12px 14px; font-family:'Space Mono', monospace; font-size:11px; color:#C9CDDA; border-top:1.5px solid #3A3F4E; display:flex; justify-content:space-between; gap:8px;}
+  .clip-label span:first-child{overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+  .clip-label span:last-child{color:#6B7288; flex-shrink:0;}
+
+  /* ── schedule / episodes ── */
+  .schedule{padding:90px 40px 40px; max-width:1320px; margin:0 auto;}
+  .schedule-grid{display:grid; grid-template-columns: repeat(4, 1fr); gap:22px;}
+  .ep-card{border:1.5px solid var(--ink); transition:border-color 0.15s;}
+  .ep-card:hover{border-color:var(--coral);}
+  .ep-thumb{aspect-ratio:1/1.2; position:relative; display:flex; align-items:flex-start; justify-content:flex-end; padding:10px; background-size:cover; background-position:center;}
+  .ep-thumb svg{position:absolute; bottom:14px; left:14px; width:24%; stroke:rgba(255,255,255,0.85); fill:none; stroke-width:1.4;}
+  .tag{font-family:'Space Mono', monospace; font-size:10px; background:var(--paper); color:var(--ink); padding:3px 8px; border:1px solid var(--ink);}
+  .tag.new{background:var(--coral); color:var(--paper); border-color:var(--coral);}
+  .e1{background:linear-gradient(160deg,#6E7793,#3B4257);}
+  .e2{background:linear-gradient(160deg,#8A93AB,#525A70);}
+  .e3{background:linear-gradient(160deg,#4A5368,#22242E);}
+  .e4{background:linear-gradient(160deg,#7A8298,#454C60);}
+  .ep-info{padding:14px 4px 14px;}
+  .ep-info h4{font-size:13px; font-weight:600; margin-bottom:4px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+  .ep-info p{font-family:'Space Mono', monospace; font-size:11px; color:var(--ink-soft);}
+  .view-all-wrap{text-align:center; margin:40px 0 10px;}
+  .btn-outline{display:inline-block; border:1.5px solid var(--ink); padding:13px 34px; font-size:12px; font-weight:700; letter-spacing:0.08em; transition:background 0.15s ease, color 0.15s ease;}
+  .btn-outline:hover{background:var(--ink); color:var(--paper);}
+
+  /* ── live chat replay (live-only) ── */
+  .live-chat-section{
+    display:none;
+    background:#14151B;
+    padding:60px 40px;
+    border-top:1.5px solid #2a2a2e;
+  }
+  body.is-live .live-chat-section{ display:block; }
+  .live-chat-inner{max-width:1320px; margin:0 auto;}
+  .live-chat-label{font-family:'Space Mono',monospace; font-size:11px; color:#6B7288; letter-spacing:0.1em; margin-bottom:24px;}
+  .live-chat-stream{
+    border:1.5px solid #2a2a2e;
+    background:#1B1D24;
+    padding:20px;
+    font-family:'Space Mono',monospace;
+    font-size:12px;
+    color:#DCE0EA;
+    display:flex; flex-direction:column; gap:10px;
+    min-height:180px;
+    max-height:260px;
+    overflow:hidden;
+  }
+
+  /* ── sponsors ── */
+  .sponsors{padding:70px 40px; max-width:1320px; margin:0 auto; text-align:center;}
+  .sponsors-label{font-family:'Space Mono',monospace; font-size:11px; color:var(--ink-soft); letter-spacing:0.08em; margin-bottom:26px;}
+  .sponsor-row{display:flex; justify-content:center; gap:1.5px; flex-wrap:wrap; background:var(--ink); border:1.5px solid var(--ink);}
+  .sponsor-item{background:var(--paper); flex:1 1 180px; padding:22px; font-family:'Bebas Neue',sans-serif; font-size:20px; color:var(--ink-soft); letter-spacing:0.03em; transition:color 0.15s;}
+  .sponsor-item:hover{color:var(--ink);}
+
+  /* ── community ── */
+  .community{padding:80px 40px; background:var(--paper-dark); border-top:1.5px solid var(--ink); border-bottom:1.5px solid var(--ink);}
+  .community-inner{max-width:1320px; margin:0 auto; display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center;}
+  .community-left h2{font-family:'Bebas Neue',sans-serif; font-size:clamp(36px,5vw,64px); line-height:0.9; margin-bottom:18px;}
+  .community-left p{font-size:14px; color:var(--ink-soft); line-height:1.65; max-width:420px; margin-bottom:26px;}
+  .community-perks{display:flex; flex-direction:column; gap:14px;}
+  .perk{display:flex; align-items:flex-start; gap:12px; font-size:13px;}
+  .perk-icon{width:20px; height:20px; stroke:var(--coral); fill:none; stroke-width:1.8; flex-shrink:0; margin-top:1px;}
+  .perk b{display:block; font-size:13px; margin-bottom:2px;}
+  .perk span{font-size:12px; color:var(--ink-soft);}
+  .community-right{display:flex; flex-direction:column; gap:16px;}
+  .discord-card{
+    border:1.5px solid var(--ink);
+    background:var(--paper);
+    padding:26px;
+    display:flex; align-items:center; gap:18px;
+  }
+  .discord-card-icon{width:40px; height:40px; flex-shrink:0; stroke:var(--ink); fill:none; stroke-width:1.3;}
+  .discord-card h4{font-size:15px; font-weight:700; margin-bottom:4px;}
+  .discord-card p{font-size:12px; color:var(--ink-soft);}
+  .discord-card .btn-primary{margin-top:14px; width:100%; justify-content:center;}
+
+  /* ── faq ── */
+  .faq{padding:70px 40px 100px; max-width:900px; margin:0 auto;}
+  .faq-item{border-bottom:1.5px solid var(--ink);}
+  .faq-item summary{
+    list-style:none; cursor:pointer;
+    padding:22px 4px; display:flex; justify-content:space-between; align-items:center;
+    font-size:15px; font-weight:600;
+  }
+  .faq-item summary::-webkit-details-marker{display:none;}
+  .faq-item summary::after{content:"+"; font-family:'Bebas Neue',sans-serif; font-size:24px;}
+  .faq-item[open] summary::after{content:"–";}
+  .faq-item p{padding:0 4px 22px; font-size:13.5px; color:var(--ink-soft); line-height:1.6; max-width:640px;}
+
+  /* ── footer ── */
+  footer{
+    background:var(--ink);
+    color:var(--paper);
+    margin-top:0;
+    padding:0;
+  }
+
+  .footer-top{
+    max-width:1320px; margin:0 auto;
+    display:grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap:0;
+    border-bottom:1.5px solid rgba(236,231,218,0.12);
+  }
+
+  .footer-brand{
+    padding:56px 40px;
+    border-right:1.5px solid rgba(236,231,218,0.12);
+    display:flex; flex-direction:column; gap:20px;
+  }
+  .footer-brand-logo{
+    font-family:'Bebas Neue',sans-serif;
+    font-size:42px; letter-spacing:0.02em;
+    line-height:1;
+  }
+  .footer-brand-logo span{ color:var(--coral); }
+  .footer-brand-tagline{
+    font-family:'Space Mono',monospace;
+    font-size:11px; color:rgba(236,231,218,0.5);
+    line-height:1.6; max-width:240px;
+  }
+  .footer-brand-socials{
+    display:flex; gap:10px; flex-wrap:wrap; margin-top:6px;
+  }
+  .footer-social-btn{
+    width:36px; height:36px;
+    border:1.5px solid rgba(236,231,218,0.2);
+    display:flex; align-items:center; justify-content:center;
+    transition:border-color 0.15s, background 0.15s;
+    flex-shrink:0;
+  }
+  .footer-social-btn:hover{ border-color:var(--coral); background:var(--coral); }
+  .footer-social-btn svg{ width:15px; height:15px; stroke:var(--paper); fill:none; stroke-width:1.6; }
+  .footer-status{
+    display:inline-flex; align-items:center; gap:8px;
+    font-family:'Space Mono',monospace; font-size:10px;
+    color:rgba(236,231,218,0.45); margin-top:auto;
+    letter-spacing:0.05em;
+  }
+  .footer-status-dot{
+    width:7px; height:7px; border-radius:50%;
+    background:var(--slate); display:inline-block;
+    transition:background 0.3s;
+  }
+  body.is-live .footer-status-dot{ background:var(--coral); animation:pulse 1.4s infinite; }
+  body.is-live .footer-status-text{ color:var(--coral); }
+
+  .footer-nav{
+    padding:56px 40px;
+    border-right:1.5px solid rgba(236,231,218,0.12);
+    display:grid; grid-template-columns:1fr 1fr; gap:0 30px;
+  }
+  .footer-col h5{
+    font-family:'Space Mono',monospace; font-size:9px;
+    letter-spacing:0.1em; color:rgba(236,231,218,0.35);
+    margin-bottom:16px; text-transform:uppercase;
+  }
+  .footer-col a{
+    display:block; font-size:12px;
+    color:rgba(236,231,218,0.6);
+    margin-bottom:11px; letter-spacing:0.01em;
+    transition:color 0.15s;
+  }
+  .footer-col a:hover{ color:var(--paper); }
+  .footer-col a .arrow{ opacity:0; margin-left:4px; transition:opacity 0.15s; }
+  .footer-col a:hover .arrow{ opacity:1; }
+
+  .footer-cta{
+    padding:56px 40px;
+    display:flex; flex-direction:column; justify-content:space-between; gap:30px;
+  }
+  .footer-cta-heading{
+    font-family:'Bebas Neue',sans-serif;
+    font-size:clamp(28px,3vw,42px);
+    line-height:0.95; letter-spacing:0.02em;
+  }
+  .footer-cta-heading span{ color:var(--coral); }
+  .footer-cta-buttons{ display:flex; flex-direction:column; gap:10px; }
+  .footer-cta-btn{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:13px 16px;
+    border:1.5px solid rgba(236,231,218,0.2);
+    font-family:'Space Mono',monospace; font-size:11px;
+    color:rgba(236,231,218,0.7); letter-spacing:0.05em;
+    transition:border-color 0.15s, color 0.15s, background 0.15s;
+  }
+  .footer-cta-btn:hover{ border-color:var(--paper); color:var(--paper); }
+  .footer-cta-btn.primary{
+    background:var(--coral); border-color:var(--coral); color:var(--paper);
+  }
+  .footer-cta-btn.primary:hover{ background:#e8334f; border-color:#e8334f; }
+  .footer-cta-btn-icon{ font-size:14px; }
+
+  .footer-bottom{
+    max-width:1320px; margin:0 auto;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:20px 40px;
+    flex-wrap:wrap; gap:12px;
+  }
+  .footer-bottom-left{
+    font-family:'Bebas Neue',sans-serif;
+    font-size:22px; letter-spacing:0.05em;
+    color:rgba(236,231,218,0.2);
+  }
+  .footer-bottom-right{
+    font-family:'Space Mono',monospace; font-size:10px;
+    color:rgba(236,231,218,0.25); letter-spacing:0.04em;
+    display:flex; gap:20px;
+  }
+  .footer-bottom-right a{ color:inherit; transition:color 0.15s; }
+  .footer-bottom-right a:hover{ color:rgba(236,231,218,0.6); }
+
+  @media (max-width:1080px){
+    .footer-top{ grid-template-columns:1fr 1fr; }
+    .footer-cta{ border-top:1.5px solid rgba(236,231,218,0.12); grid-column:1/-1; }
+  }
+  @media (max-width:680px){
+    .footer-top{ grid-template-columns:1fr; }
+    .footer-brand, .footer-nav, .footer-cta{ border-right:none; padding:36px 20px; }
+    .footer-nav{ border-top:1.5px solid rgba(236,231,218,0.12); }
+    .footer-cta{ border-top:1.5px solid rgba(236,231,218,0.12); }
+    .footer-bottom{ padding:16px 20px; }
+  }
+
+  /* ── responsive ── */
+  @media (max-width: 1080px){
+    .genres-grid{grid-template-columns:repeat(2,1fr);}
+    .milestone-list{grid-template-columns:repeat(2,1fr);}
+    .twitch-inner{grid-template-columns:1fr 280px; height:460px;}
+  }
+  @media (max-width: 900px){
+    .wrap, nav, .hero-content, .section-head, .collage, .cta-bar, .about, .gear, .editorial, .testimonials, .clip-strip, .schedule, .sponsors, .faq, footer, .genres-section, .milestones, .community{padding-left:20px; padding-right:20px;}
+    nav{grid-template-columns:auto 1fr auto;}
+    .nav-links{display:none;}
+    .stats-bar{grid-template-columns:repeat(2,1fr);}
+    .stat:nth-child(2){border-right:none;}
+    .about-grid, .collage-grid, .windows, .editorial-grid, .community-inner{grid-template-columns:1fr;}
+    .gear-grid, .testi-grid{grid-template-columns:1fr;}
+    .genres-grid{grid-template-columns:1fr;}
+    .milestone-list{grid-template-columns:repeat(2,1fr);}
+    .clip-grid, .schedule-grid{grid-template-columns:1fr 1fr;}
+    .section-head{flex-direction:column; gap:10px;}
+    .section-head p{text-align:left;}
+    .footer-grid{flex-direction:column;}
+    .footer-sub{text-align:left;}
+    .twitch-inner{grid-template-columns:1fr; height:auto;}
+    .twitch-player-wrap{height:260px; border-right:none; border-bottom:1.5px solid #2a2a2e;}
+    .twitch-chat-wrap{height:320px;}
+    .live-banner{padding:14px 20px;}
+  }
+  @media (max-width: 540px){
+    .clip-grid, .schedule-grid{grid-template-columns:1fr;}
+    .milestone-list{grid-template-columns:1fr 1fr;}
+  }
+
+</style>
+</head>
+<body>
+
+  <!-- ── Announcement bar: offline version ── -->
+  <div class="announce" id="announce-offline">STREAMING ALMOST DAILY <span>·</span> THANK YOU FOR FOLLOWING <span>·</span> WEBSITE RELEASED</div>
+
+  <!-- ── Announcement bar: live version (shown only when live) ── -->
+  <div class="announce" id="announce-live">🔴 LIVE NOW <span>·</span> <span id="live-title-announce">on stream</span> <span>·</span> <span id="live-count-announce">...</span> WATCHING — JOIN IN</div>
+
+  <header>
+    <nav>
+      <div class="nav-socials">
+        <a href="https://twitch.tv/thatguypb_" target="_blank" rel="noopener" aria-label="Twitch">
+          <svg viewBox="0 0 24 24"><path d="M4 4h16v11l-4 4h-4l-3 3H9v-3H4V4z"/><line x1="14" y1="8" x2="14" y2="13"/><line x1="10" y1="8" x2="10" y2="13"/></svg>
+        </a>
+        <a href="https://www.youtube.com/@HHThatGuyPB" target="_blank" rel="noopener" aria-label="YouTube">
+          <svg viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="3"/><path d="M10 9l6 3-6 3V9z"/></svg>
+        </a>
+        <a href="https://www.tiktok.com/@tgc_pb" target="_blank" rel="noopener" aria-label="TikTok">
+          <svg viewBox="0 0 24 24"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"/></svg>
+        </a>
+        <a href="https://x.com/ThatGuyPB" target="_blank" rel="noopener" aria-label="X / Twitter">
+          <svg viewBox="0 0 24 24"><line x1="4" y1="4" x2="20" y2="20"/><line x1="20" y1="4" x2="4" y2="20"/></svg>
+        </a>
+        <a href="https://www.instagram.com/hhthatguypb" target="_blank" rel="noopener" aria-label="Instagram">
+          <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="0.6"/></svg>
+        </a>
+        <a href="https://www.patreon.com/cw/TGCHideout" target="_blank" rel="noopener" aria-label="Patreon">
+          <svg viewBox="0 0 24 24"><circle cx="14.5" cy="9.5" r="6.5"/><rect x="2" y="2" width="4" height="20" rx="1"/></svg>
+        </a>
+      </div>
+
+      <img style="height: 2vh;" class="logo-img" alt="ThatGuyPB logo" src="assets/TGPB.png">
+
+      <div class="nav-links">
+        <a href="#about-section">about</a>
+        <a href="#genres-section">genres</a>
+        <a href="#schedule">vods</a>
+        <a href="#clips">clips</a>
+        <a href="#faq">faq</a>
+        <a href="https://twitch.tv/thatguypb_" target="_blank" rel="noopener" class="nav-status" id="live-badge-nav" aria-label="Stream status"><span class="dot"></span>OFFLINE</a>
+      </div>
+    </nav>
+  </header>
+
+  <!-- ── HERO ── -->
+  <section class="hero">
+    <div class="hero-scan"></div>
+    <div class="hero-grid-glow"></div>
+    <div id="live-badge">STREAM IS CURRENTLY OFFLINE</div>
+    <div class="hero-content">
+      <div>
+        <h1 id="hero-heading">STILL AWAKE,<br>STILL STREAMING</h1>
+        <p class="hero-sub" id="hero-sub">Variety streamer, night owl, professional loser of ranked games. New VODs go up every morning.</p>
+      </div>
+      <div class="hero-right">
+        <a href="https://twitch.tv/thatguypb_" target="_blank" rel="noopener" class="btn-primary" id="hero-cta">WATCH ON TWITCH →</a>
+        <div class="hero-meta" id="hero-meta">EPISODE 214<br>RUNTIME 03:42:10</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── LIVE BANNER (live-only) ── -->
+  <div class="live-banner">
+    <div class="live-banner-left">
+      <span class="live-banner-dot"></span>
+      <div>
+        <div class="live-banner-title">LIVE RIGHT NOW</div>
+        <div class="live-banner-sub" id="live-banner-game">Loading stream info…</div>
+      </div>
+    </div>
+    <span class="live-banner-count" id="live-banner-viewers">— viewers</span>
+  </div>
+
+  <!-- ── TWITCH EMBED (live-only) ── -->
+  <div class="twitch-section" id="twitch-section">
+    <div class="twitch-header">
+      <span class="twitch-header-dot"></span>
+      <span class="twitch-header-text">LIVE ON TWITCH — <span id="twitch-live-title">loading…</span></span>
+      <span class="twitch-game-tag" id="twitch-game-tag"></span>
+    </div>
+    <div class="twitch-inner">
+      <div class="twitch-player-wrap" id="twitch-player-wrap">
+        <!-- Embed iframe injected by JS so it only loads when live -->
+      </div>
+      <div class="twitch-chat-wrap">
+        <iframe
+          id="twitch-chat-iframe"
+          src=""
+          title="Twitch Chat"
+          aria-label="Twitch live chat"
+        ></iframe>
+        <div class="twitch-bar">
+          <span class="twitch-bar-label">LIVE CHAT</span>
+          <a href="https://twitch.tv/thatguypb_" target="_blank" rel="noopener">WATCH ON TWITCH ↗</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── STATS BAR ── -->
+  <div class="stats-bar">
+    <div class="stat"><b id="stat-followers">—</b><span>FOLLOWERS</span></div>
+    <div class="stat"><b id="stat-hours">—</b><span>HOURS STREAMED</span></div>
+    <div class="stat"><b id="stat-episodes">—</b><span>TOTAL VODS</span></div>
+    <div class="stat"><b id="stat-last-stream">—</b><span>LAST STREAM</span></div>
+  </div>
+
+  <!-- ── ABOUT ── -->
+  <div class="about" id="about-section">
+    <div class="section-head" style="padding-left:0; padding-right:0;">
+      <h2>about</h2>
+      <p>the short version, for anyone new here</p>
+    </div>
+    <div class="about-grid">
+      <div class="photo-card p1" style="aspect-ratio:0.85/1; background:#2a2a2e;">
+        <img id="profile-img" src="" alt="ThatGuyPB profile photo"
+          style="width:100%;height:100%;object-fit:cover;display:block;"
+          onerror="this.style.display='none'">
+        <div class="caption-tag" id="profile-caption">profile.jpg</div>
+      </div>
+      <div class="about-copy">
+        <p id="bio-text">Been streaming variety games since 2019 — mostly co-op chaos, the occasional ranked meltdown, and whatever chat votes on during community nights. What started as a way to hang out with a few friends turned into a full-blown chat family, and I'm still not entirely sure how that happened.</p>
+        <p>Streams run three nights a week, VODs get cut and captioned the morning after, and the Discord never really sleeps. If you're new — say hi in chat, nobody bites.</p>
+        <div class="fact-list">
+          <div><b id="fact-since">—</b><span>STREAMING SINCE</span></div>
+          <div><b>ET</b><span>TIMEZONE</span></div>
+          <div><b id="fact-category">—</b><span>MAIN CATEGORY</span></div>
+          <div><b>3×</b><span>WEEKLY STREAMS</span></div>
+          <div><b>PC</b><span>PRIMARY PLATFORM</span></div>
+          <div><b>EN</b><span>LANGUAGE</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── GENRES ── -->
+  <section class="genres-section" id="genres-section">
+    <div class="section-head" style="padding-left:0; padding-right:0; border-top:1.5px solid var(--ink);">
+      <h2>what gets streamed</h2>
+      <p>the genres and vibes you can expect, roughly by frequency</p>
+    </div>
+    <div class="genres-grid">
+
+      <div class="genre-card g-fps">
+        <div class="genre-top">
+          <svg class="genre-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4M5.6 5.6l2.8 2.8M15.6 15.6l2.8 2.8M5.6 18.4l2.8-2.8M15.6 8.4l2.8-2.8"/></svg>
+          <span class="genre-freq">MOST PLAYED</span>
+        </div>
+        <div class="genre-name">FPS / Shooters</div>
+        <div class="genre-desc">Where most of the rage happens. Ranked queues, aim trainers that clearly don't work, and the occasional pop-off clip that somehow goes viral.</div>
+        <div class="genre-games">
+          <span class="genre-tag">Valorant</span>
+          <span class="genre-tag">CS2</span>
+          <span class="genre-tag">Apex</span>
+          <span class="genre-tag">CoD</span>
+          <span class="genre-tag">Overwatch 2</span>
+        </div>
+        <div class="genre-bar-wrap">
+          <div class="genre-bar-label">STREAM SHARE</div>
+          <div class="genre-bar"><div class="genre-bar-fill"></div></div>
+        </div>
+      </div>
+
+      <div class="genre-card g-rpg">
+        <div class="genre-top">
+          <svg class="genre-icon" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+          <span class="genre-freq">REGULAR</span>
+        </div>
+        <div class="genre-name">RPG / Adventure</div>
+        <div class="genre-desc">Long-form story games with full playthroughs. Chat picks dialogue options, argues about builds, and begs not to skip cutscenes.</div>
+        <div class="genre-games">
+          <span class="genre-tag">Elden Ring</span>
+          <span class="genre-tag">BG3</span>
+          <span class="genre-tag">Witcher 3</span>
+          <span class="genre-tag">Cyberpunk</span>
+          <span class="genre-tag">Hades II</span>
+        </div>
+        <div class="genre-bar-wrap">
+          <div class="genre-bar-label">STREAM SHARE</div>
+          <div class="genre-bar"><div class="genre-bar-fill"></div></div>
+        </div>
+      </div>
+
+      <div class="genre-card g-horror">
+        <div class="genre-top">
+          <svg class="genre-icon" viewBox="0 0 24 24"><path d="M12 2a9 9 0 100 18A9 9 0 0012 2z"/><path d="M9 10h.01M15 10h.01"/><path d="M9.5 15a3.5 3.5 0 005 0"/></svg>
+          <span class="genre-freq">SEASONAL</span>
+        </div>
+        <div class="genre-name">Horror</div>
+        <div class="genre-desc">October staple. The screaming is real, the jumpscares get clipped every time, and chat enjoys every second of the suffering.</div>
+        <div class="genre-games">
+          <span class="genre-tag">Phasmophobia</span>
+          <span class="genre-tag">Lethal Co.</span>
+          <span class="genre-tag">Alan Wake 2</span>
+          <span class="genre-tag">Dead Space</span>
+        </div>
+        <div class="genre-bar-wrap">
+          <div class="genre-bar-label">STREAM SHARE</div>
+          <div class="genre-bar"><div class="genre-bar-fill"></div></div>
+        </div>
+      </div>
+
+      <div class="genre-card g-coop">
+        <div class="genre-top">
+          <svg class="genre-icon" viewBox="0 0 24 24"><circle cx="9" cy="7" r="3"/><circle cx="15" cy="7" r="3"/><path d="M3 20c0-3 2.7-5 6-5M15 15c3.3 0 6 2 6 5"/><path d="M9 15c1.5 0 3 .5 4.2 1.4"/></svg>
+          <span class="genre-freq">WEEKLY</span>
+        </div>
+        <div class="genre-name">Co-op / Multiplayer</div>
+        <div class="genre-desc">Community nights where viewers join in. Controlled chaos, lots of betrayal, and the kind of moments you can't script.</div>
+        <div class="genre-games">
+          <span class="genre-tag">It Takes Two</span>
+          <span class="genre-tag">Among Us</span>
+          <span class="genre-tag">Minecraft</span>
+          <span class="genre-tag">Party Animals</span>
+          <span class="genre-tag">Fall Guys</span>
+        </div>
+        <div class="genre-bar-wrap">
+          <div class="genre-bar-label">STREAM SHARE</div>
+          <div class="genre-bar"><div class="genre-bar-fill"></div></div>
+        </div>
+      </div>
+
+      <div class="genre-card g-indie">
+        <div class="genre-top">
+          <svg class="genre-icon" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <span class="genre-freq">REGULAR</span>
+        </div>
+        <div class="genre-name">Indie / Hidden Gems</div>
+        <div class="genre-desc">Smaller titles that deserve more eyes. Chat usually discovers something new they'll end up buying. Good problem to have.</div>
+        <div class="genre-games">
+          <span class="genre-tag">Hollow Knight</span>
+          <span class="genre-tag">Celeste</span>
+          <span class="genre-tag">Stardew</span>
+          <span class="genre-tag">Undertale</span>
+          <span class="genre-tag">Neon White</span>
+        </div>
+        <div class="genre-bar-wrap">
+          <div class="genre-bar-label">STREAM SHARE</div>
+          <div class="genre-bar"><div class="genre-bar-fill"></div></div>
+        </div>
+      </div>
+
+      <div class="genre-card g-ranked">
+        <div class="genre-top">
+          <svg class="genre-icon" viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          <span class="genre-freq">ONGOING</span>
+        </div>
+        <div class="genre-name">Ranked Grind</div>
+        <div class="genre-desc">The series that started it all. A public document of every rank-up and rank-down, sometimes in the same session. Chat finds it therapeutic.</div>
+        <div class="genre-games">
+          <span class="genre-tag">Ranked Series</span>
+          <span class="genre-tag">Ladder Climbing</span>
+          <span class="genre-tag">Season Resets</span>
+          <span class="genre-tag">Tilt Checks</span>
+        </div>
+        <div class="genre-bar-wrap">
+          <div class="genre-bar-label">STREAM SHARE</div>
+          <div class="genre-bar"><div class="genre-bar-fill"></div></div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── THE DESK ── -->
+  <div class="section-head">
+    <h2>the desk</h2>
+    <p>a few things from around the setup — clips, the chat, the usual chaos</p>
+  </div>
+
+  <div class="collage">
+    <div class="collage-grid">
+      <div class="collage-stack">
+        <div class="photo-card p1">
+          <div class="photo-fill"><svg viewBox="0 0 24 24"><rect x="2" y="6" width="14" height="12" rx="2"/><path d="M16 10l6-4v12l-6-4"/></svg></div>
+          <div class="caption-tag">webcam.png</div>
+        </div>
+        <div class="photo-card p2">
+          <div class="photo-fill"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="14" rx="1"/><path d="M8 21h8M12 18v3"/></svg></div>
+          <div class="caption-tag">deskcam.jpg</div>
+        </div>
+      </div>
+      <div class="photo-card p3" style="position:relative;">
+        <div class="photo-fill"><svg viewBox="0 0 24 24"><path d="M6 20V10M6 10l6-6 6 6M12 4v16"/></svg></div>
+        <div class="caption-tag">last night's rage quit, 2:41am</div>
+        <span class="sticker s1">HI CHAT</span>
+        <span class="sticker s2">:3</span>
+      </div>
+    </div>
+
+    <div class="windows">
+      <div class="win chat-window">
+        <div class="win-bar">
+          <div class="win-dots"><span></span><span></span><span></span></div>
+          <div class="win-title">chat.log — twitch.tv/ThatGuyPB_</div>
+        </div>
+        <div class="win-body">
+          <div class="chat-line"><b>mossycouch:</b> yo PB stream just went live 🔥</div>
+          <div class="chat-line sub"><b>NEW SUB — pebbleking:</b> welcome to the loser gang</div>
+          <div class="chat-line hl"><b>ThatGuyPB:</b> guys i am NOT losing this one</div>
+          <div class="chat-line"><b>tinyraccoon:</b> he is absolutely losing this one</div>
+          <div class="chat-line"><b>ferngully_:</b> LMAOOO</div>
+          <div class="chat-line"><b>quietblip:</b> clip it clip it</div>
+          <div class="chat-line hl"><b>ThatGuyPB:</b> ok that's fair, clipping now</div>
+          <div class="chat-line"><b>mossycouch:</b> gg either way, love the vibes</div>
+        </div>
+      </div>
+      <div class="win obs-window">
+        <div class="win-bar">
+          <div class="win-dots"><span></span><span></span><span></span></div>
+          <div class="win-title">scene — main.obs</div>
+        </div>
+        <div class="win-body">
+          <div class="obs-hud"><span class="rec"></span><span id="obs-rec-time">REC 03:42:10</span></div>
+          <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M9 9l6 3-6 3V9z"/></svg>
+          <div id="obs-caption">1080p · 60fps</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── CTA BAR ── -->
+  <section class="cta-bar">
+    <div class="eyebrow">DON'T MISS IT</div>
+    <h2 id="cta-heading">NEXT STREAM DROPS<br>SOONER THAN YOU THINK</h2>
+    <div class="cta-schedule hide-live">
+      <div>STREAMING ALMOST<b>DAILY</b></div>
+    </div>
+    <div class="cta-live-note">↑ THE STREAM IS LIVE RIGHT NOW — CLICK TO JOIN</div>
+    <div style="margin-top:28px;">
+      <a href="https://twitch.tv/thatguypb_" target="_blank" rel="noopener" class="btn-primary" id="cta-btn">WATCH ON TWITCH →</a>
+    </div>
+  </section>
+
+  <!-- ── GEAR ── -->
+  <section class="gear">
+    <div class="section-head" style="padding-left:0; padding-right:0; border-top:none;">
+      <h2>the setup</h2>
+      <p>the gear keeping the stream alive, barely</p>
+    </div>
+    <div class="gear-grid">
+      <div class="gear-item">
+        <svg viewBox="0 0 24 24"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 11a7 7 0 0014 0M12 18v4M9 22h6"/></svg>
+        <div><h4>Microphone</h4><p>Condenser mic on a boom arm, popfilter always slightly crooked.</p></div>
+      </div>
+      <div class="gear-item">
+        <svg viewBox="0 0 24 24"><rect x="2" y="6" width="14" height="12" rx="2"/><path d="M16 10l6-4v12l-6-4"/></svg>
+        <div><h4>Webcam</h4><p>1080p60, sitting on top of the monitor closest to chat.</p></div>
+      </div>
+      <div class="gear-item">
+        <svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="14" rx="2"/><path d="M8 21h8M12 18v3"/></svg>
+        <div><h4>Capture card</h4><p>Handles the console feed for co-op nights and retro sessions.</p></div>
+      </div>
+      <div class="gear-item">
+        <svg viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="10" rx="2"/><path d="M7 11v2M11 11v2M15 11v2"/></svg>
+        <div><h4>Keyboard</h4><p>Loud enough that chat asks about it during every single stream.</p></div>
+      </div>
+      <div class="gear-item">
+        <svg viewBox="0 0 24 24"><path d="M6 4h10l2 4v5H4V8l2-4z"/><path d="M4 13v6M18 13v6M4 19h14"/></svg>
+        <div><h4>Chair</h4><p>Nothing fancy — just broken in exactly right after 3 years.</p></div>
+      </div>
+      <div class="gear-item">
+        <svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="13" rx="1"/><path d="M8 21h8M12 17v4"/></svg>
+        <div><h4>Monitors</h4><p>Three across: game, chat, and whatever chaos is happening in Discord.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── MILESTONES ── -->
+  <section class="milestones">
+    <div class="section-head" style="padding-left:0; padding-right:0; border-top:1.5px solid var(--ink);">
+      <h2>the journey</h2>
+      <p>numbers that actually mean something</p>
+    </div>
+    <div class="milestone-list">
+      <div class="milestone-item">
+        <div class="milestone-year">2019 — started</div>
+        <div class="milestone-num">1</div>
+        <div class="milestone-label">First stream. One concurrent viewer. It was my own alt account.</div>
+      </div>
+      <div class="milestone-item">
+        <div class="milestone-year">2020</div>
+        <div class="milestone-num">500</div>
+        <div class="milestone-label">Followers hit 500 during a Minecraft lockdown series. Discord opened the same week.</div>
+      </div>
+      <div class="milestone-item">
+        <div class="milestone-year">2021</div>
+        <div class="milestone-num">2K</div>
+        <div class="milestone-label">First affiliate milestone. Community nights started. Chat became genuinely unhinged.</div>
+      </div>
+      <div class="milestone-item">
+        <div class="milestone-year">2022</div>
+        <div class="milestone-num">5K</div>
+        <div class="milestone-label">Reached 5K followers. Broke down crying live. Chat clipped it immediately.</div>
+      </div>
+      <div class="milestone-item">
+        <div class="milestone-year">2023</div>
+        <div class="milestone-num">10K</div>
+        <div class="milestone-label">Hit 10K followers. Celebrated with a 12-hour marathon stream and lost rank in 4 games.</div>
+      </div>
+      <div class="milestone-item">
+        <div class="milestone-year">ongoing</div>
+        <div class="milestone-num" id="milestone-episodes">—</div>
+        <div class="milestone-label">VODs and counting. Still losing. Still showing up.</div>
+      </div>
+      <div class="milestone-item">
+        <div class="milestone-year">total</div>
+        <div class="milestone-num" id="milestone-hours">—</div>
+        <div class="milestone-label">Hours live on stream. Probably should have slept more.</div>
+      </div>
+      <div class="milestone-item">
+        <div class="milestone-year">record</div>
+        <div class="milestone-num" id="milestone-peak">—</div>
+        <div class="milestone-label">Peak concurrent viewers. Still can't believe it.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── EDITORIAL ── -->
+  <section class="editorial">
+    <div class="editorial-grid">
+      <div class="editorial-left">
+        <div class="photo-card tall">
+          <div class="photo-fill"><svg viewBox="0 0 24 24"><path d="M4 4h6l2 3h8v11a2 2 0 01-2 2H4a2 2 0 01-2-2V6a2 2 0 012-2z"/></svg></div>
+          <div class="caption-tag">vod_archive/</div>
+        </div>
+      </div>
+      <div class="editorial-right">
+        <div class="quote-card">
+          <div class="quote">"I started streaming because I lose games too consistently to keep it to myself."</div>
+          <div class="who">— from the about-me VOD, episode 1</div>
+        </div>
+        <div class="photo-card wide">
+          <div class="photo-fill"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3"/><path d="M5 21c0-4 3-6 7-6s7 2 7 6"/></svg></div>
+          <div class="caption-tag">community night, ep. 198</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CHAT SAYS ── -->
+  <section class="testimonials">
+    <div class="section-head" style="padding-left:0; padding-right:0;">
+      <h2>chat says</h2>
+      <p>pulled straight from the community</p>
+    </div>
+    <div class="testi-grid">
+      <div class="quote-card"><div class="quote">LOADING...</div><div class="who">— N/A</div></div>
+      <div class="quote-card"><div class="quote">LOADING...</div><div class="who">— N/A</div></div>
+      <div class="quote-card"><div class="quote">LOADING...</div><div class="who">— N/A</div></div>
+      <div class="quote-card"><div class="quote">LOADING...</div><div class="who">— N/A</div></div>
+      <div class="quote-card"><div class="quote">LOADING...</div><div class="who">— N/A</div></div>
+      <div class="quote-card"><div class="quote">LOADING...</div><div class="who">— N/A</div></div>
+    </div>
+  </section>
+
+  <!-- ── CLIP STRIP ── -->
+  <section class="clip-strip" id="clips">
+    <div class="clip-strip-head">
+      <span class="clip-strip-head-label">CLIP LIBRARY</span>
+      <a href="https://twitch.tv/thatguypb_/clips" target="_blank" rel="noopener">VIEW ALL CLIPS ↗</a>
+    </div>
+    <div class="clip-grid" id="clip-grid">
+      <div class="clip-card">
+        <div class="clip-thumb clip-c1"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M10 8l6 4-6 4V8z"/></svg><div class="dur">0:14</div></div>
+        <div class="clip-label"><span>the fall</span><span>82k</span></div>
+      </div>
+      <div class="clip-card">
+        <div class="clip-thumb clip-c2"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M10 8l6 4-6 4V8z"/></svg><div class="dur">0:22</div></div>
+        <div class="clip-label"><span>chat cooked me</span><span>61k</span></div>
+      </div>
+      <div class="clip-card">
+        <div class="clip-thumb clip-c3"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M10 8l6 4-6 4V8z"/></svg><div class="dur">0:09</div></div>
+        <div class="clip-label"><span>predicted it</span><span>44k</span></div>
+      </div>
+      <div class="clip-card">
+        <div class="clip-thumb clip-c4"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M10 8l6 4-6 4V8z"/></svg><div class="dur">0:31</div></div>
+        <div class="clip-label"><span>3am ramble</span><span>29k</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── LIVE CHAT SECTION (live-only) ── -->
+  <div class="live-chat-section">
+    <div class="live-chat-inner">
+      <div class="live-chat-label">LIVE CHAT FEED</div>
+      <div class="live-chat-stream" id="live-chat-feed">
+        <div class="chat-line"><b>Loading live chat…</b></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── EPISODES ── -->
+  <section class="schedule" id="schedule">
+    <div class="section-head" style="padding-left:0; padding-right:0; border-top:none;">
+      <h2>recent episodes</h2>
+      <p>catch up on the last few streams, freshly cut and captioned</p>
+    </div>
+    <div class="schedule-grid" id="episodes-grid">
+      <div class="ep-card">
+        <div class="ep-thumb e1"><span class="tag new">NEW</span><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M10 8l6 4-6 4V8z"/></svg></div>
+        <div class="ep-info"><h4>ep. 214 — the losing streak continues</h4><p>03:42:10 · TUE</p></div>
+      </div>
+      <div class="ep-card">
+        <div class="ep-thumb e2"><span class="tag">VOD</span><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M10 8l6 4-6 4V8z"/></svg></div>
+        <div class="ep-info"><h4>ep. 213 — chat picks the game</h4><p>02:58:44 · SAT</p></div>
+      </div>
+      <div class="ep-card">
+        <div class="ep-thumb e3"><span class="tag">VOD</span><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M10 8l6 4-6 4V8z"/></svg></div>
+        <div class="ep-info"><h4>ep. 212 — community game night</h4><p>04:10:02 · THU</p></div>
+      </div>
+      <div class="ep-card">
+        <div class="ep-thumb e4"><span class="tag">VOD</span><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M10 8l6 4-6 4V8z"/></svg></div>
+        <div class="ep-info"><h4>ep. 211 — the desk rebuild</h4><p>01:47:30 · TUE</p></div>
+      </div>
+    </div>
+    <div class="view-all-wrap"><a href="https://twitch.tv/thatguypb_/videos" target="_blank" rel="noopener" class="btn-outline">View all episodes</a></div>
+  </section>
+
+  <!-- ── COMMUNITY ── -->
+  <section class="community">
+    <div class="community-inner">
+      <div class="community-left">
+        <h2>JOIN THE<br>COMMUNITY</h2>
+        <p>The Discord is where the real stuff happens between streams — game votes, giveaways, clip channels, and a bunch of people who are way too invested in the ranked grind.</p>
+        <div class="community-perks">
+          <div class="perk">
+            <svg class="perk-icon" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+            <div><b>Stream alerts</b><span>Get notified the moment a stream goes live</span></div>
+          </div>
+          <div class="perk">
+            <svg class="perk-icon" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+            <div><b>Game voting</b><span>Community nights are 100% chat-voted</span></div>
+          </div>
+          <div class="perk">
+            <svg class="perk-icon" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+            <div><b>Clip archive</b><span>Every highlight, catalogued by the community</span></div>
+          </div>
+          <div class="perk">
+            <svg class="perk-icon" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+            <div><b>Sub perks</b><span>Custom roles, early VOD access, and more</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="community-right">
+        <div class="discord-card">
+          <svg class="discord-card-icon" viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="12" rx="4"/><circle cx="9" cy="12" r="1"/><circle cx="15" cy="12" r="1"/></svg>
+          <div style="flex:1;">
+            <h4>Discord Server</h4>
+            <p>3,200+ members and growing. Join the chaos.</p>
+            <a href="#" class="btn-primary" style="margin-top:14px;">JOIN DISCORD →</a>
+          </div>
+        </div>
+        <div class="discord-card">
+          <svg class="discord-card-icon" viewBox="0 0 24 24"><path d="M4 4h16v11l-4 4h-4l-3 3H9v-3H4V4z"/><line x1="14" y1="8" x2="14" y2="13"/><line x1="10" y1="8" x2="10" y2="13"/></svg>
+          <div style="flex:1;">
+            <h4>Twitch Channel</h4>
+            <p>Follow on Twitch to get notified for every stream.</p>
+            <a href="https://twitch.tv/thatguypb_" target="_blank" rel="noopener" class="btn-primary" style="margin-top:14px;">FOLLOW ON TWITCH →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── PARTNERS ── -->
+  <section class="sponsors">
+    <div class="sponsors-label">PARTNERS</div>
+    <div class="sponsor-row">
+      <div class="sponsor-item">OPEN</div>
+      <div class="sponsor-item">OPEN</div>
+      <div class="sponsor-item">OPEN</div>
+      <div class="sponsor-item">OPEN</div>
+    </div>
+  </section>
+
+  <!-- ── FAQ ── -->
+  <section class="faq" id="faq">
+    <div class="section-head" style="padding-left:0; padding-right:0;">
+      <h2>faq</h2>
+    </div>
+    <details class="faq-item" open>
+      <summary>When do you stream?</summary>
+      <p>Tuesdays and Thursdays at 7PM ET, Saturdays at 2PM ET. Schedule changes get posted in the Discord first, then the announcement bar up top.</p>
+    </details>
+    <details class="faq-item">
+      <summary>What games do you stream?</summary>
+      <p>Mostly FPS and ranked games, RPG playthroughs, co-op nights with viewers, and horror during October. The genres section above has the full breakdown with the specific titles.</p>
+    </details>
+    <details class="faq-item">
+      <summary>Where do VODs go after the stream ends?</summary>
+      <p>Full VODs get cut, captioned, and uploaded the next morning — you'll find them in the episodes section above. The Twitch VODs also stay up for 60 days.</p>
+    </details>
+    <details class="faq-item">
+      <summary>How do I join the community?</summary>
+      <p>The Discord link is in the footer and in the community section above. Chat is open to everyone, subs get a couple of extra channels and roles.</p>
+    </details>
+    <details class="faq-item">
+      <summary>Can I clip and share moments from the stream?</summary>
+      <p>Absolutely — clip away and tag it, chat finds the best ones anyway. The clips section on this page pulls from the Twitch top clips automatically.</p>
+    </details>
+    <details class="faq-item">
+      <summary>Do you take game suggestions?</summary>
+      <p>Community nights are chat-voted, so drop suggestions in the Discord's #game-nights channel. For solo streams I go through the backlog list that lives in the Discord too.</p>
+    </details>
+    <details class="faq-item">
+      <summary>How does the ranked series work?</summary>
+      <p>Every ranked session is catalogued — rank at the start, rank at the end, peak viewers for the session. It's a full public record of the grind, good or bad.</p>
+    </details>
+    <details class="faq-item">
+      <summary>Is there a sub benefit beyond emotes?</summary>
+      <p>Subs get early VOD access (morning of, before public upload), custom Discord roles, and priority spots in community game nights. That's the whole list — no fluff.</p>
+    </details>
+  </section>
+
+  <!-- ── FOOTER ── -->
+  <footer id="footer">
+
+    <div class="footer-top">
+
+      <!-- brand + socials -->
+      <div class="footer-brand">
+        <div class="footer-brand-logo">That<span>Guy</span>PB</div>
+        <div class="footer-brand-tagline">Im here to make you smile and maybe laugh. Streaming Tues / Thurs / Sat.</div>
+        <div class="footer-brand-socials">
+          <a href="https://twitch.tv/thatguypb_" target="_blank" rel="noopener" aria-label="Twitch" class="footer-social-btn">
+            <svg viewBox="0 0 24 24"><path d="M4 4h16v11l-4 4h-4l-3 3H9v-3H4V4z"/><line x1="14" y1="8" x2="14" y2="13"/><line x1="10" y1="8" x2="10" y2="13"/></svg>
+          </a>
+          <a href="https://www.youtube.com/@HHThatGuyPB" target="_blank" rel="noopener" aria-label="YouTube" class="footer-social-btn">
+            <svg viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="3"/><path d="M10 9l6 3-6 3V9z"/></svg>
+          </a>
+          <a href="https://www.tiktok.com/@tgc_pb" target="_blank" rel="noopener" aria-label="TikTok" class="footer-social-btn">
+            <svg viewBox="0 0 24 24"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"/></svg>
+          </a>
+          <a href="https://x.com/ThatGuyPB" target="_blank" rel="noopener" aria-label="X / Twitter" class="footer-social-btn">
+            <svg viewBox="0 0 24 24"><line x1="4" y1="4" x2="20" y2="20"/><line x1="20" y1="4" x2="4" y2="20"/></svg>
+          </a>
+          <a href="https://www.instagram.com/hhthatguypb" target="_blank" rel="noopener" aria-label="Instagram" class="footer-social-btn">
+            <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="0.6"/></svg>
+          </a>
+          <a href="https://www.patreon.com/cw/TGCHideout" target="_blank" rel="noopener" aria-label="Patreon" class="footer-social-btn">
+            <svg viewBox="0 0 24 24"><circle cx="14.5" cy="9.5" r="6.5"/><rect x="2" y="2" width="4" height="20" rx="1"/></svg>
+          </a>
+        </div>
+        <div class="footer-status">
+          <span class="footer-status-dot"></span>
+          <span class="footer-status-text" id="footer-status-text">OFFLINE</span>
+        </div>
+      </div>
+
+      <!-- nav links -->
+      <div class="footer-nav">
+        <div class="footer-col">
+          <h5>Navigate</h5>
+          <a href="#about-section">About <span class="arrow">↗</span></a>
+          <a href="#genres-section">Genres <span class="arrow">↗</span></a>
+          <a href="#schedule">Episodes <span class="arrow">↗</span></a>
+          <a href="#clips">Clips <span class="arrow">↗</span></a>
+          <a href="#faq">FAQ <span class="arrow">↗</span></a>
+        </div>
+        <div class="footer-col">
+          <h5>Channels</h5>
+          <a href="https://twitch.tv/thatguypb_" target="_blank" rel="noopener">Twitch <span class="arrow">↗</span></a>
+          <a href="https://www.youtube.com/@HHThatGuyPB" target="_blank" rel="noopener">YouTube <span class="arrow">↗</span></a>
+          <a href="https://www.youtube.com/@ThatGuyPBVods" target="_blank" rel="noopener">VODs <span class="arrow">↗</span></a>
+          <a href="https://www.tiktok.com/@tgc_pb" target="_blank" rel="noopener">TikTok <span class="arrow">↗</span></a>
+          <a href="https://www.instagram.com/hhthatguypb" target="_blank" rel="noopener">Instagram <span class="arrow">↗</span></a>
+          <a href="https://x.com/ThatGuyPB" target="_blank" rel="noopener">Twitter / X <span class="arrow">↗</span></a>
+          <a href="https://www.patreon.com/cw/TGCHideout" target="_blank" rel="noopener">Patreon <span class="arrow">↗</span></a>
+        </div>
+      </div>
+
+      <!-- cta column -->
+      <div class="footer-cta">
+        <div class="footer-cta-heading">SEE YOU<br>IN <span>CHAT</span></div>
+        <div class="footer-cta-buttons">
+          <a href="https://twitch.tv/thatguypb_" target="_blank" rel="noopener" class="footer-cta-btn primary">
+            WATCH ON TWITCH <span class="footer-cta-btn-icon">→</span>
+          </a>
+          <a href="https://www.youtube.com/@HHThatGuyPB" target="_blank" rel="noopener" class="footer-cta-btn">
+            YOUTUBE CHANNEL <span class="footer-cta-btn-icon">↗</span>
+          </a>
+          <a href="https://www.patreon.com/cw/TGCHideout" target="_blank" rel="noopener" class="footer-cta-btn">
+            JOIN PATREON (TGC HIDEOUT) <span class="footer-cta-btn-icon">↗</span>
+          </a>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="footer-bottom">
+      <div class="footer-bottom-left">THATGUYPB</div>
+      <div class="footer-bottom-right">
+        <a href="#">Community guidelines</a>
+        <a href="#">Privacy policy</a>
+        <a href="#">Clip policy</a>
+        <span>© <span id="footer-year"></span> ThatGuyPB</span>
+      </div>
+    </div>
+
+  </footer>
+
+<script>
+(function(){
+  'use strict';
+
+  /* ═══════════════════════════════════════════════════════════════════
+     CONFIG
+     ═══════════════════════════════════════════════════════════════════ */
+  const CHANNEL_LOGIN   = 'ThatGuyPB';
+  const CHANNEL_DISPLAY = 'ThatGuyPB';
+  const TWITCH_API_BASE = '/api/twitch';
+
+  /* ═══════════════════════════════════════════════════════════════════
+     HELPERS
+     ═══════════════════════════════════════════════════════════════════ */
+  const $ = id => document.getElementById(id);
+  const set = (id, val) => { const el = $(id); if(el) el.textContent = val; };
+
+  function escHtml(s){
+    return String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  }
+
+  /* Parse Twitch ISO duration "3h24m10s" → total seconds */
+  function parseDuration(d){
+    if(!d) return 0;
+    const m = String(d).match(/(?:(\d+)h)?(?:(\d+)m)?(?:(\d+)s)?/);
+    return (parseInt(m[1]||0,10)*3600) + (parseInt(m[2]||0,10)*60) + parseInt(m[3]||0,10);
+  }
+
+  function fmtHMS(secs){
+    const h = Math.floor(secs/3600), m = Math.floor((secs%3600)/60), s = secs%60;
+    const p = n=>String(n).padStart(2,'0');
+    return h>0 ? `${h}:${p(m)}:${p(s)}` : `${m}:${p(s)}`;
+  }
+
+  function fmtHoursShort(totalSecs){
+    const h = Math.round(totalSecs/3600);
+    return h >= 1000 ? (h/1000).toFixed(1)+'K' : String(h);
+  }
+
+  function sizedThumb(url,w,h){
+    return url ? url.replace('%{width}',w).replace('%{height}',h) : '';
+  }
+
+  async function apiGet(path, params){
+    const qs = new URLSearchParams(params||{}).toString();
+    const r  = await fetch(TWITCH_API_BASE + path + (qs?'?'+qs:''));
+    if(!r.ok) throw new Error('API '+r.status+' '+path);
+    return r.json();
+  }
+
+  /* ═══════════════════════════════════════════════════════════════════
+     LIVE RUNTIME TICKER — counts up every second while live
+     ═══════════════════════════════════════════════════════════════════ */
+  let _tickerInterval = null;
+
+  function startTicker(startedAt){
+    if(_tickerInterval) clearInterval(_tickerInterval);
+    function tick(){
+      const secs = Math.max(0, Math.floor((Date.now() - new Date(startedAt).getTime()) / 1000));
+      const str  = fmtHMS(secs);
+      set('obs-rec-time', 'REC '+str);
+      const hm = $('hero-meta');
+      if(hm) hm.innerHTML = 'LIVE NOW<br>RUNTIME '+str;
+    }
+    tick();
+    _tickerInterval = setInterval(tick, 1000);
+  }
+
+  function stopTicker(){ if(_tickerInterval){ clearInterval(_tickerInterval); _tickerInterval=null; } }
+
+  /* ═══════════════════════════════════════════════════════════════════
+     PAGE TITLE FLASHER
+     ═══════════════════════════════════════════════════════════════════ */
+  let _titleFlash = null;
+  const BASE_TITLE = document.title;
+
+  function startTitleFlash(streamTitle){
+    if(_titleFlash) return;
+    let on = true;
+    _titleFlash = setInterval(()=>{
+      document.title = on ? '🔴 LIVE — '+CHANNEL_DISPLAY : streamTitle || BASE_TITLE;
+      on = !on;
+    }, 3000);
+  }
+
+  function stopTitleFlash(){
+    if(_titleFlash){ clearInterval(_titleFlash); _titleFlash=null; }
+    document.title = BASE_TITLE;
+  }
+
+  /* ═══════════════════════════════════════════════════════════════════
+     LIVE STATUS
+     ═══════════════════════════════════════════════════════════════════ */
+  let _wasLive = false;
+
+  function setLive(stream){
+    const isLive = !!stream;
+    document.body.classList.toggle('is-live', isLive);
+
+    const heroBadge = $('live-badge');
+    const navBadge  = $('live-badge-nav');
+    const heroSub   = $('hero-sub');
+    const heroCta   = $('hero-cta');
+    const ctaHeading= $('cta-heading');
+    const ctaBtn    = $('cta-btn');
+    const obsCap    = $('obs-caption');
+
+    if(isLive){
+      const viewers = Number(stream.viewer_count||0).toLocaleString();
+      const title   = stream.title || 'on stream';
+      const game    = stream.game_name || '';
+
+      // badges
+      heroBadge.classList.add('is-live');
+      heroBadge.innerHTML = '<span class="live-dot"></span>LIVE NOW — '+viewers+' WATCHING';
+      navBadge.classList.add('is-live');
+      navBadge.innerHTML  = '<span class="dot"></span>LIVE';
+      set('footer-status-text', 'LIVE NOW');
+
+      // hero
+      if(heroSub) heroSub.textContent = title;
+      if(obsCap)  obsCap.textContent  = game || '1080p · 60fps';
+
+      // cta
+      if(heroCta){  heroCta.textContent = '🔴 WATCH LIVE NOW →'; heroCta.classList.add('live-cta'); }
+      if(ctaHeading) ctaHeading.innerHTML = 'THE STREAM IS<br>LIVE RIGHT NOW';
+      if(ctaBtn){   ctaBtn.textContent = '🔴 WATCH LIVE NOW →'; ctaBtn.classList.add('live-cta'); }
+
+      // live banner
+      set('live-banner-game',    game ? 'Playing '+game : title);
+      set('live-banner-viewers', viewers+' viewers');
+
+      // announce bar
+      set('live-title-announce', title);
+      set('live-count-announce', viewers);
+
+      // twitch embed section header
+      set('twitch-live-title', title);
+      set('twitch-game-tag',   game);
+
+      // live runtime ticker
+      if(stream.started_at) startTicker(stream.started_at);
+
+      // page title flash
+      startTitleFlash(title);
+
+      // inject embed once
+      if(!_wasLive) injectTwitchEmbed();
+
+      // update meta tags dynamically
+      updateMetaTags(title, game);
+
+      _wasLive = true;
+
+    } else {
+      // ── OFFLINE ──
+      heroBadge.classList.remove('is-live');
+      heroBadge.textContent = 'OFFLINE — NEXT STREAM TUE 7PM ET';
+      navBadge.classList.remove('is-live');
+      navBadge.innerHTML    = '<span class="dot"></span>OFFLINE';
+      set('footer-status-text', 'OFFLINE');
+
+      if(heroCta)  { heroCta.textContent = 'WATCH ON TWITCH →'; heroCta.classList.remove('live-cta'); }
+      if(ctaHeading) ctaHeading.innerHTML = 'NEXT STREAM DROPS<br>SOONER THAN YOU THINK';
+      if(ctaBtn)   { ctaBtn.textContent = 'WATCH ON TWITCH →'; ctaBtn.classList.remove('live-cta'); }
+
+      stopTicker();
+      stopTitleFlash();
+      _wasLive = false;
+    }
+  }
+
+  function updateMetaTags(title, game){
+    const desc = game
+      ? `🔴 LIVE NOW — ${title} (${game})`
+      : `🔴 LIVE NOW — ${title}`;
+    document.querySelector('meta[name="description"]')?.setAttribute('content', desc);
+    document.querySelector('meta[property="og:title"]')?.setAttribute('content', `🔴 LIVE — ${CHANNEL_DISPLAY}`);
+    document.querySelector('meta[property="og:description"]')?.setAttribute('content', desc);
+  }
+
+  /* ═══════════════════════════════════════════════════════════════════
+     TWITCH EMBED
+     ═══════════════════════════════════════════════════════════════════ */
+  function twitchParents(){
+    const h = location.hostname || 'localhost';
+    const parents = [h];
+    const m = h.match(/^.+\.([^.]+\.pages\.dev)$/);
+    if(m && !parents.includes(m[1])) parents.push(m[1]);
+    return parents.map(p=>'parent='+encodeURIComponent(p)).join('&');
+  }
+
+  function injectTwitchEmbed(){
+    const wrap   = $('twitch-player-wrap');
+    const chatEl = $('twitch-chat-iframe');
+    const pp     = twitchParents();
+
+    if(wrap && !wrap.querySelector('iframe')){
+      const f = document.createElement('iframe');
+      f.src = `https://player.twitch.tv/?channel=${encodeURIComponent(CHANNEL_DISPLAY)}&${pp}&autoplay=true&muted=true`;
+      f.title = 'Twitch Live Player';
+      f.setAttribute('allowfullscreen','');
+      f.setAttribute('allow','autoplay; fullscreen');
+      f.setAttribute('aria-label','Live Twitch stream player');
+      wrap.appendChild(f);
+    }
+    if(chatEl && !chatEl.src){
+      chatEl.src = `https://www.twitch.tv/embed/${encodeURIComponent(CHANNEL_DISPLAY)}/chat?${pp}&darkpopout`;
+    }
+  }
+
+  /* ═══════════════════════════════════════════════════════════════════
+     RENDER CLIPS
+     ═══════════════════════════════════════════════════════════════════ */
+  function renderClips(clips){
+    const grid = $('clip-grid');
+    if(!grid||!clips?.length) return;
+    const pal = ['clip-c1','clip-c2','clip-c3','clip-c4'];
+    grid.innerHTML = clips.slice(0,4).map((c,i)=>`
+      <div class="clip-card">
+        <a href="${escHtml(c.url)}" target="_blank" rel="noopener" aria-label="${escHtml(c.title)}">
+          <div class="clip-thumb ${pal[i%4]}"
+               style="${c.thumbnail_url?'background-image:url(\''+sizedThumb(c.thumbnail_url,480,272)+'\')':''}"
+               role="img">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M10 8l6 4-6 4V8z"/></svg>
+            <div class="dur">${Math.round(c.duration||0)}s</div>
+          </div>
+        </a>
+        <div class="clip-label">
+          <span title="${escHtml(c.title)}">${escHtml(c.title)}</span>
+          <span>${Number(c.view_count||0).toLocaleString()}</span>
+        </div>
+      </div>`).join('');
+  }
+
+  /* ═══════════════════════════════════════════════════════════════════
+     RENDER VIDEOS
+     ═══════════════════════════════════════════════════════════════════ */
+  function renderVideos(videos){
+    const grid = $('episodes-grid');
+    if(!grid||!videos?.length) return;
+
+    // compute stats from video list
+    let totalSecs = 0;
+    const gameCounts = {};
+
+    videos.forEach(v => {
+      totalSecs += parseDuration(v.duration);
+      // extract game from title heuristically (fallback only)
+    });
+
+    // stats bar: total vods & hours streamed
+    set('stat-episodes', videos.length.toLocaleString());
+    set('stat-hours',    fmtHoursShort(totalSecs));
+
+    // milestone cards
+    set('milestone-episodes', videos.length.toLocaleString());
+    set('milestone-hours',    fmtHoursShort(totalSecs));
+
+    // last stream date for stat bar
+    if(videos[0]?.created_at){
+      const d   = new Date(videos[0].created_at);
+      const ago = timeSince(d);
+      set('stat-last-stream', ago);
+    }
+
+    // hero meta: latest VOD ep number + runtime
+    if(videos[0]){
+      const hm = $('hero-meta');
+      if(hm) hm.innerHTML = `VOD #${videos.length}<br>RUNTIME ${fmtHMS(parseDuration(videos[0].duration))}`;
+    }
+
+    // render episode cards — up to 8
+    grid.innerHTML = videos.slice(0,8).map((v,i)=>`
+      <div class="ep-card">
+        <a href="${escHtml(v.url)}" target="_blank" rel="noopener" aria-label="${escHtml(v.title)}">
+          <div class="ep-thumb"
+               style="${v.thumbnail_url
+                 ? 'background-image:url(\''+sizedThumb(v.thumbnail_url,440,248)+'\')'
+                 : 'background:linear-gradient(160deg,#6E7793,#3B4257)'}">
+            <span class="tag ${i===0?'new':''}">${i===0?'NEW':'VOD'}</span>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M10 8l6 4-6 4V8z"/></svg>
+          </div>
+        </a>
+        <div class="ep-info">
+          <h4 title="${escHtml(v.title)}">${escHtml(v.title)}</h4>
+          <p>${fmtHMS(parseDuration(v.duration))} · ${new Date(v.created_at).toLocaleDateString()}</p>
+        </div>
+      </div>`).join('');
+
+    if(videos.length>4) grid.style.gridTemplateColumns='repeat(4,1fr)';
+  }
+
+  /* ═══════════════════════════════════════════════════════════════════
+     TOP GAME — detect most frequent game_id from recent clips/videos
+     ═══════════════════════════════════════════════════════════════════ */
+  function topGameFromClips(clips){
+    if(!clips?.length) return null;
+    const counts = {};
+    clips.forEach(c=>{ if(c.game_id){ counts[c.game_id]=(counts[c.game_id]||0)+1; } });
+    return Object.entries(counts).sort((a,b)=>b[1]-a[1])[0]?.[0] || null;
+  }
+
+  /* ═══════════════════════════════════════════════════════════════════
+     TIME AGO HELPER
+     ═══════════════════════════════════════════════════════════════════ */
+  function timeSince(date){
+    const secs = Math.floor((Date.now()-date.getTime())/1000);
+    if(secs < 60)    return 'just now';
+    if(secs < 3600)  return Math.floor(secs/60)+'m ago';
+    if(secs < 86400) return Math.floor(secs/3600)+'h ago';
+    return Math.floor(secs/86400)+'d ago';
+  }
+
+  /* ═══════════════════════════════════════════════════════════════════
+     APPLY USER DATA
+     ═══════════════════════════════════════════════════════════════════ */
+  function applyUser(user){
+    if(!user) return;
+
+    // profile images — nav logo + about card
+    if(user.profile_image_url){
+      document.querySelectorAll('.logo-img').forEach(img => img.src = user.profile_image_url);
+      const profileImg = $('profile-img');
+      if(profileImg){
+        profileImg.src = user.profile_image_url;
+        profileImg.style.display = 'block';
+        set('profile-caption', user.display_name || CHANNEL_DISPLAY);
+      }
+    }
+
+    // bio
+    if(user.description){
+      const bio = $('bio-text');
+      if(bio) bio.textContent = user.description;
+    }
+
+    // streaming since (account created_at)
+    if(user.created_at){
+      set('fact-since', new Date(user.created_at).getFullYear().toString());
+    }
+
+    // broadcaster type badge (partner / affiliate)
+    if(user.broadcaster_type){
+      const type = user.broadcaster_type; // 'partner' | 'affiliate' | ''
+      if(type === 'partner' || type === 'affiliate'){
+        const badge = document.createElement('span');
+        badge.className = 'type-badge';
+        badge.textContent = type.toUpperCase();
+        $('live-badge')?.parentElement?.appendChild(badge);
+      }
+    }
+  }
+
+  /* ═══════════════════════════════════════════════════════════════════
+     APPLY CHANNEL DATA
+     ═══════════════════════════════════════════════════════════════════ */
+  function applyChannel(ch, stream){
+    if(!ch) return;
+    const obsCap = $('obs-caption');
+    // show current game when offline, stream handler covers online state
+    if(obsCap && !stream){
+      obsCap.textContent = ch.game_name || '1080p · 60fps';
+    }
+    // top game in fact list (only if no stream data has a better answer)
+    if(ch.game_name && !stream){
+      set('fact-category', ch.game_name.length > 12 ? ch.game_name.slice(0,12)+'…' : ch.game_name);
+    }
+    // page tags: og:image from channel thumbnail
+    if(ch.thumbnail_url){
+      let og = document.querySelector('meta[property="og:image"]');
+      if(!og){ og=document.createElement('meta'); og.setAttribute('property','og:image'); document.head.appendChild(og); }
+      og.setAttribute('content', sizedThumb(ch.thumbnail_url,1280,720));
+    }
+  }
+
+  /* ═══════════════════════════════════════════════════════════════════
+     APPLY FOLLOWERS
+     ═══════════════════════════════════════════════════════════════════ */
+  function applyFollowers(data){
+    if(typeof data?.total === 'number'){
+      const count = data.total;
+      set('stat-followers', count.toLocaleString());
+      // milestone: find which bucket we're in for display
+      const latest = document.querySelector('.milestone-item:last-child .milestone-num');
+      // don't overwrite specific milestones — just the followers stat
+    }
+  }
+
+  /* ═══════════════════════════════════════════════════════════════════
+     APPLY CLIPS — also derives top game for fact-list
+     ═══════════════════════════════════════════════════════════════════ */
+  async function applyClips(clipsData, userId){
+    renderClips(clipsData);
+    // try to resolve top game name from clip game_ids
+    const topId = topGameFromClips(clipsData);
+    if(topId){
+      try{
+        const gData = await apiGet('/game', { id: topId });
+        const gName = gData?.data?.[0]?.name;
+        if(gName) set('fact-category', gName.length>12 ? gName.slice(0,12)+'…' : gName);
+      } catch(_){}
+    }
+  }
+
+  /* ═══════════════════════════════════════════════════════════════════
+     VIEWER COUNT LIVE UPDATER (every 60s)
+     ═══════════════════════════════════════════════════════════════════ */
+  function updateViewerCount(stream){
+    if(!stream) return;
+    const viewers = Number(stream.viewer_count||0).toLocaleString();
+    const heroBadge = $('live-badge');
+    if(heroBadge?.classList.contains('is-live')){
+      heroBadge.innerHTML = '<span class="live-dot"></span>LIVE NOW — '+viewers+' WATCHING';
+    }
+    set('live-banner-viewers', viewers+' viewers');
+    set('live-count-announce', viewers);
+  }
+
+  /* ═══════════════════════════════════════════════════════════════════
+     MAIN LOAD
+     ═══════════════════════════════════════════════════════════════════ */
+  async function loadTwitchData(){
+    let user;
+    try{
+      const r = await apiGet('/user', { username: CHANNEL_LOGIN });
+      user = r?.data?.[0];
+    } catch(err){
+      console.warn('[ThatGuyPB] Twitch proxy unavailable — static content stays.', err);
+      return;
+    }
+    if(!user) return;
+
+    applyUser(user);
+
+    // fire all requests in parallel
+    const [streamRes, channelRes, followersRes, videosRes, clipsRes] = await Promise.allSettled([
+      apiGet('/stream',    { user_login: CHANNEL_LOGIN }),
+      apiGet('/channel',   { broadcaster_id: user.id }),
+      apiGet('/followers', { broadcaster_id: user.id }),
+      apiGet('/videos',    { user_id: user.id, first: 20 }),
+      apiGet('/clips',     { broadcaster_id: user.id, first: 20 }),
+    ]);
+
+    const stream = streamRes.status==='fulfilled' ? streamRes.value?.data?.[0] : null;
+    const ch     = channelRes.status==='fulfilled' ? channelRes.value?.data?.[0] : null;
+
+    // live status (must come before applyChannel so OBS caption logic is correct)
+    setLive(stream || null);
+
+    // channel
+    applyChannel(ch, stream);
+
+    // followers
+    if(followersRes.status==='fulfilled') applyFollowers(followersRes.value);
+
+    // videos — stats + episode grid
+    if(videosRes.status==='fulfilled') renderVideos(videosRes.value?.data);
+
+    // clips — grid + top game
+    const clipsData = clipsRes.status==='fulfilled' ? clipsRes.value?.data : null;
+    await applyClips(clipsData, user.id);
+
+    // milestone: peak viewers — pull from top clip view count as proxy if no stream history API
+    if(clipsData?.length){
+      const maxViews = Math.max(...clipsData.map(c=>c.view_count||0));
+      if(maxViews>0) set('milestone-peak', maxViews.toLocaleString());
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', ()=>{
+    // copyright year
+    set('footer-year', new Date().getFullYear());
+    loadTwitchData();
+  });
+
+  /* ═══════════════════════════════════════════════════════════════════
+     POLLING — every 60s: refresh stream status + viewer count
+     ═══════════════════════════════════════════════════════════════════ */
+  setInterval(async ()=>{
+    try{
+      const r = await apiGet('/stream', { user_login: CHANNEL_LOGIN });
+      const stream = r?.data?.[0] || null;
+      setLive(stream);
+      updateViewerCount(stream);
+    } catch(_){}
+  }, 60000);
+
+})();
+</script>
+
+</body>
+</html>
