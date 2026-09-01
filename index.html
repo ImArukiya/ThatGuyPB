@@ -4,9 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ThatGuyPB — currently probably losing</title>
-<meta name="description" content="Variety streamer, night owl, professional loser of ranked games. Streaming Tues / Thurs / Sat.">
+<meta name="description" content="ThatGuyPB_ — 19 year old variety streamer. Unapologetically myself. No Pause Only Resume. Welcome to TGC.">
 <meta property="og:title" content="ThatGuyPB — currently probably losing">
-<meta property="og:description" content="Variety streamer, night owl, professional loser of ranked games.">
+<meta property="og:description" content="19 year old variety streamer. Unapologetically myself. No Pause Only Resume. Welcome to TGC.">
 <meta property="og:type" content="website">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
@@ -468,47 +468,45 @@
   .clip-label span:first-child{overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
   .clip-label span:last-child{color:#6B7288; flex-shrink:0;}
 
-  /* ── episodes / vods ── */
-  .episodes-section{padding:80px 0 80px; border-top:1.5px solid var(--ink);}
+  /* ── episodes carousel ── */
+  .episodes-section{padding:80px 0 60px; border-top:1.5px solid var(--ink);}
   .episodes-head{
     display:flex; align-items:baseline; justify-content:space-between;
-    padding:0 40px 32px;
+    padding:0 40px 40px;
     max-width:1320px; margin:0 auto;
   }
   .episodes-head h2{font-family:'Bebas Neue', sans-serif; font-size:40px;}
-  .episodes-head p{font-size:12px; color:var(--ink-soft); max-width:260px; text-align:right; line-height:1.5;}
+  .episodes-head-right{display:flex; align-items:center; gap:16px;}
+  .episodes-head p{font-size:12px; color:var(--ink-soft); max-width:240px; text-align:right; line-height:1.5;}
 
-  /* scroll track */
-  .episodes-scroll-wrap{
-    overflow-x:auto;
-    overflow-y:visible;
-    -webkit-overflow-scrolling:touch;
-    scrollbar-width:none;
-  }
-  .episodes-scroll-wrap::-webkit-scrollbar{display:none;}
-  .episodes-scroll{
-    display:flex;
-    gap:0;
-    padding:0 40px;
-    width:max-content;
+  /* carousel stage */
+  .carousel-stage{
+    position:relative;
+    width:100%;
+    height:340px;           /* fixed height — cards are absolutely positioned */
+    overflow:hidden;
+    perspective:1200px;
+    perspective-origin:50% 50%;
   }
 
-  /* every card in the strip */
+  /* each card is absolute, positioned by JS */
   .vod-card{
-    flex-shrink:0;
-    width:340px;
+    position:absolute;
+    top:50%; left:50%;
+    width:420px;
+    transform-origin:center center;
+    cursor:pointer;
     border:1.5px solid var(--ink);
-    border-right:none;
-    display:flex;
-    flex-direction:column;
-    transition:border-color 0.15s;
     background:var(--paper);
+    display:flex; flex-direction:column;
+    will-change:transform,opacity;
+    transition:transform 0.6s cubic-bezier(0.25,0.46,0.45,0.94),
+                opacity  0.6s cubic-bezier(0.25,0.46,0.45,0.94),
+                border-color 0.2s;
+    -webkit-user-select:none; user-select:none;
   }
-  .vod-card:last-child{border-right:1.5px solid var(--ink);}
-  .vod-card:hover{border-color:var(--coral); z-index:1; position:relative;}
-
-  /* featured first card is wider */
-  .vod-card.vod-featured{width:520px;}
+  .vod-card:hover{ border-color:var(--coral); }
+  .vod-card.is-active{ border-color:var(--coral); cursor:default; }
 
   .vod-thumb{
     aspect-ratio:16/9;
@@ -523,91 +521,89 @@
     object-fit:cover;
     object-position:center top;
     display:block;
+    pointer-events:none;
   }
-  /* gradient overlay */
   .vod-thumb::after{
     content:'';
     position:absolute; inset:0;
-    background:linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 50%);
+    background:linear-gradient(to top, rgba(0,0,0,0.55) 0%, transparent 55%);
     pointer-events:none;
   }
-  /* play button */
+  /* play button — only visible on active */
   .vod-play{
     position:absolute; inset:0;
     display:flex; align-items:center; justify-content:center;
     z-index:2;
     opacity:0;
-    transition:opacity 0.15s;
+    transition:opacity 0.2s;
   }
-  .vod-card:hover .vod-play{opacity:1;}
+  .vod-card.is-active .vod-play{ opacity:1; }
   .vod-play svg{
-    width:48px; height:48px;
-    stroke:var(--paper); fill:none; stroke-width:1.3;
+    width:44px; height:44px;
+    stroke:rgba(255,255,255,0.9); fill:none; stroke-width:1.4;
     filter:drop-shadow(0 2px 10px rgba(0,0,0,0.7));
   }
-  /* tags top-right */
   .vod-tag-wrap{
-    position:absolute; top:10px; right:10px;
-    z-index:3;
+    position:absolute; top:10px; right:10px; z-index:3;
     display:flex; gap:6px;
   }
   .vod-tag{
-    font-family:'Space Mono', monospace;
-    font-size:10px;
+    font-family:'Space Mono', monospace; font-size:10px;
     padding:3px 8px;
-    background:var(--paper);
-    color:var(--ink);
-    border:1px solid var(--ink);
+    background:var(--paper); color:var(--ink); border:1px solid var(--ink);
   }
-  .vod-tag.new{background:var(--coral); color:var(--paper); border-color:var(--coral);}
-  /* duration bottom-right */
+  .vod-tag.new{ background:var(--coral); color:var(--paper); border-color:var(--coral); }
   .vod-dur{
-    position:absolute; bottom:10px; right:10px;
-    z-index:3;
-    font-family:'Space Mono', monospace;
-    font-size:10px;
-    color:#fff;
-    background:rgba(0,0,0,0.65);
-    padding:2px 7px;
+    position:absolute; bottom:10px; right:10px; z-index:3;
+    font-family:'Space Mono', monospace; font-size:10px;
+    color:#fff; background:rgba(0,0,0,0.65); padding:2px 7px;
   }
 
   .vod-info{
-    padding:14px 16px 16px;
+    padding:12px 14px 14px;
     border-top:1.5px solid var(--ink);
-    flex:1;
-    display:flex;
-    flex-direction:column;
-    gap:5px;
+    display:flex; flex-direction:column; gap:4px;
   }
   .vod-title{
-    font-size:13px;
-    font-weight:600;
-    line-height:1.35;
-    display:-webkit-box;
-    -webkit-line-clamp:2;
-    -webkit-box-orient:vertical;
+    font-size:13px; font-weight:600; line-height:1.3;
+    display:-webkit-box; -webkit-line-clamp:1; -webkit-box-orient:vertical;
     overflow:hidden;
   }
-  .vod-card.vod-featured .vod-title{font-size:15px;}
   .vod-meta{
-    font-family:'Space Mono', monospace;
-    font-size:10.5px;
+    font-family:'Space Mono', monospace; font-size:10px;
     color:var(--ink-soft);
-    white-space:nowrap;
-    overflow:hidden;
-    text-overflow:ellipsis;
-    margin-top:auto;
-    padding-top:6px;
   }
 
-  /* bottom row: "view all" after the scroll */
+  /* nav dots + arrows */
+  .carousel-controls{
+    display:flex; align-items:center; justify-content:center;
+    gap:20px; padding:28px 0 0;
+  }
+  .carousel-btn{
+    width:34px; height:34px;
+    border:1.5px solid var(--ink);
+    display:flex; align-items:center; justify-content:center;
+    cursor:pointer; background:none;
+    transition:background 0.15s, border-color 0.15s;
+    flex-shrink:0;
+  }
+  .carousel-btn:hover{ background:var(--ink); }
+  .carousel-btn:hover svg{ stroke:var(--paper); }
+  .carousel-btn svg{ width:14px; height:14px; stroke:var(--ink); fill:none; stroke-width:2; }
+  .carousel-dots{ display:flex; gap:8px; align-items:center; }
+  .carousel-dot{
+    width:6px; height:6px; border-radius:50%;
+    background:var(--paper-line); border:none; cursor:pointer; padding:0;
+    transition:background 0.2s, transform 0.2s;
+  }
+  .carousel-dot.active{ background:var(--coral); transform:scale(1.4); }
+
+  /* bottom row */
   .episodes-footer{
-    padding:24px 40px 0;
+    padding:20px 40px 0;
     max-width:1320px; margin:0 auto;
     display:flex; justify-content:flex-end;
   }
-
-  .view-all-wrap{text-align:center; margin:40px 0 10px;}
   .btn-outline{display:inline-block; border:1.5px solid var(--ink); padding:13px 34px; font-size:12px; font-weight:700; letter-spacing:0.08em; transition:background 0.15s ease, color 0.15s ease;}
   .btn-outline:hover{background:var(--ink); color:var(--paper);}
 
@@ -828,9 +824,6 @@
     .genres-grid{grid-template-columns:1fr;}
     .milestone-list{grid-template-columns:repeat(2,1fr);}
     .clip-grid{grid-template-columns:1fr 1fr;}
-    .episodes-head{padding-left:20px; padding-right:20px;}
-    .episodes-scroll{padding-left:20px; padding-right:20px;}
-    .episodes-footer{padding-left:20px; padding-right:20px;}
     .section-head{flex-direction:column; gap:10px;}
     .section-head p{text-align:left;}
     .footer-grid{flex-direction:column;}
@@ -843,8 +836,8 @@
   @media (max-width: 540px){
     .clip-grid{grid-template-columns:1fr;}
     .milestone-list{grid-template-columns:1fr 1fr;}
-    .vod-card{width:80vw;}
-    .vod-card.vod-featured{width:90vw;}
+    .vod-card{ width:85vw !important; }
+    .carousel-stage{ height:300px; }
   }
 
 </style>
@@ -852,7 +845,7 @@
 <body>
 
   <!-- ── Announcement bar: offline version ── -->
-  <div class="announce" id="announce-offline">STREAMING ALMOST DAILY <span>·</span> THANK YOU FOR FOLLOWING <span>·</span> WEBSITE RELEASED</div>
+  <div class="announce" id="announce-offline">NO PAUSE ONLY RESUME <span>·</span> UNAPOLOGETICALLY MYSELF <span>·</span> WELCOME TO TGC</div>
 
   <!-- ── Announcement bar: live version (shown only when live) ── -->
   <div class="announce" id="announce-live">🔴 LIVE NOW <span>·</span> <span id="live-title-announce">on stream</span> <span>·</span> <span id="live-count-announce">...</span> WATCHING — JOIN IN</div>
@@ -901,7 +894,7 @@
     <div class="hero-content">
       <div>
         <h1 id="hero-heading">STILL AWAKE,<br>STILL STREAMING</h1>
-        <p class="hero-sub" id="hero-sub">Variety streamer, night owl, professional loser of ranked games. New VODs go up every morning.</p>
+        <p class="hero-sub" id="hero-sub">19 year old variety streamer. Unapologetically myself. No Pause Only Resume. Welcome to TGC.</p>
       </div>
       <div class="hero-right">
         <a href="https://twitch.tv/thatguypb_" target="_blank" rel="noopener" class="btn-primary" id="hero-cta">WATCH ON TWITCH →</a>
@@ -970,13 +963,13 @@
         <div class="caption-tag" id="profile-caption">profile.jpg</div>
       </div>
       <div class="about-copy">
-        <p id="bio-text">Been streaming variety games since 2019 — mostly co-op chaos, the occasional ranked meltdown, and whatever chat votes on during community nights. What started as a way to hang out with a few friends turned into a full-blown chat family, and I'm still not entirely sure how that happened.</p>
-        <p>Streams run three nights a week, VODs get cut and captioned the morning after, and the Discord never really sleeps. If you're new — say hi in chat, nobody bites.</p>
+        <p id="bio-text">I'm Unapologetically Myself ↗ — 19 year old fella streaming whatever I feel like. Jokes are on the edgy side, if that's not your thing no stress. Lost my old account (@HHThatGuyPB) but the community survived and we've been going ever since. No Pause Only Resume.</p>
+        <p>Streams almost daily, VODs stay up on Twitch and YouTube. The Discord is where TGC actually lives between streams — game votes, clips, and general chaos. If you're here, you're here to stay. Welcome to TGC.</p>
         <div class="fact-list">
           <div><b id="fact-since">—</b><span>STREAMING SINCE</span></div>
-          <div><b>ET</b><span>TIMEZONE</span></div>
+          <div><b>19</b><span>YEARS OLD</span></div>
           <div><b id="fact-category">—</b><span>MAIN CATEGORY</span></div>
-          <div><b>3×</b><span>WEEKLY STREAMS</span></div>
+          <div><b>TGC</b><span>COMMUNITY NAME</span></div>
           <div><b>PC</b><span>PRIMARY PLATFORM</span></div>
           <div><b>EN</b><span>LANGUAGE</span></div>
         </div>
@@ -1061,9 +1054,11 @@
   <!-- ── CTA BAR ── -->
   <section class="cta-bar">
     <div class="eyebrow">DON'T MISS IT</div>
-    <h2 id="cta-heading">NEXT STREAM DROPS<br>SOONER THAN YOU THINK</h2>
+    <h2 id="cta-heading">STREAM DROPS<br>ALMOST EVERY DAY</h2>
     <div class="cta-schedule hide-live">
-      <div>STREAMING ALMOST<b>DAILY</b></div>
+      <div>SCHEDULE<b></b>ALMOST DAILY</b></div>
+      <div>DONATIONS<b>TTS ENABLED</b></div>
+      <div>COMMUNITY<b>TGC DISCORD</b></div>
     </div>
     <div class="cta-live-note">↑ THE STREAM IS LIVE RIGHT NOW — CLICK TO JOIN</div>
     <div style="margin-top:28px;">
@@ -1113,39 +1108,39 @@
     </div>
     <div class="milestone-list">
       <div class="milestone-item">
-        <div class="milestone-year">2019 — started</div>
+        <div class="milestone-year">the beginning</div>
         <div class="milestone-num">1</div>
-        <div class="milestone-label">First stream. One concurrent viewer. It was my own alt account.</div>
+        <div class="milestone-label">First stream on @HHThatGuyPB. Zero viewers. Pure chaos from day one.</div>
       </div>
       <div class="milestone-item">
-        <div class="milestone-year">2020</div>
-        <div class="milestone-num">500</div>
-        <div class="milestone-label">Followers hit 500 during a Minecraft lockdown series. Discord opened the same week.</div>
+        <div class="milestone-year">the reset</div>
+        <div class="milestone-num">0</div>
+        <div class="milestone-label">Lost the old account. Said no pause, only resume — and started fresh as ThatGuyPB_.</div>
       </div>
       <div class="milestone-item">
-        <div class="milestone-year">2021</div>
-        <div class="milestone-num">2K</div>
-        <div class="milestone-label">First affiliate milestone. Community nights started. Chat became genuinely unhinged.</div>
+        <div class="milestone-year">the community</div>
+        <div class="milestone-num">TGC</div>
+        <div class="milestone-label">ThatGuyPB's Community was born. Discord opened. Chat got unhinged almost immediately.</div>
       </div>
       <div class="milestone-item">
-        <div class="milestone-year">2022</div>
-        <div class="milestone-num">5K</div>
-        <div class="milestone-label">Reached 5K followers. Broke down crying live. Chat clipped it immediately.</div>
-      </div>
-      <div class="milestone-item">
-        <div class="milestone-year">2023</div>
-        <div class="milestone-num">10K</div>
-        <div class="milestone-label">Hit 10K followers. Celebrated with a 12-hour marathon stream and lost rank in 4 games.</div>
-      </div>
-      <div class="milestone-item">
-        <div class="milestone-year">ongoing</div>
+        <div class="milestone-year">right now</div>
         <div class="milestone-num" id="milestone-episodes">—</div>
-        <div class="milestone-label">VODs and counting. Still losing. Still showing up.</div>
+        <div class="milestone-label">VODs and counting. Still showing up every day.</div>
       </div>
       <div class="milestone-item">
-        <div class="milestone-year">total</div>
+        <div class="milestone-year">total time</div>
         <div class="milestone-num" id="milestone-hours">—</div>
-        <div class="milestone-label">Hours live on stream. Probably should have slept more.</div>
+        <div class="milestone-label">Hours live. Probably should have slept more.</div>
+      </div>
+      <div class="milestone-item">
+        <div class="milestone-year">the goal</div>
+        <div class="milestone-num">140</div>
+        <div class="milestone-label">Follower goal. Currently at 134. Six more to go — tell a friend.</div>
+      </div>
+      <div class="milestone-item">
+        <div class="milestone-year">bits goal</div>
+        <div class="milestone-num">1K</div>
+        <div class="milestone-label">543 bits in so far. Donos go straight to TTS — the chaos is the point.</div>
       </div>
       <div class="milestone-item">
         <div class="milestone-year">record</div>
@@ -1235,51 +1230,22 @@
       <h2>recent episodes</h2>
       <p>catch up on the last few streams, freshly cut and captioned</p>
     </div>
-    <div class="episodes-scroll-wrap">
-      <div class="episodes-scroll" id="episodes-grid">
-        <!-- JS populates this -->
-        <div class="vod-card vod-featured">
-          <div class="vod-thumb" style="background:linear-gradient(160deg,#6E7793,#3B4257)">
-            <div class="vod-tag-wrap"><span class="vod-tag new">NEW</span></div>
-            <div class="vod-play"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M10 8l6 4-6 4V8z"/></svg></div>
-          </div>
-          <div class="vod-info">
-            <div class="vod-title">ep. 214 — the losing streak continues</div>
-            <div class="vod-meta">03:42:10 · TUE</div>
-          </div>
-        </div>
-        <div class="vod-card">
-          <div class="vod-thumb" style="background:linear-gradient(160deg,#8A93AB,#525A70)">
-            <div class="vod-tag-wrap"><span class="vod-tag">VOD</span></div>
-            <div class="vod-play"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M10 8l6 4-6 4V8z"/></svg></div>
-          </div>
-          <div class="vod-info">
-            <div class="vod-title">ep. 213 — chat picks the game</div>
-            <div class="vod-meta">02:58:44 · SAT</div>
-          </div>
-        </div>
-        <div class="vod-card">
-          <div class="vod-thumb" style="background:linear-gradient(160deg,#4A5368,#22242E)">
-            <div class="vod-tag-wrap"><span class="vod-tag">VOD</span></div>
-            <div class="vod-play"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M10 8l6 4-6 4V8z"/></svg></div>
-          </div>
-          <div class="vod-info">
-            <div class="vod-title">ep. 212 — community game night</div>
-            <div class="vod-meta">04:10:02 · THU</div>
-          </div>
-        </div>
-        <div class="vod-card">
-          <div class="vod-thumb" style="background:linear-gradient(160deg,#7A8298,#454C60)">
-            <div class="vod-tag-wrap"><span class="vod-tag">VOD</span></div>
-            <div class="vod-play"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M10 8l6 4-6 4V8z"/></svg></div>
-          </div>
-          <div class="vod-info">
-            <div class="vod-title">ep. 211 — the desk rebuild</div>
-            <div class="vod-meta">01:47:30 · TUE</div>
-          </div>
-        </div>
-      </div>
+
+    <!-- 3D carousel -->
+    <div class="carousel-stage" id="carousel-stage">
+      <!-- vod-cards injected by JS -->
     </div>
+
+    <div class="carousel-controls">
+      <button class="carousel-btn" id="carousel-prev" aria-label="Previous">
+        <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+      <div class="carousel-dots" id="carousel-dots"></div>
+      <button class="carousel-btn" id="carousel-next" aria-label="Next">
+        <svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"/></svg>
+      </button>
+    </div>
+
     <div class="episodes-footer">
       <a href="https://twitch.tv/thatguypb_/videos" target="_blank" rel="noopener" class="btn-outline">View all episodes</a>
     </div>
@@ -1289,24 +1255,24 @@
   <section class="community">
     <div class="community-inner">
       <div class="community-left">
-        <h2>JOIN THE<br>COMMUNITY</h2>
-        <p>The Discord is where the real stuff happens between streams — game votes, giveaways, clip channels, and a bunch of people who are way too invested in the ranked grind.</p>
+        <h2>JOIN<br>TGC</h2>
+        <p>ThatGuyPB's Community — the Discord is where TGC actually lives between streams. Game votes, clips, general unhinged behaviour, and a group of people who genuinely don't leave. If you're here, you're here to stay.</p>
         <div class="community-perks">
           <div class="perk">
             <svg class="perk-icon" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
-            <div><b>Stream alerts</b><span>Get notified the moment a stream goes live</span></div>
+            <div><b>Stream alerts</b><span>Get notified the second a stream goes live</span></div>
           </div>
           <div class="perk">
             <svg class="perk-icon" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
-            <div><b>Game voting</b><span>Community nights are 100% chat-voted</span></div>
+            <div><b>Donos go to TTS</b><span>Your message gets read on stream — chaos guaranteed</span></div>
           </div>
           <div class="perk">
             <svg class="perk-icon" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
-            <div><b>Clip archive</b><span>Every highlight, catalogued by the community</span></div>
+            <div><b>Clip archive</b><span>Every highlight lives in the clips section above</span></div>
           </div>
           <div class="perk">
             <svg class="perk-icon" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
-            <div><b>Sub perks</b><span>Custom roles, early VOD access, and more</span></div>
+            <div><b>No Pause Only Resume</b><span>We lost the old account and kept going. That's TGC.</span></div>
           </div>
         </div>
       </div>
@@ -1314,16 +1280,16 @@
         <div class="discord-card">
           <svg class="discord-card-icon" viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="12" rx="4"/><circle cx="9" cy="12" r="1"/><circle cx="15" cy="12" r="1"/></svg>
           <div style="flex:1;">
-            <h4>Discord Server</h4>
-            <p>3,200+ members and growing. Join the chaos.</p>
+            <h4>TGC Discord</h4>
+            <p>The community hub. Join the chaos between streams.</p>
             <a href="#" class="btn-primary" style="margin-top:14px;">JOIN DISCORD →</a>
           </div>
         </div>
         <div class="discord-card">
           <svg class="discord-card-icon" viewBox="0 0 24 24"><path d="M4 4h16v11l-4 4h-4l-3 3H9v-3H4V4z"/><line x1="14" y1="8" x2="14" y2="13"/><line x1="10" y1="8" x2="10" y2="13"/></svg>
           <div style="flex:1;">
-            <h4>Twitch Channel</h4>
-            <p>Follow on Twitch to get notified for every stream.</p>
+            <h4>Twitch — ThatGuyPB_</h4>
+            <p>Follow for live notifications. 134 followers and climbing — 140 is the next goal.</p>
             <a href="https://twitch.tv/thatguypb_" target="_blank" rel="noopener" class="btn-primary" style="margin-top:14px;">FOLLOW ON TWITCH →</a>
           </div>
         </div>
@@ -1349,35 +1315,35 @@
     </div>
     <details class="faq-item" open>
       <summary>When do you stream?</summary>
-      <p>Tuesdays and Thursdays at 7PM ET, Saturdays at 2PM ET. Schedule changes get posted in the Discord first, then the announcement bar up top.</p>
+      <p>Almost daily — no fixed schedule, just constant. Check the announcement bar at the top or follow on Twitch to get notified the moment a stream goes live.</p>
+    </details>
+    <details class="faq-item">
+      <summary>What's TGC?</summary>
+      <p>ThatGuyPB's Community — the name for everyone here. The Discord is where TGC actually lives between streams. If you're here, you're here to stay.</p>
     </details>
     <details class="faq-item">
       <summary>What games do you stream?</summary>
-      <p>Mostly FPS and ranked games, RPG playthroughs, co-op nights with viewers, and horror during October. The genres section above has the full breakdown with the specific titles.</p>
+      <p>Variety — whatever's in the backlog or whatever chat votes on. Jokes are on the edgy side and there's zero pretension. The genres section above has the live breakdown pulled from recent streams.</p>
     </details>
     <details class="faq-item">
-      <summary>Where do VODs go after the stream ends?</summary>
-      <p>Full VODs get cut, captioned, and uploaded the next morning — you'll find them in the episodes section above. The Twitch VODs also stay up for 60 days.</p>
+      <summary>What happened to @HHThatGuyPB?</summary>
+      <p>Lost the old account. No pause, only resume — started fresh as ThatGuyPB_ and brought the community over. The channel is gone but TGC survived.</p>
+    </details>
+    <details class="faq-item">
+      <summary>Can I donate? Does it do anything?</summary>
+      <p>Donos are TTS — your message gets read on stream. You absolutely don't have to, it's appreciated either way. Every bit counts toward the goals shown on the Twitch page.</p>
+    </details>
+    <details class="faq-item">
+      <summary>What are the stream rules?</summary>
+      <p>Jokes are fine, just don't be a genuine dick about it. Have a good time. If you're here you're here to stay — welcome to TGC.</p>
+    </details>
+    <details class="faq-item">
+      <summary>Where do VODs go?</summary>
+      <p>Twitch VODs stay up on the channel and the recent episodes carousel above pulls them automatically. YouTube has the longer cuts too — links are in the nav and footer.</p>
     </details>
     <details class="faq-item">
       <summary>How do I join the community?</summary>
-      <p>The Discord link is in the footer and in the community section above. Chat is open to everyone, subs get a couple of extra channels and roles.</p>
-    </details>
-    <details class="faq-item">
-      <summary>Can I clip and share moments from the stream?</summary>
-      <p>Absolutely — clip away and tag it, chat finds the best ones anyway. The clips section on this page pulls from the Twitch top clips automatically.</p>
-    </details>
-    <details class="faq-item">
-      <summary>Do you take game suggestions?</summary>
-      <p>Community nights are chat-voted, so drop suggestions in the Discord's #game-nights channel. For solo streams I go through the backlog list that lives in the Discord too.</p>
-    </details>
-    <details class="faq-item">
-      <summary>How does the ranked series work?</summary>
-      <p>Every ranked session is catalogued — rank at the start, rank at the end, peak viewers for the session. It's a full public record of the grind, good or bad.</p>
-    </details>
-    <details class="faq-item">
-      <summary>Is there a sub benefit beyond emotes?</summary>
-      <p>Subs get early VOD access (morning of, before public upload), custom Discord roles, and priority spots in community game nights. That's the whole list — no fluff.</p>
+      <p>Discord link is in the footer and the community section above. Follow on Twitch for live notifications. Show up in chat and say something — nobody bites.</p>
     </details>
   </section>
 
@@ -1389,7 +1355,7 @@
       <!-- brand + socials -->
       <div class="footer-brand">
         <div class="footer-brand-logo">That<span>Guy</span>PB</div>
-        <div class="footer-brand-tagline">Im here to make you smile and maybe laugh. Streaming Tues / Thurs / Sat.</div>
+        <div class="footer-brand-tagline">Unapologetically Myself. No Pause Only Resume. Welcome to TGC.</div>
         <div class="footer-brand-socials">
           <a href="https://twitch.tv/thatguypb_" target="_blank" rel="noopener" aria-label="Twitch" class="footer-social-btn">
             <svg viewBox="0 0 24 24"><path d="M4 4h16v11l-4 4h-4l-3 3H9v-3H4V4z"/><line x1="14" y1="8" x2="14" y2="13"/><line x1="10" y1="8" x2="10" y2="13"/></svg>
@@ -1625,7 +1591,7 @@
     } else {
       // ── OFFLINE ──
       heroBadge.classList.remove('is-live');
-      heroBadge.textContent = 'OFFLINE — NEXT STREAM TUE 7PM ET';
+      heroBadge.textContent = 'OFFLINE — STREAMING ALMOST DAILY';
       navBadge.classList.remove('is-live');
       navBadge.innerHTML    = '<span class="dot"></span>OFFLINE';
       set('footer-status-text', 'OFFLINE');
@@ -1815,60 +1781,177 @@
   /* ═══════════════════════════════════════════════════════════════════
      RENDER VIDEOS
      ═══════════════════════════════════════════════════════════════════ */
+  /* ═══════════════════════════════════════════════════════════════════
+     RENDER VIDEOS  — 3D looping carousel
+     ═══════════════════════════════════════════════════════════════════ */
   function renderVideos(videos){
-    const grid = $('episodes-grid');
-    if(!grid||!videos?.length) return;
+    if(!videos?.length) return;
 
-    // compute stats from video list
+    /* ── stats (unchanged) ── */
     let totalSecs = 0;
-    const gameCounts = {};
-
-    videos.forEach(v => {
-      totalSecs += parseDuration(v.duration);
-      // extract game from title heuristically (fallback only)
-    });
-
-    // stats bar: total vods & hours streamed
+    videos.forEach(v => { totalSecs += parseDuration(v.duration); });
     set('stat-episodes', videos.length.toLocaleString());
     set('stat-hours',    fmtHoursShort(totalSecs));
-
-    // milestone cards
     set('milestone-episodes', videos.length.toLocaleString());
     set('milestone-hours',    fmtHoursShort(totalSecs));
-
-    // last stream date for stat bar
     if(videos[0]?.created_at){
-      const d   = new Date(videos[0].created_at);
-      const ago = timeSince(d);
-      set('stat-last-stream', ago);
+      set('stat-last-stream', timeSince(new Date(videos[0].created_at)));
     }
-
-    // hero meta: latest VOD ep number + runtime
     if(videos[0]){
       const hm = $('hero-meta');
       if(hm) hm.innerHTML = `VOD #${videos.length}<br>RUNTIME ${fmtHMS(parseDuration(videos[0].duration))}`;
     }
 
-    // render episode cards — horizontal scroll strip, up to 8
-    grid.innerHTML = videos.slice(0,8).map((v,i)=>`
-      <div class="vod-card${i===0?' vod-featured':''}">
-        <a href="${escHtml(v.url)}" target="_blank" rel="noopener" aria-label="${escHtml(v.title)}" style="display:contents;">
-          <div class="vod-thumb">
-            ${v.thumbnail_url
-              ? `<img src="${sizedThumb(v.thumbnail_url,640,360)}" alt="" loading="lazy">`
-              : `<div style="width:100%;height:100%;background:linear-gradient(160deg,#6E7793,#3B4257)"></div>`}
-            <div class="vod-tag-wrap"><span class="vod-tag${i===0?' new':''}">${i===0?'NEW':'VOD'}</span></div>
-            <div class="vod-play"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M10 8l6 4-6 4V8z"/></svg></div>
-            <div class="vod-dur">${fmtHMS(parseDuration(v.duration))}</div>
+    /* ── build carousel ── */
+    const stage     = $('carousel-stage');
+    const dotsWrap  = $('carousel-dots');
+    if(!stage) return;
+
+    const items = videos.slice(0, 10);   // up to 10 in the loop
+    const total = items.length;
+    let   current = 0;
+    let   autoTimer = null;
+    let   isPaused = false;
+
+    // Build card HTML
+    stage.innerHTML = items.map((v, i) => `
+      <div class="vod-card" data-index="${i}">
+        <div class="vod-thumb">
+          ${v.thumbnail_url
+            ? `<img src="${sizedThumb(v.thumbnail_url, 640, 360)}" alt="" loading="lazy">`
+            : `<div style="position:absolute;inset:0;background:linear-gradient(160deg,#6E7793,#3B4257)"></div>`}
+          <div class="vod-tag-wrap"><span class="vod-tag${i===0?' new':''}">${i===0?'NEW':'VOD'}</span></div>
+          <div class="vod-play">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M10 8l6 4-6 4V8z"/></svg>
           </div>
-        </a>
+          <div class="vod-dur">${fmtHMS(parseDuration(v.duration))}</div>
+        </div>
         <div class="vod-info">
           <div class="vod-title" title="${escHtml(v.title)}">${escHtml(v.title)}</div>
           <div class="vod-meta">${new Date(v.created_at).toLocaleDateString()}</div>
         </div>
       </div>`).join('');
 
-    // grid columns handled by CSS (horizontal scroll)
+    // Build dots
+    if(dotsWrap){
+      dotsWrap.innerHTML = items.map((_, i) =>
+        `<button class="carousel-dot${i===0?' active':''}" data-idx="${i}" aria-label="Go to episode ${i+1}"></button>`
+      ).join('');
+      dotsWrap.addEventListener('click', e => {
+        const btn = e.target.closest('.carousel-dot');
+        if(btn) goTo(+btn.dataset.idx);
+      });
+    }
+
+    const cards = Array.from(stage.querySelectorAll('.vod-card'));
+
+    /* ── layout engine ── */
+    // Visible slots relative to center: ..., -2, -1, 0, +1, +2, ...
+    // We show 5 cards: center + 2 on each side. Beyond ±2 → hidden.
+    function getSlotStyle(slot){
+      // slot: integer offset from center (-2..+2)
+      const CARD_W   = 420;   // px — must match CSS width
+      const SPREAD   = 260;   // px between card centres
+      const ROT_Y    = 38;    // degrees rotation per slot
+      const Z_STEP   = 160;   // depth step per slot
+      const SCALE_STEP = 0.18; // scale drop per slot away from centre
+
+      const tx    = slot * SPREAD;
+      const ry    = slot * ROT_Y;
+      const tz    = -Math.abs(slot) * Z_STEP;
+      const scale = 1 - Math.abs(slot) * SCALE_STEP;
+      const opacity = Math.abs(slot) > 2 ? 0 : 1 - Math.abs(slot) * 0.15;
+      const zIndex  = 10 - Math.abs(slot);
+
+      return { tx, ry, tz, scale, opacity, zIndex };
+    }
+
+    function applyLayout(animate){
+      cards.forEach((card, i) => {
+        // raw offset, then wrap into [-floor(total/2), +ceil(total/2)]
+        let offset = i - current;
+        const half = Math.floor(total / 2);
+        while(offset >  half) offset -= total;
+        while(offset < -half) offset += total;
+
+        const s = getSlotStyle(offset);
+
+        card.style.transition = animate
+          ? 'transform 0.6s cubic-bezier(0.25,0.46,0.45,0.94), opacity 0.6s cubic-bezier(0.25,0.46,0.45,0.94)'
+          : 'none';
+        card.style.transform  = `translate(-50%,-50%) translateX(${s.tx}px) translateZ(${s.tz}px) rotateY(${s.ry}deg) scale(${s.scale})`;
+        card.style.opacity    = s.opacity;
+        card.style.zIndex     = s.zIndex;
+        card.style.pointerEvents = Math.abs(offset) > 2 ? 'none' : 'auto';
+        card.classList.toggle('is-active', offset === 0);
+      });
+
+      // update dots
+      if(dotsWrap){
+        dotsWrap.querySelectorAll('.carousel-dot').forEach((d, i) => {
+          d.classList.toggle('active', i === current);
+        });
+      }
+    }
+
+    function goTo(idx, animate = true){
+      current = ((idx % total) + total) % total;
+      applyLayout(animate);
+    }
+
+    function next(){ goTo(current + 1); }
+    function prev(){ goTo(current - 1); }
+
+    /* ── auto-advance ── */
+    function startAuto(){
+      clearInterval(autoTimer);
+      autoTimer = setInterval(() => { if(!isPaused) next(); }, 3800);
+    }
+
+    /* ── click a side card → go to it ── */
+    stage.addEventListener('click', e => {
+      const card = e.target.closest('.vod-card');
+      if(!card) return;
+      const idx = +card.dataset.index;
+      if(idx === current){
+        // active card clicked — open VOD
+        const url = items[idx]?.url;
+        if(url) window.open(url, '_blank', 'noopener');
+      } else {
+        goTo(idx);
+        isPaused = true;
+        clearTimeout(window._carouselResumeTimer);
+        window._carouselResumeTimer = setTimeout(() => { isPaused = false; }, 6000);
+      }
+    });
+
+    /* ── arrow buttons ── */
+    const btnPrev = $('carousel-prev');
+    const btnNext = $('carousel-next');
+    if(btnPrev) btnPrev.addEventListener('click', () => { prev(); isPaused = true; clearTimeout(window._carouselResumeTimer); window._carouselResumeTimer = setTimeout(()=>{ isPaused=false; }, 6000); });
+    if(btnNext) btnNext.addEventListener('click', () => { next(); isPaused = true; clearTimeout(window._carouselResumeTimer); window._carouselResumeTimer = setTimeout(()=>{ isPaused=false; }, 6000); });
+
+    /* ── pause on hover ── */
+    stage.addEventListener('mouseenter', () => { isPaused = true; });
+    stage.addEventListener('mouseleave', () => { isPaused = false; });
+
+    /* ── touch swipe ── */
+    let touchStartX = 0;
+    stage.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, {passive:true});
+    stage.addEventListener('touchend',   e => {
+      const dx = e.changedTouches[0].clientX - touchStartX;
+      if(Math.abs(dx) > 40){ dx < 0 ? next() : prev(); }
+    }, {passive:true});
+
+    /* ── keyboard ── */
+    document.addEventListener('keydown', e => {
+      if(e.key === 'ArrowLeft')  prev();
+      if(e.key === 'ArrowRight') next();
+    });
+
+    // initial paint (no animation)
+    applyLayout(false);
+    startAuto();
   }
 
   /* ═══════════════════════════════════════════════════════════════════
