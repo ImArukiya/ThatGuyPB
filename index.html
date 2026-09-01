@@ -85,7 +85,7 @@
 
   /* ── nav ── */
   header{
-    position:sticky; top:0; z-index:100;
+    position:sticky; top:0; z-index:200;
     background:var(--paper);
     border-bottom:1.5px solid var(--ink);
   }
@@ -131,6 +131,103 @@
   .nav-status.is-live{background:var(--coral); color:var(--paper); border-color:var(--coral);}
   .nav-status.is-live .dot{background:var(--paper); animation:pulse 1.4s infinite;}
   @keyframes pulse{0%,100%{opacity:1; transform:scale(1);} 50%{opacity:0.35; transform:scale(0.8);}}
+
+  /* hamburger — hidden on desktop */
+  .nav-hamburger{
+    display:none;
+    justify-self:end;
+    flex-direction:column; justify-content:center; gap:5px;
+    width:40px; height:40px; padding:8px;
+    cursor:pointer; border:none; background:none;
+    -webkit-tap-highlight-color:transparent;
+  }
+  .nav-hamburger span{
+    display:block; width:100%; height:1.5px;
+    background:var(--ink);
+    transition:transform 0.25s ease, opacity 0.2s ease;
+    transform-origin:center;
+  }
+  .nav-hamburger.open span:nth-child(1){ transform:translateY(6.5px) rotate(45deg); }
+  .nav-hamburger.open span:nth-child(2){ opacity:0; transform:scaleX(0); }
+  .nav-hamburger.open span:nth-child(3){ transform:translateY(-6.5px) rotate(-45deg); }
+
+  /* mobile drawer */
+  .nav-drawer{
+    display:none;
+    position:fixed; top:0; left:0; right:0; bottom:0;
+    z-index:190;
+    background:var(--paper);
+    flex-direction:column;
+    overflow-y:auto;
+    transform:translateY(-100%);
+    transition:transform 0.35s cubic-bezier(0.4,0,0.2,1);
+    padding-top:80px; /* clears the sticky header */
+  }
+  .nav-drawer.open{
+    transform:translateY(0);
+  }
+  /* show drawer only when explicitly set to flex */
+  .nav-drawer{ display:flex; pointer-events:none; visibility:hidden; }
+  .nav-drawer.open{ pointer-events:auto; visibility:visible; }
+
+  .nav-drawer-links{
+    display:flex; flex-direction:column;
+    padding:0 24px;
+    border-bottom:1.5px solid var(--ink);
+  }
+  .nav-drawer-links a{
+    font-family:'Bebas Neue',sans-serif;
+    font-size:42px; letter-spacing:0.02em; line-height:1;
+    padding:18px 0;
+    border-bottom:1px solid var(--paper-line);
+    color:var(--ink);
+    display:flex; align-items:center; justify-content:space-between;
+    transition:color 0.15s;
+  }
+  .nav-drawer-links a:last-child{ border-bottom:none; }
+  .nav-drawer-links a:hover{ color:var(--coral); }
+  .nav-drawer-links a .arrow{ font-size:22px; opacity:0.35; }
+
+  .nav-drawer-status{
+    padding:20px 24px;
+    display:flex; align-items:center; gap:10px;
+    border-bottom:1.5px solid var(--ink);
+  }
+  .nav-drawer-status .dot{
+    width:8px; height:8px; border-radius:50%; background:var(--slate);
+  }
+  body.is-live .nav-drawer-status .dot{ background:var(--coral); animation:pulse 1.4s infinite; }
+  .nav-drawer-status span{
+    font-family:'Space Mono',monospace; font-size:11px; letter-spacing:0.06em; color:var(--ink-soft);
+  }
+
+  .nav-drawer-socials{
+    padding:24px;
+    display:flex; flex-wrap:wrap; gap:12px;
+  }
+  .nav-drawer-socials a{
+    width:46px; height:46px;
+    border:1.5px solid var(--ink);
+    display:flex; align-items:center; justify-content:center;
+    transition:background 0.15s, border-color 0.15s;
+  }
+  .nav-drawer-socials a svg{ width:18px; height:18px; stroke:var(--ink); fill:none; stroke-width:1.6; }
+  .nav-drawer-socials a:hover{ background:var(--ink); border-color:var(--ink); }
+  .nav-drawer-socials a:hover svg{ stroke:var(--paper); }
+
+  .nav-drawer-cta{
+    padding:0 24px 32px;
+    display:flex; flex-direction:column; gap:10px;
+  }
+  .nav-drawer-cta a{
+    display:flex; align-items:center; justify-content:center; gap:8px;
+    padding:16px;
+    font-family:'Space Mono',monospace; font-size:12px; font-weight:700; letter-spacing:0.06em;
+    border:1.5px solid var(--ink);
+    transition:background 0.15s, color 0.15s;
+  }
+  .nav-drawer-cta a.primary{ background:var(--coral); border-color:var(--coral); color:var(--paper); }
+  .nav-drawer-cta a.primary:hover{ background:#e0294a; }
 
   /* ── hero ── */
   .hero{
@@ -843,46 +940,365 @@
     .footer-bottom{ padding:16px 20px; }
   }
 
-  /* ── responsive ── */
+  /* ══════════════════════════════════════════
+     RESPONSIVE
+  ══════════════════════════════════════════ */
+
+  /* ── 1080px — tablet landscape ── */
   @media (max-width: 1080px){
     .genres-grid{grid-template-columns:repeat(2,1fr);}
     .milestone-list{grid-template-columns:repeat(2,1fr);}
     .twitch-inner{grid-template-columns:1fr 280px; height:460px;}
+    .footer-top{grid-template-columns:1fr 1fr;}
+    .footer-cta{border-top:1.5px solid rgba(236,231,218,0.12); grid-column:1/-1;}
   }
+
+  /* ── 900px — tablet portrait / large phone ── */
   @media (max-width: 900px){
-    .wrap, nav, .hero-content, .section-head, .cta-bar, .about, .gear, .clip-strip, .faq, footer, .genres-section, .milestones, .community, .expect, .rules-section, .donate-strip, .stream-info, .socials-section, .episodes-section{padding-left:20px; padding-right:20px;}
-    nav{grid-template-columns:auto 1fr auto;}
-    .nav-links{display:none;}
-    .stats-bar{grid-template-columns:repeat(2,1fr);}
-    .stat:nth-child(2){border-right:none;}
-    .rules-grid{grid-template-columns:1fr;}
-    .donate-inner{grid-template-columns:1fr;}
-    .donate-right{flex-direction:row; flex-wrap:wrap;}
-    .socials-grid{grid-template-columns:1fr 1fr;}
-    .stream-info-grid{grid-template-columns:1fr;}
-    .genres-grid{grid-template-columns:1fr;}
-    .milestone-list{grid-template-columns:repeat(2,1fr);}
-    .clip-grid{grid-template-columns:1fr 1fr;}
-    .section-head{flex-direction:column; gap:10px;}
-    .section-head p{text-align:left;}
-    .footer-grid{flex-direction:column;}
-    .footer-sub{text-align:left;}
-    .twitch-inner{grid-template-columns:1fr; height:auto;}
-    .twitch-player-wrap{height:260px; border-right:none; border-bottom:1.5px solid #2a2a2e;}
-    .twitch-chat-wrap{height:320px;}
-    .live-banner{padding:14px 20px;}
+    /* global padding */
+    .wrap, nav, .hero-content, .section-head,
+    .cta-bar, .about, .gear, .clip-strip, .faq,
+    footer, .genres-section, .milestones, .community,
+    .expect, .rules-section, .donate-strip, .stream-info,
+    .socials-section, .episodes-section{
+      padding-left:20px; padding-right:20px;
+    }
+
+    /* nav — show hamburger, hide desktop items */
+    nav{ grid-template-columns: auto 1fr auto; padding:12px 20px; }
+    .nav-socials{ display:none; }
+    .nav-links{ display:none; }
+    .nav-hamburger{ display:flex; }
+    .nav-logo img{ height:34px; width:34px; }
+
+    /* hero */
+    .hero{ height:75vh; min-height:480px; }
+    .hero-content{ padding:0 20px 48px; flex-direction:column; gap:20px; align-items:flex-start; }
+    .hero-content h1{ font-size:clamp(48px,14vw,80px); }
+    .hero-sub{ font-size:13px; }
+    .hero-right{ align-items:flex-start; gap:10px; }
+    .hero-meta{ text-align:left; }
+    #live-badge{ top:20px; left:20px; font-size:10px; }
+
+    /* stats bar */
+    .stats-bar{ grid-template-columns:repeat(2,1fr); }
+    .stat:nth-child(2){ border-right:none; }
+    .stat:nth-child(3){ border-top:1.5px solid var(--ink); }
+    .stat:nth-child(4){ border-top:1.5px solid var(--ink); border-right:none; }
+
+    /* about */
+    .about-grid{ grid-template-columns:1fr; }
+
+    /* grids */
+    .gear-grid{ grid-template-columns:1fr 1fr; }
+    .genres-grid{ grid-template-columns:1fr 1fr; }
+    .expect-grid{ grid-template-columns:1fr 1fr; }
+    .stream-info-grid{ grid-template-columns:1fr; }
+    .rules-grid{ grid-template-columns:1fr; }
+    .socials-grid{ grid-template-columns:1fr 1fr; }
+    .milestone-list{ grid-template-columns:repeat(2,1fr); }
+    .clip-grid{ grid-template-columns:1fr 1fr; }
+    .community-inner{ grid-template-columns:1fr; gap:40px; }
+
+    /* donate */
+    .donate-inner{ grid-template-columns:1fr; gap:24px; }
+    .donate-right{ flex-direction:row; flex-wrap:wrap; }
+
+    /* section heads */
+    .section-head{ flex-direction:column; gap:8px; }
+    .section-head p{ text-align:left; }
+
+    /* carousel */
+    .carousel-stage{ height:320px; }
+    .vod-card{ width:72vw !important; }
+    .episodes-head, .episodes-footer{ padding-left:20px; padding-right:20px; }
+
+    /* twitch embed */
+    .twitch-inner{ grid-template-columns:1fr; height:auto; }
+    .twitch-player-wrap{ height:240px; border-right:none; border-bottom:1.5px solid #2a2a2e; }
+    .twitch-chat-wrap{ height:300px; }
+    .live-banner{ padding:14px 20px; }
+
+    /* footer */
+    .footer-top{ grid-template-columns:1fr; }
+    .footer-brand, .footer-nav, .footer-cta{ border-right:none; padding:36px 20px; }
+    .footer-cta{ border-top:1.5px solid rgba(236,231,218,0.12); grid-column:auto; }
+    .footer-bottom{ padding:16px 20px; flex-direction:column; align-items:flex-start; gap:8px; }
+    .footer-bottom-right{ flex-wrap:wrap; gap:12px; }
   }
-  @media (max-width: 540px){
-    .clip-grid{grid-template-columns:1fr;}
-    .milestone-list{grid-template-columns:1fr 1fr;}
-    .vod-card{ width:85vw !important; }
-    .carousel-stage{ height:300px; }
-    .about-grid, .community-inner{grid-template-columns:1fr;}
-    .gear-grid, .expect-grid{grid-template-columns:1fr;}
-    .socials-grid{grid-template-columns:1fr;}
-    .donate-right{flex-direction:column;}
-    .episodes-head{padding-left:20px; padding-right:20px;}
-    .episodes-footer{padding-left:20px; padding-right:20px;}
+
+  /* ── 640px — small tablet / large phone ── */
+  @media (max-width: 640px){
+    /* nav drawer padding */
+    .nav-drawer{ padding-top:72px; }
+
+    /* hero tighter */
+    .hero{ height:70vh; min-height:440px; }
+    .hero-content h1{ font-size:clamp(42px,16vw,72px); }
+
+    /* grids → single column */
+    .gear-grid{ grid-template-columns:1fr; }
+    .genres-grid{ grid-template-columns:1fr; }
+    .expect-grid{ grid-template-columns:1fr; }
+    .socials-grid{ grid-template-columns:1fr; }
+    .stats-bar{ grid-template-columns:repeat(2,1fr); }
+
+    /* milestone 2-col stays, clips → 1 */
+    .clip-grid{ grid-template-columns:1fr; }
+
+    /* donate */
+    .donate-right{ flex-direction:column; }
+
+    /* carousel */
+    .carousel-stage{ height:290px; }
+    .vod-card{ width:84vw !important; }
+    .carousel-controls{ padding-top:20px; }
+
+    /* CTA bar */
+    .cta-bar{ padding:50px 20px; }
+    .cta-schedule{ flex-direction:column; gap:12px; align-items:center; }
+
+    /* community */
+    .community{ padding:60px 20px; }
+    .discord-card{ flex-direction:column; }
+
+    /* gear items */
+    .gear-item{ padding:20px; }
+
+    /* section heads */
+    .section-head{ padding:44px 0 20px; }
+    .section-head h2{ font-size:32px; }
+
+    /* milestones */
+    .milestone-num{ font-size:34px; }
+
+    /* footer nav grid */
+    .footer-nav{ grid-template-columns:1fr; }
+  }
+
+  /* ── 420px — phone portrait ── */
+  @media (max-width: 420px){
+    nav{ padding:10px 16px; }
+    .hero-content{ padding:0 16px 36px; }
+    .hero-content h1{ font-size:clamp(36px,17vw,60px); line-height:0.88; }
+    .hero-sub{ font-size:12px; }
+    .btn-primary{ font-size:11px; padding:13px 22px; }
+
+    .stats-bar{ grid-template-columns:1fr 1fr; }
+    .stat{ padding:18px 14px; }
+    .stat b{ font-size:28px; }
+
+    .milestone-list{ grid-template-columns:1fr 1fr; }
+    .milestone-num{ font-size:30px; }
+    .milestone-item{ padding:18px 14px; }
+
+    .vod-card{ width:90vw !important; }
+    .carousel-stage{ height:270px; }
+
+    .announce{ font-size:10px; padding:8px 12px; }
+
+    .ticker-item{ font-size:13px; padding:0 20px; }
+
+    .expect-num{ font-size:40px; }
+    .expect-card{ padding:22px 18px; }
+
+    .rules-left{ padding:28px 20px; }
+    .rules-right{ padding:28px 20px; }
+    .rules-left h3{ font-size:30px; }
+
+    .social-card{ padding:20px 16px; }
+    .social-card-name{ font-size:18px; }
+
+    .si-card{ padding:22px 16px; }
+
+    .faq-item summary{ font-size:13.5px; padding:18px 4px; }
+
+    .footer-brand{ padding:32px 16px; }
+    .footer-brand-logo{ font-size:34px; }
+    .footer-bottom{ padding:14px 16px; }
+    .footer-bottom-right{ font-size:9px; }
+
+    .section-head h2{ font-size:28px; }
+    .section-head{ padding:36px 0 16px; }
+  }
+
+  /* ══════════════════════════════════════════
+     MUSIC PLAYER
+  ══════════════════════════════════════════ */
+  #music-player{
+    position:fixed;
+    bottom:24px; right:24px;
+    z-index:500;
+    font-family:'Space Mono', monospace;
+  }
+
+  /* collapsed pill — always visible */
+  .mp-pill{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    background:var(--ink);
+    color:var(--paper);
+    padding:10px 14px;
+    border:1.5px solid rgba(236,231,218,0.12);
+    cursor:pointer;
+    user-select:none;
+    -webkit-user-select:none;
+    transition:border-color 0.2s;
+    min-width:0;
+    max-width:260px;
+  }
+  .mp-pill:hover{ border-color:rgba(236,231,218,0.35); }
+  #music-player.expanded .mp-pill{ border-bottom:none; }
+
+  .mp-bars{
+    display:flex;
+    align-items:flex-end;
+    gap:2px;
+    height:14px;
+    flex-shrink:0;
+  }
+  .mp-bar{
+    width:3px;
+    background:var(--coral);
+    border-radius:1px;
+    transform-origin:bottom;
+    animation:none;
+  }
+  .mp-playing .mp-bar:nth-child(1){ animation:bar-bounce 0.8s ease-in-out infinite; height:5px; }
+  .mp-playing .mp-bar:nth-child(2){ animation:bar-bounce 0.8s ease-in-out infinite 0.15s; height:9px; }
+  .mp-playing .mp-bar:nth-child(3){ animation:bar-bounce 0.8s ease-in-out infinite 0.05s; height:7px; }
+  .mp-playing .mp-bar:nth-child(4){ animation:bar-bounce 0.8s ease-in-out infinite 0.25s; height:11px; }
+  @keyframes bar-bounce{
+    0%,100%{ transform:scaleY(1); }
+    50%{ transform:scaleY(2.2); }
+  }
+  .mp-bar:not(.mp-playing .mp-bar){ height:4px; }
+  /* static state — all bars same height */
+  #music-player:not(.playing) .mp-bar{ animation:none !important; height:4px !important; }
+
+  .mp-track{
+    flex:1; min-width:0;
+    display:flex; flex-direction:column; gap:2px;
+  }
+  .mp-title{
+    font-size:10px; letter-spacing:0.04em;
+    white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+    color:var(--paper);
+  }
+  .mp-artist{
+    font-size:9px; color:rgba(236,231,218,0.45); letter-spacing:0.04em;
+    white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+  }
+
+  .mp-btn{
+    width:22px; height:22px;
+    display:flex; align-items:center; justify-content:center;
+    background:none; border:none; cursor:pointer; padding:0; flex-shrink:0;
+    color:var(--paper);
+    transition:color 0.15s;
+    -webkit-tap-highlight-color:transparent;
+  }
+  .mp-btn:hover{ color:var(--coral); }
+  .mp-btn svg{ width:14px; height:14px; stroke:currentColor; fill:none; stroke-width:1.8; }
+
+  /* expanded panel */
+  .mp-panel{
+    background:var(--ink);
+    border:1.5px solid rgba(236,231,218,0.12);
+    border-bottom:none;
+    padding:14px;
+    display:none;
+    flex-direction:column;
+    gap:12px;
+    width:260px;
+  }
+  #music-player.expanded .mp-panel{ display:flex; }
+
+  /* progress bar */
+  .mp-progress-wrap{
+    display:flex; align-items:center; gap:8px;
+  }
+  .mp-time{
+    font-size:9px; color:rgba(236,231,218,0.4); flex-shrink:0; letter-spacing:0.03em;
+  }
+  .mp-progress{
+    flex:1; height:2px; background:rgba(236,231,218,0.12);
+    position:relative; cursor:pointer;
+  }
+  .mp-progress-fill{
+    position:absolute; top:0; left:0; height:100%;
+    background:var(--coral); width:0%; pointer-events:none;
+    transition:width 0.25s linear;
+  }
+  .mp-progress:hover .mp-progress-fill{ background:var(--paper); }
+
+  /* controls row */
+  .mp-controls{
+    display:flex; align-items:center; justify-content:center; gap:6px;
+  }
+  .mp-play-btn{
+    width:32px; height:32px;
+    border:1.5px solid rgba(236,231,218,0.25);
+    display:flex; align-items:center; justify-content:center;
+    background:none; cursor:pointer; padding:0; flex-shrink:0;
+    color:var(--paper); transition:border-color 0.15s, background 0.15s;
+    -webkit-tap-highlight-color:transparent;
+  }
+  .mp-play-btn:hover{ border-color:var(--coral); background:var(--coral); }
+  .mp-play-btn svg{ width:13px; height:13px; stroke:currentColor; fill:none; stroke-width:1.8; }
+
+  /* volume */
+  .mp-vol-wrap{ display:flex; align-items:center; gap:6px; }
+  .mp-vol-slider{
+    -webkit-appearance:none; appearance:none;
+    width:64px; height:2px;
+    background:rgba(236,231,218,0.12); cursor:pointer; outline:none; border:none;
+  }
+  .mp-vol-slider::-webkit-slider-thumb{
+    -webkit-appearance:none; width:10px; height:10px; border-radius:50%;
+    background:var(--paper); cursor:pointer;
+  }
+  .mp-vol-slider::-moz-range-thumb{
+    width:10px; height:10px; border-radius:50%;
+    background:var(--paper); cursor:pointer; border:none;
+  }
+
+  /* playlist */
+  .mp-playlist{
+    display:flex; flex-direction:column; gap:0;
+    max-height:140px; overflow-y:auto;
+    scrollbar-width:thin;
+    scrollbar-color:rgba(236,231,218,0.15) transparent;
+    border-top:1px solid rgba(236,231,218,0.08);
+    padding-top:10px;
+  }
+  .mp-plist-item{
+    display:flex; align-items:center; gap:8px;
+    padding:6px 4px;
+    cursor:pointer;
+    border-radius:0;
+    transition:background 0.1s;
+  }
+  .mp-plist-item:hover{ background:rgba(236,231,218,0.06); }
+  .mp-plist-item.active .mp-plist-title{ color:var(--coral); }
+  .mp-plist-num{
+    font-size:9px; color:rgba(236,231,218,0.3); width:14px;
+    flex-shrink:0; text-align:right;
+  }
+  .mp-plist-item.active .mp-plist-num{ color:var(--coral); }
+  .mp-plist-info{ flex:1; min-width:0; }
+  .mp-plist-title{
+    font-size:10px; color:rgba(236,231,218,0.75); letter-spacing:0.03em;
+    white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+  }
+  .mp-plist-dur{
+    font-size:9px; color:rgba(236,231,218,0.3); flex-shrink:0;
+  }
+
+  @media (max-width:420px){
+    #music-player{ bottom:16px; right:16px; }
+    .mp-pill, .mp-panel{ max-width:calc(100vw - 32px); width:calc(100vw - 32px); }
   }
 
 </style>
@@ -928,8 +1344,55 @@
         <a href="#faq">faq</a>
         <a href="https://twitch.tv/thatguypb_" target="_blank" rel="noopener" class="nav-status" id="live-badge-nav" aria-label="Stream status"><span class="dot"></span>OFFLINE</a>
       </div>
+
+      <!-- hamburger — mobile only -->
+      <button class="nav-hamburger" id="nav-hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="nav-drawer">
+        <span></span><span></span><span></span>
+      </button>
     </nav>
   </header>
+
+  <!-- ── MOBILE DRAWER ── -->
+  <nav class="nav-drawer" id="nav-drawer" aria-label="Mobile navigation">
+    <div class="nav-drawer-status">
+      <span class="dot"></span>
+      <span id="drawer-status-text">OFFLINE</span>
+    </div>
+    <div class="nav-drawer-links">
+      <a href="#about-section">About <span class="arrow">↗</span></a>
+      <a href="#genres-section">Genres <span class="arrow">↗</span></a>
+      <a href="#schedule">Episodes <span class="arrow">↗</span></a>
+      <a href="#clips">Clips <span class="arrow">↗</span></a>
+      <a href="#faq">FAQ <span class="arrow">↗</span></a>
+    </div>
+    <div class="nav-drawer-socials">
+      <a href="https://twitch.tv/thatguypb_" target="_blank" rel="noopener" aria-label="Twitch">
+        <svg viewBox="0 0 24 24"><path d="M4 4h16v11l-4 4h-4l-3 3H9v-3H4V4z"/><line x1="14" y1="8" x2="14" y2="13"/><line x1="10" y1="8" x2="10" y2="13"/></svg>
+      </a>
+      <a href="https://www.youtube.com/@HHThatGuyPB" target="_blank" rel="noopener" aria-label="YouTube">
+        <svg viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="3"/><path d="M10 9l6 3-6 3V9z"/></svg>
+      </a>
+      <a href="https://www.youtube.com/@ThatGuyPBVods" target="_blank" rel="noopener" aria-label="VODs">
+        <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="14" rx="1"/><path d="M8 21h8M12 17v4"/></svg>
+      </a>
+      <a href="https://www.tiktok.com/@tgc_pb" target="_blank" rel="noopener" aria-label="TikTok">
+        <svg viewBox="0 0 24 24"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"/></svg>
+      </a>
+      <a href="https://www.instagram.com/hhthatguypb" target="_blank" rel="noopener" aria-label="Instagram">
+        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="0.6"/></svg>
+      </a>
+      <a href="https://x.com/ThatGuyPB" target="_blank" rel="noopener" aria-label="X / Twitter">
+        <svg viewBox="0 0 24 24"><line x1="4" y1="4" x2="20" y2="20"/><line x1="20" y1="4" x2="4" y2="20"/></svg>
+      </a>
+      <a href="https://www.patreon.com/cw/TGCHideout" target="_blank" rel="noopener" aria-label="Patreon">
+        <svg viewBox="0 0 24 24"><circle cx="14.5" cy="9.5" r="6.5"/><rect x="2" y="2" width="4" height="20" rx="1"/></svg>
+      </a>
+    </div>
+    <div class="nav-drawer-cta">
+      <a href="https://twitch.tv/thatguypb_" target="_blank" rel="noopener" class="primary">WATCH ON TWITCH →</a>
+      <a href="https://www.patreon.com/cw/TGCHideout" target="_blank" rel="noopener">TGC HIDEOUT — PATREON ↗</a>
+    </div>
+  </nav>
 
   <!-- ── HERO ── -->
   <section class="hero">
@@ -1682,6 +2145,7 @@
       navBadge.classList.add('is-live');
       navBadge.innerHTML  = '<span class="dot"></span>LIVE';
       set('footer-status-text', 'LIVE NOW');
+      set('drawer-status-text', 'LIVE NOW');
 
       // hero
       if(heroSub) heroSub.textContent = title;
@@ -1724,6 +2188,7 @@
       navBadge.classList.remove('is-live');
       navBadge.innerHTML    = '<span class="dot"></span>OFFLINE';
       set('footer-status-text', 'OFFLINE');
+      set('drawer-status-text', 'OFFLINE');
 
       if(heroCta)  { heroCta.textContent = 'WATCH ON TWITCH →'; heroCta.classList.remove('live-cta'); }
       if(ctaHeading) ctaHeading.innerHTML = 'NEXT STREAM DROPS<br>SOONER THAN YOU THINK';
@@ -2264,6 +2729,38 @@
   document.addEventListener('DOMContentLoaded', ()=>{
     // copyright year
     set('footer-year', new Date().getFullYear());
+
+    /* ── hamburger / mobile drawer ── */
+    const hamburger = $('nav-hamburger');
+    const drawer    = $('nav-drawer');
+
+    function openDrawer(){
+      hamburger.classList.add('open');
+      drawer.classList.add('open');
+      hamburger.setAttribute('aria-expanded','true');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeDrawer(){
+      hamburger.classList.remove('open');
+      drawer.classList.remove('open');
+      hamburger.setAttribute('aria-expanded','false');
+      document.body.style.overflow = '';
+    }
+
+    if(hamburger) hamburger.addEventListener('click', ()=>{
+      drawer.classList.contains('open') ? closeDrawer() : openDrawer();
+    });
+
+    // close when a nav link is tapped
+    drawer?.querySelectorAll('.nav-drawer-links a').forEach(a => {
+      a.addEventListener('click', closeDrawer);
+    });
+
+    // close on Escape key
+    document.addEventListener('keydown', e => {
+      if(e.key === 'Escape' && drawer?.classList.contains('open')) closeDrawer();
+    });
+
     loadTwitchData();
   });
 
@@ -2278,6 +2775,275 @@
       updateViewerCount(stream);
     } catch(_){}
   }, 60000);
+
+})();
+</script>
+
+<!-- ══════════════════════════════════════════
+     MUSIC PLAYER
+══════════════════════════════════════════ -->
+<div id="music-player">
+  <!-- expanded panel (shown when .expanded) -->
+  <div class="mp-panel">
+    <!-- progress -->
+    <div class="mp-progress-wrap">
+      <span class="mp-time" id="mp-cur">0:00</span>
+      <div class="mp-progress" id="mp-progress">
+        <div class="mp-progress-fill" id="mp-fill"></div>
+      </div>
+      <span class="mp-time" id="mp-dur">0:00</span>
+    </div>
+    <!-- controls -->
+    <div class="mp-controls">
+      <button class="mp-btn" id="mp-prev" aria-label="Previous track">
+        <svg viewBox="0 0 24 24"><polygon points="19 20 9 12 19 4 19 20"/><line x1="5" y1="19" x2="5" y2="5"/></svg>
+      </button>
+      <button class="mp-play-btn" id="mp-play" aria-label="Play / Pause">
+        <svg viewBox="0 0 24 24" id="mp-play-icon"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+      </button>
+      <button class="mp-btn" id="mp-next" aria-label="Next track">
+        <svg viewBox="0 0 24 24"><polygon points="5 4 15 12 5 20 5 4"/><line x1="19" y1="5" x2="19" y2="19"/></svg>
+      </button>
+      <div class="mp-vol-wrap">
+        <button class="mp-btn" id="mp-mute" aria-label="Mute">
+          <svg viewBox="0 0 24 24" id="mp-vol-icon"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 010 7.07"/></svg>
+        </button>
+        <input type="range" class="mp-vol-slider" id="mp-vol" min="0" max="1" step="0.02" value="0.7" aria-label="Volume">
+      </div>
+    </div>
+    <!-- playlist -->
+    <div class="mp-playlist" id="mp-playlist"></div>
+  </div>
+
+  <!-- collapsed pill — always visible -->
+  <div class="mp-pill" id="mp-pill" role="button" aria-label="Toggle music player" tabindex="0">
+    <div class="mp-bars" id="mp-bars">
+      <div class="mp-bar"></div>
+      <div class="mp-bar"></div>
+      <div class="mp-bar"></div>
+      <div class="mp-bar"></div>
+    </div>
+    <div class="mp-track">
+      <div class="mp-title" id="mp-pill-title">TGC RADIO</div>
+      <div class="mp-artist" id="mp-pill-artist">click to expand</div>
+    </div>
+    <button class="mp-btn" id="mp-pill-play" aria-label="Play / Pause">
+      <svg viewBox="0 0 24 24" id="mp-pill-icon"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+    </button>
+  </div>
+</div>
+
+<script>
+(function(){
+  /* ═══════════════════════════════════════════════
+     PLAYLIST — add/remove objects freely.
+     src = relative path from site root.
+  ═══════════════════════════════════════════════ */
+  const PLAYLIST = [
+    { title: '500 LBS',       artist: 'ThatGuyPB', src: 'assets/music/500lbs.mp3'       },
+    { title: 'DARK THOUGHTS', artist: 'ThatGuyPB', src: 'assets/music/DarkThoughts.mp3' },
+  ];
+
+  /* ─── state ─── */
+  let idx         = 0;
+  let trackLoaded = false;   // has a track been assigned to audio.src?
+  let muted       = false;
+  let expanded    = false;
+
+  const audio = new Audio();
+  audio.volume  = 0.7;
+  audio.preload = 'none';
+
+  /* ─── element refs ─── */
+  const player      = document.getElementById('music-player');
+  const pill        = document.getElementById('mp-pill');
+  const pillTitle   = document.getElementById('mp-pill-title');
+  const pillArtist  = document.getElementById('mp-pill-artist');
+  const pillPlayBtn = document.getElementById('mp-pill-play');
+  const pillPlayIco = document.getElementById('mp-pill-icon');
+  const mpBars      = document.getElementById('mp-bars');
+
+  const playBtn     = document.getElementById('mp-play');
+  const playIco     = document.getElementById('mp-play-icon');
+  const prevBtn     = document.getElementById('mp-prev');
+  const nextBtn     = document.getElementById('mp-next');
+  const muteBtn     = document.getElementById('mp-mute');
+  const volSlider   = document.getElementById('mp-vol');
+  const volIco      = document.getElementById('mp-vol-icon');
+
+  const progressEl  = document.getElementById('mp-progress');
+  const fillEl      = document.getElementById('mp-fill');
+  const curEl       = document.getElementById('mp-cur');
+  const durEl       = document.getElementById('mp-dur');
+  const plistEl     = document.getElementById('mp-playlist');
+
+  /* ─── svg icon strings ─── */
+  const SVG_PLAY  = `<polygon points="5 3 19 12 5 21 5 3"/>`;
+  const SVG_PAUSE = `<rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/>`;
+  const SVG_VOL   = `<polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 010 7.07"/>`;
+  const SVG_MUTE  = `<polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/>`;
+
+  /* ─── helpers ─── */
+  function fmt(s){
+    if(!isFinite(s) || isNaN(s)) return '0:00';
+    const m = Math.floor(s / 60), ss = Math.floor(s % 60);
+    return m + ':' + (ss < 10 ? '0' : '') + ss;
+  }
+
+  function syncPlayIcons(){
+    const isPlaying = !audio.paused;
+    const icon = isPlaying ? SVG_PAUSE : SVG_PLAY;
+    if(playIco)     playIco.innerHTML     = icon;
+    if(pillPlayIco) pillPlayIco.innerHTML = icon;
+    if(isPlaying){
+      player.classList.add('playing');
+      mpBars.classList.add('mp-playing');
+    } else {
+      player.classList.remove('playing');
+      mpBars.classList.remove('mp-playing');
+    }
+  }
+
+  function updatePillText(){
+    const t = PLAYLIST[idx];
+    pillTitle.textContent  = t.title;
+    pillArtist.textContent = t.artist;
+  }
+
+  /* ─── load a track ─── */
+  function loadTrack(i, autoplay){
+    idx         = ((i % PLAYLIST.length) + PLAYLIST.length) % PLAYLIST.length;
+    trackLoaded = true;
+
+    audio.src = PLAYLIST[idx].src;
+    audio.load();                         // required before play() in some browsers
+
+    fillEl.style.width = '0%';
+    curEl.textContent  = '0:00';
+    durEl.textContent  = '0:00';
+
+    updatePillText();
+    renderPlaylist();
+
+    if(autoplay){
+      audio.play().catch(err => console.warn('[MusicPlayer] play() blocked:', err));
+    }
+  }
+
+  /* ─── play / pause ─── */
+  function togglePlay(){
+    if(!trackLoaded) loadTrack(idx, true);
+    else if(audio.paused) audio.play().catch(err => console.warn('[MusicPlayer]', err));
+    else audio.pause();
+  }
+
+  /* ─── expand / collapse ─── */
+  function toggleExpand(){
+    expanded = !expanded;
+    player.classList.toggle('expanded', expanded);
+    // preload track info when panel opens for the first time
+    if(expanded && !trackLoaded) loadTrack(idx, false);
+  }
+
+  /* ─── render playlist ─── */
+  function renderPlaylist(){
+    if(!plistEl) return;
+    plistEl.innerHTML = PLAYLIST.map((t, i) => `
+      <div class="mp-plist-item${i === idx ? ' active' : ''}" data-i="${i}">
+        <span class="mp-plist-num">${i + 1}</span>
+        <div class="mp-plist-info">
+          <div class="mp-plist-title">${t.title}</div>
+        </div>
+        <span class="mp-plist-dur" id="mp-pdur-${i}">-:--</span>
+      </div>`).join('');
+
+    plistEl.querySelectorAll('.mp-plist-item').forEach(el => {
+      el.addEventListener('click', () => loadTrack(+el.dataset.i, true));
+    });
+  }
+
+  /* ─── audio events ─── */
+  audio.addEventListener('play',    syncPlayIcons);
+  audio.addEventListener('pause',   syncPlayIcons);
+  audio.addEventListener('ended',   () => loadTrack(idx + 1, true));
+
+  audio.addEventListener('timeupdate', () => {
+    if(!audio.duration || isNaN(audio.duration)) return;
+    const pct = (audio.currentTime / audio.duration) * 100;
+    fillEl.style.width = pct + '%';
+    curEl.textContent  = fmt(audio.currentTime);
+    durEl.textContent  = fmt(audio.duration);
+  });
+
+  audio.addEventListener('loadedmetadata', () => {
+    durEl.textContent = fmt(audio.duration);
+    const d = document.getElementById('mp-pdur-' + idx);
+    if(d) d.textContent = fmt(audio.duration);
+  });
+
+  audio.addEventListener('error', e => {
+    console.warn('[MusicPlayer] audio error on track', PLAYLIST[idx]?.src, e);
+  });
+
+  /* ─── progress scrub ─── */
+  let scrubbing = false;
+  progressEl.addEventListener('mousedown', e => { scrubbing = true; scrub(e); });
+  document.addEventListener('mousemove',   e => { if(scrubbing) scrub(e); });
+  document.addEventListener('mouseup',     ()  => { scrubbing = false; });
+  progressEl.addEventListener('touchstart', e => { scrub(e.touches[0]); }, { passive: true });
+  progressEl.addEventListener('touchmove',  e => { scrub(e.touches[0]); }, { passive: true });
+
+  function scrub(e){
+    if(!audio.duration || isNaN(audio.duration)) return;
+    const r   = progressEl.getBoundingClientRect();
+    const pct = Math.max(0, Math.min(1, (e.clientX - r.left) / r.width));
+    audio.currentTime = pct * audio.duration;
+    fillEl.style.width = (pct * 100) + '%';
+  }
+
+  /* ─── button controls ─── */
+  playBtn.addEventListener('click', togglePlay);
+
+  pillPlayBtn.addEventListener('click', e => {
+    e.stopPropagation();
+    togglePlay();
+  });
+
+  prevBtn.addEventListener('click', () => loadTrack(idx - 1, !audio.paused));
+  nextBtn.addEventListener('click', () => loadTrack(idx + 1, !audio.paused));
+
+  pill.addEventListener('click', e => {
+    if(e.target.closest('#mp-pill-play')) return;
+    toggleExpand();
+  });
+  pill.addEventListener('keydown', e => {
+    if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); toggleExpand(); }
+  });
+
+  muteBtn.addEventListener('click', () => {
+    muted = !muted;
+    audio.muted = muted;
+    volIco.innerHTML = muted ? SVG_MUTE : SVG_VOL;
+  });
+
+  volSlider.addEventListener('input', () => {
+    audio.volume = +volSlider.value;
+    if(audio.volume > 0 && muted){ muted = false; audio.muted = false; }
+    volIco.innerHTML = (muted || audio.volume === 0) ? SVG_MUTE : SVG_VOL;
+  });
+
+  /* ─── keyboard shortcuts (only when player is focused) ─── */
+  document.addEventListener('keydown', e => {
+    // don't steal keys from inputs / textareas
+    if(['INPUT','TEXTAREA','SELECT'].includes(document.activeElement?.tagName)) return;
+    if(e.key === 'MediaPlayPause') { e.preventDefault(); togglePlay(); }
+    if(e.key === 'MediaTrackNext') { e.preventDefault(); loadTrack(idx + 1, !audio.paused); }
+    if(e.key === 'MediaTrackPrevious') { e.preventDefault(); loadTrack(idx - 1, !audio.paused); }
+  });
+
+  /* ─── init ─── */
+  renderPlaylist();
+  updatePillText();
 
 })();
 </script>
