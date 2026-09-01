@@ -357,39 +357,6 @@
   .genre-bar{height:3px; background:var(--paper-line); border-radius:2px; overflow:hidden;}
   .genre-bar-fill{height:100%; border-radius:2px; background:var(--accent,var(--coral)); width:0; transition:width 0.9s ease;}
 
-  /* ── collage / desk ── */
-  .collage{position:relative; padding:10px 40px 90px; max-width:1320px; margin:0 auto;}
-  .collage-grid{display:grid; grid-template-columns: 260px 1fr; gap:24px;}
-  .collage-stack{display:flex; flex-direction:column; gap:24px;}
-  .photo-card{position:relative; border:1.5px solid var(--ink); overflow:hidden; background:#565f74;}
-  .photo-fill{position:relative; display:flex; align-items:center; justify-content:center; width:100%; height:100%;}
-  .photo-fill svg{width:34%; opacity:0.85; stroke:rgba(255,255,255,0.85); fill:none; stroke-width:1.3;}
-  .photo-fill::after{content:""; position:absolute; inset:0; background:repeating-linear-gradient(0deg, rgba(0,0,0,0.08) 0px, transparent 1px, transparent 3px); mix-blend-mode:overlay;}
-  .p1{aspect-ratio:1/1.15; background:linear-gradient(150deg,#6C7593,#454E66);}
-  .p2{aspect-ratio:1/0.9; background:linear-gradient(150deg,#8A93AB,#5A6377);}
-  .p3{aspect-ratio:1.55/1; background:linear-gradient(120deg,#3B4258,#232838 60%, #6C7593);}
-  .caption-tag{position:absolute; bottom:10px; left:10px; background:var(--paper); color:var(--ink); font-family:'Space Mono', monospace; font-size:10px; padding:4px 8px; border:1px solid var(--ink);}
-  .sticker{position:absolute; font-family:'Bebas Neue', sans-serif; color:var(--coral); font-size:22px; transform:rotate(-8deg); pointer-events:none;}
-  .sticker.s1{top:-6px; right:26%;}
-  .sticker.s2{bottom:-14px; left:6%; color:var(--teal); transform:rotate(6deg); font-size:18px;}
-
-  /* ── windows ── */
-  .windows{display:grid; grid-template-columns: 1fr 1fr; gap:24px; margin-top:24px;}
-  .win{border:1.5px solid var(--ink); background:#F4F1E9;}
-  .win-bar{display:flex; align-items:center; gap:8px; padding:9px 12px; border-bottom:1.5px solid var(--ink); background:var(--paper-dark);}
-  .win-dots{display:flex; gap:6px;}
-  .win-dots span{width:9px; height:9px; border-radius:50%; background:var(--ink); opacity:0.7;}
-  .win-title{font-family:'Space Mono', monospace; font-size:11px; color:var(--ink-soft); margin:0 auto;}
-  .chat-window .win-body{padding:14px 16px; height:260px; overflow:hidden; background:#1B1D24; color:#DCE0EA; font-family:'Space Mono', monospace; font-size:12px; display:flex; flex-direction:column; gap:9px;}
-  .chat-line b{color:var(--lavender);}
-  .chat-line.hl b{color:var(--coral);}
-  .chat-line.sub{color:#8FE3D2;}
-  .obs-window .win-body{height:260px; background:linear-gradient(150deg,#4B5670,#22273A); position:relative; display:flex; align-items:center; justify-content:center;}
-  .obs-window .win-body svg{width:70px; opacity:0.7; stroke:#D8DCE8; fill:none; stroke-width:1.2;}
-  .obs-hud{position:absolute; top:12px; left:12px; font-family:'Space Mono', monospace; font-size:10px; color:#DDE1EC; background:rgba(0,0,0,0.35); padding:4px 8px; display:flex; gap:6px; align-items:center;}
-  .obs-hud .rec{width:6px; height:6px; border-radius:50%; background:var(--coral);}
-  #obs-caption{position:absolute; bottom:12px; right:12px; font-family:'Space Mono', monospace; font-size:10px; color:#DDE1EC; background:rgba(0,0,0,0.35); padding:4px 8px;}
-
   /* ── cta bar ── */
   .cta-bar{background:var(--ink); color:var(--paper); padding:70px 40px; text-align:center;}
   .cta-bar .eyebrow{font-family:'Space Mono',monospace; font-size:11px; letter-spacing:0.08em; color:var(--slate-3); margin-bottom:12px;}
@@ -426,22 +393,6 @@
   .milestone-year{font-family:'Space Mono',monospace; font-size:10px; color:var(--ink-soft); letter-spacing:0.05em; margin-bottom:8px;}
   .milestone-num{font-family:'Bebas Neue',sans-serif; font-size:42px; line-height:1; color:var(--ink);}
   .milestone-label{font-size:12px; color:var(--ink-soft); margin-top:6px; line-height:1.4;}
-
-  /* ── editorial ── */
-  .editorial{padding:80px 40px; max-width:1320px; margin:0 auto;}
-  .editorial-grid{display:grid; grid-template-columns: 1.15fr 1fr; gap:24px; align-items:start;}
-  .editorial-left{display:flex; flex-direction:column; gap:24px;}
-  .editorial-left .tall{aspect-ratio:0.86/1; background:linear-gradient(165deg,#3E465D,#20232F 70%);}
-  .editorial-right{display:flex; flex-direction:column; gap:24px;}
-  .editorial-right .wide{aspect-ratio:1.4/1; background:linear-gradient(140deg,#8A93AB,#525C74);}
-  .quote-card{border:1.5px solid var(--ink); background:var(--paper-dark); padding:24px; position:relative;}
-  .quote-card .quote{font-family:'Space Mono', monospace; font-size:13px; line-height:1.6;}
-  .quote-card .who{margin-top:14px; font-size:11px; color:var(--ink-soft);}
-
-  /* ── testimonials ── */
-  .testimonials{padding:0 40px 90px; max-width:1320px; margin:0 auto;}
-  .testi-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:20px;}
-  @media (max-width:700px){ .testi-grid{grid-template-columns:1fr;} }
 
   /* ── clip strip ── */
   .clip-strip{background:#14151B; padding:70px 40px; position:relative;}
@@ -566,7 +517,7 @@
   }
   .vod-title{
     font-size:13px; font-weight:600; line-height:1.3;
-    display:-webkit-box; -webkit-line-clamp:1; -webkit-box-orient:vertical;
+    display:-webkit-box; -webkit-line-clamp:1; -webkit-box-orient:vertical; line-clamp:1;
     overflow:hidden;
   }
   .vod-meta{
@@ -630,12 +581,96 @@
     overflow:hidden;
   }
 
-  /* ── sponsors ── */
-  .sponsors{padding:70px 40px; max-width:1320px; margin:0 auto; text-align:center;}
-  .sponsors-label{font-family:'Space Mono',monospace; font-size:11px; color:var(--ink-soft); letter-spacing:0.08em; margin-bottom:26px;}
-  .sponsor-row{display:flex; justify-content:center; gap:1.5px; flex-wrap:wrap; background:var(--ink); border:1.5px solid var(--ink);}
-  .sponsor-item{background:var(--paper); flex:1 1 180px; padding:22px; font-family:'Bebas Neue',sans-serif; font-size:20px; color:var(--ink-soft); letter-spacing:0.03em; transition:color 0.15s;}
-  .sponsor-item:hover{color:var(--ink);}
+  /* ── ticker / marquee ── */
+  .ticker{
+    background:var(--ink); color:var(--paper);
+    overflow:hidden; white-space:nowrap;
+    border-top:1.5px solid var(--ink); border-bottom:1.5px solid rgba(255,255,255,0.08);
+    padding:10px 0;
+  }
+  .ticker-inner{
+    display:inline-flex; gap:0;
+    animation:ticker-scroll 28s linear infinite;
+    will-change:transform;
+  }
+  .ticker:hover .ticker-inner{ animation-play-state:paused; }
+  .ticker-item{
+    font-family:'Bebas Neue',sans-serif; font-size:15px; letter-spacing:0.08em;
+    padding:0 28px; color:rgba(236,231,218,0.55);
+    display:inline-flex; align-items:center; gap:14px;
+  }
+  .ticker-item span{ color:var(--coral); font-size:18px; }
+  @keyframes ticker-scroll{ 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
+
+  /* ── what to expect ── */
+  .expect{padding:80px 40px; max-width:1320px; margin:0 auto; border-top:1.5px solid var(--ink);}
+  .expect-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:1.5px; background:var(--ink); border:1.5px solid var(--ink); margin-top:28px;}
+  .expect-card{background:var(--paper); padding:30px 26px; position:relative; overflow:hidden;}
+  .expect-card::before{content:''; position:absolute; top:0; left:0; right:0; height:3px; background:var(--accent,var(--coral));}
+  .expect-num{font-family:'Bebas Neue',sans-serif; font-size:56px; line-height:1; color:var(--ink); opacity:0.08; position:absolute; top:16px; right:20px; letter-spacing:-0.02em;}
+  .expect-icon{width:28px; height:28px; stroke:var(--ink); fill:none; stroke-width:1.4; margin-bottom:14px;}
+  .expect-title{font-family:'Bebas Neue',sans-serif; font-size:22px; letter-spacing:0.02em; margin-bottom:8px;}
+  .expect-desc{font-size:12.5px; color:var(--ink-soft); line-height:1.6;}
+
+  /* ── rules card ── */
+  .rules-section{padding:0 40px 80px; max-width:1320px; margin:0 auto;}
+  .rules-grid{display:grid; grid-template-columns:1fr 1fr; gap:1.5px; background:var(--ink); border:1.5px solid var(--ink);}
+  .rules-left{background:var(--ink); color:var(--paper); padding:40px;}
+  .rules-left h3{font-family:'Bebas Neue',sans-serif; font-size:38px; line-height:0.95; margin-bottom:16px;}
+  .rules-left p{font-family:'Space Mono',monospace; font-size:11px; color:rgba(236,231,218,0.5); line-height:1.7;}
+  .rules-right{background:var(--paper); padding:40px; display:flex; flex-direction:column; gap:0;}
+  .rule-item{display:flex; align-items:flex-start; gap:16px; padding:18px 0; border-bottom:1px solid var(--paper-line);}
+  .rule-item:last-child{border-bottom:none;}
+  .rule-num{font-family:'Bebas Neue',sans-serif; font-size:28px; color:var(--coral); line-height:1; flex-shrink:0; width:28px;}
+  .rule-text{font-size:13.5px; font-weight:600; margin-bottom:3px;}
+  .rule-sub{font-size:12px; color:var(--ink-soft);}
+
+  /* ── donate strip ── */
+  .donate-strip{background:var(--paper-dark); border-top:1.5px solid var(--ink); border-bottom:1.5px solid var(--ink); padding:50px 40px;}
+  .donate-inner{max-width:1320px; margin:0 auto; display:grid; grid-template-columns:1fr auto; gap:40px; align-items:center;}
+  .donate-left h3{font-family:'Bebas Neue',sans-serif; font-size:clamp(28px,4vw,48px); line-height:0.95; margin-bottom:10px;}
+  .donate-left p{font-size:13px; color:var(--ink-soft); line-height:1.6; max-width:520px;}
+  .donate-left .tts-note{font-family:'Space Mono',monospace; font-size:11px; color:var(--coral); margin-top:10px;}
+  .donate-right{display:flex; flex-direction:column; gap:10px; flex-shrink:0;}
+  .donate-btn{
+    display:flex; align-items:center; justify-content:space-between; gap:20px;
+    padding:14px 22px; border:1.5px solid var(--ink);
+    font-family:'Space Mono',monospace; font-size:11px; font-weight:700; letter-spacing:0.05em;
+    background:var(--paper); color:var(--ink);
+    transition:background 0.15s, color 0.15s, border-color 0.15s;
+    white-space:nowrap;
+  }
+  .donate-btn:hover{background:var(--ink); color:var(--paper);}
+  .donate-btn.primary{background:var(--coral); border-color:var(--coral); color:var(--paper);}
+  .donate-btn.primary:hover{background:#e0294a;}
+
+  /* ── socials grid ── */
+  .socials-section{padding:80px 40px; max-width:1320px; margin:0 auto; border-top:1.5px solid var(--ink);}
+  .socials-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:1.5px; background:var(--ink); border:1.5px solid var(--ink); margin-top:28px;}
+  .social-card{
+    background:var(--paper); padding:28px 26px;
+    display:flex; flex-direction:column; gap:12px;
+    transition:background 0.15s; position:relative;
+    text-decoration:none; color:inherit;
+  }
+  .social-card:hover{background:var(--paper-dark);}
+  .social-card::after{content:'↗'; position:absolute; top:20px; right:22px; font-size:18px; color:var(--paper-line); transition:color 0.15s, transform 0.15s;}
+  .social-card:hover::after{color:var(--coral); transform:translate(2px,-2px);}
+  .social-card-icon{width:32px; height:32px; stroke:var(--ink); fill:none; stroke-width:1.4;}
+  .social-card-name{font-family:'Bebas Neue',sans-serif; font-size:22px; letter-spacing:0.03em;}
+  .social-card-handle{font-family:'Space Mono',monospace; font-size:10.5px; color:var(--ink-soft);}
+  .social-card-desc{font-size:12px; color:var(--ink-soft); line-height:1.5;}
+
+  /* ── stream info panel ── */
+  .stream-info{padding:0 40px 80px; max-width:1320px; margin:0 auto;}
+  .stream-info-grid{display:grid; grid-template-columns:1fr 1fr 1fr; gap:1.5px; background:var(--ink); border:1.5px solid var(--ink);}
+  .si-card{background:var(--paper); padding:30px;}
+  .si-card h4{font-family:'Bebas Neue',sans-serif; font-size:20px; letter-spacing:0.03em; margin-bottom:14px; border-bottom:1.5px solid var(--ink); padding-bottom:10px;}
+  .si-list{display:flex; flex-direction:column; gap:9px;}
+  .si-row{display:flex; justify-content:space-between; align-items:baseline; gap:8px; font-size:12.5px;}
+  .si-row span:first-child{color:var(--ink-soft);}
+  .si-row span:last-child{font-family:'Space Mono',monospace; font-size:11px; font-weight:700; text-align:right;}
+  .si-tag{display:inline-block; font-family:'Space Mono',monospace; font-size:10px; padding:3px 8px; border:1px solid var(--paper-line); color:var(--ink-soft); margin:2px 2px 0 0;}
 
   /* ── community ── */
   .community{padding:80px 40px; background:var(--paper-dark); border-top:1.5px solid var(--ink); border-bottom:1.5px solid var(--ink);}
@@ -814,13 +849,16 @@
     .twitch-inner{grid-template-columns:1fr 280px; height:460px;}
   }
   @media (max-width: 900px){
-    .wrap, nav, .hero-content, .section-head, .collage, .cta-bar, .about, .gear, .editorial, .testimonials, .clip-strip, .sponsors, .faq, footer, .genres-section, .milestones, .community{padding-left:20px; padding-right:20px;}
+    .wrap, nav, .hero-content, .section-head, .cta-bar, .about, .gear, .clip-strip, .faq, footer, .genres-section, .milestones, .community, .expect, .rules-section, .donate-strip, .stream-info, .socials-section, .episodes-section{padding-left:20px; padding-right:20px;}
     nav{grid-template-columns:auto 1fr auto;}
     .nav-links{display:none;}
     .stats-bar{grid-template-columns:repeat(2,1fr);}
     .stat:nth-child(2){border-right:none;}
-    .about-grid, .collage-grid, .windows, .editorial-grid, .community-inner{grid-template-columns:1fr;}
-    .gear-grid, .testi-grid{grid-template-columns:1fr;}
+    .rules-grid{grid-template-columns:1fr;}
+    .donate-inner{grid-template-columns:1fr;}
+    .donate-right{flex-direction:row; flex-wrap:wrap;}
+    .socials-grid{grid-template-columns:1fr 1fr;}
+    .stream-info-grid{grid-template-columns:1fr;}
     .genres-grid{grid-template-columns:1fr;}
     .milestone-list{grid-template-columns:repeat(2,1fr);}
     .clip-grid{grid-template-columns:1fr 1fr;}
@@ -838,6 +876,12 @@
     .milestone-list{grid-template-columns:1fr 1fr;}
     .vod-card{ width:85vw !important; }
     .carousel-stage{ height:300px; }
+    .about-grid, .community-inner{grid-template-columns:1fr;}
+    .gear-grid, .expect-grid{grid-template-columns:1fr;}
+    .socials-grid{grid-template-columns:1fr;}
+    .donate-right{flex-direction:column;}
+    .episodes-head{padding-left:20px; padding-right:20px;}
+    .episodes-footer{padding-left:20px; padding-right:20px;}
   }
 
 </style>
@@ -956,11 +1000,13 @@
       <p>the short version, for anyone new here</p>
     </div>
     <div class="about-grid">
-      <div class="photo-card p1" style="aspect-ratio:0.85/1; background:#2a2a2e;">
-        <img id="profile-img" src="" alt="ThatGuyPB profile photo"
-          style="width:100%;height:100%;object-fit:cover;display:block;"
+      <div style="position:relative; border:1.5px solid var(--ink); overflow:hidden; background:var(--paper-dark); aspect-ratio:0.85/1;">
+        <img id="profile-img" src="" alt="ThatGuyPB"
+          style="width:100%;height:100%;object-fit:cover;object-position:top center;display:block;"
           onerror="this.style.display='none'">
-        <div class="caption-tag" id="profile-caption">profile.jpg</div>
+        <div style="position:absolute;bottom:0;left:0;right:0;padding:10px 12px;background:linear-gradient(to top,rgba(33,31,27,0.85),transparent);pointer-events:none;">
+          <div style="font-family:'Space Mono',monospace;font-size:10px;color:rgba(236,231,218,0.8);" id="profile-caption">ThatGuyPB_</div>
+        </div>
       </div>
       <div class="about-copy">
         <p id="bio-text">I'm Unapologetically Myself ↗ — 19 year old fella streaming whatever I feel like. Jokes are on the edgy side, if that's not your thing no stress. Lost my old account (@HHThatGuyPB) but the community survived and we've been going ever since. No Pause Only Resume.</p>
@@ -994,69 +1040,12 @@
     </div>
   </section>
 
-  <!-- ── THE DESK ── -->
-  <div class="section-head">
-    <h2>the desk</h2>
-    <p>a few things from around the setup — clips, the chat, the usual chaos</p>
-  </div>
-
-  <div class="collage">
-    <div class="collage-grid">
-      <div class="collage-stack">
-        <div class="photo-card p1">
-          <div class="photo-fill"><svg viewBox="0 0 24 24"><rect x="2" y="6" width="14" height="12" rx="2"/><path d="M16 10l6-4v12l-6-4"/></svg></div>
-          <div class="caption-tag">webcam.png</div>
-        </div>
-        <div class="photo-card p2">
-          <div class="photo-fill"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="14" rx="1"/><path d="M8 21h8M12 18v3"/></svg></div>
-          <div class="caption-tag">deskcam.jpg</div>
-        </div>
-      </div>
-      <div class="photo-card p3" style="position:relative;">
-        <div class="photo-fill"><svg viewBox="0 0 24 24"><path d="M6 20V10M6 10l6-6 6 6M12 4v16"/></svg></div>
-        <div class="caption-tag">last night's rage quit, 2:41am</div>
-        <span class="sticker s1">HI CHAT</span>
-        <span class="sticker s2">:3</span>
-      </div>
-    </div>
-
-    <div class="windows">
-      <div class="win chat-window">
-        <div class="win-bar">
-          <div class="win-dots"><span></span><span></span><span></span></div>
-          <div class="win-title">chat.log — twitch.tv/ThatGuyPB_</div>
-        </div>
-        <div class="win-body">
-          <div class="chat-line"><b>mossycouch:</b> yo PB stream just went live 🔥</div>
-          <div class="chat-line sub"><b>NEW SUB — pebbleking:</b> welcome to the loser gang</div>
-          <div class="chat-line hl"><b>ThatGuyPB:</b> guys i am NOT losing this one</div>
-          <div class="chat-line"><b>tinyraccoon:</b> he is absolutely losing this one</div>
-          <div class="chat-line"><b>ferngully_:</b> LMAOOO</div>
-          <div class="chat-line"><b>quietblip:</b> clip it clip it</div>
-          <div class="chat-line hl"><b>ThatGuyPB:</b> ok that's fair, clipping now</div>
-          <div class="chat-line"><b>mossycouch:</b> gg either way, love the vibes</div>
-        </div>
-      </div>
-      <div class="win obs-window">
-        <div class="win-bar">
-          <div class="win-dots"><span></span><span></span><span></span></div>
-          <div class="win-title">scene — main.obs</div>
-        </div>
-        <div class="win-body">
-          <div class="obs-hud"><span class="rec"></span><span id="obs-rec-time">REC 03:42:10</span></div>
-          <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M9 9l6 3-6 3V9z"/></svg>
-          <div id="obs-caption">1080p · 60fps</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
   <!-- ── CTA BAR ── -->
   <section class="cta-bar">
     <div class="eyebrow">DON'T MISS IT</div>
     <h2 id="cta-heading">STREAM DROPS<br>ALMOST EVERY DAY</h2>
     <div class="cta-schedule hide-live">
-      <div>SCHEDULE<b></b>ALMOST DAILY</b></div>
+      <div>SCHEDULE<b>ALMOST DAILY</b></div>
       <div>DONATIONS<b>TTS ENABLED</b></div>
       <div>COMMUNITY<b>TGC DISCORD</b></div>
     </div>
@@ -1150,41 +1139,82 @@
     </div>
   </section>
 
-  <!-- ── EDITORIAL ── -->
-  <section class="editorial">
-    <div class="editorial-grid">
-      <div class="editorial-left">
-        <div class="photo-card tall">
-          <div class="photo-fill"><svg viewBox="0 0 24 24"><path d="M4 4h6l2 3h8v11a2 2 0 01-2 2H4a2 2 0 01-2-2V6a2 2 0 012-2z"/></svg></div>
-          <div class="caption-tag">vod_archive/</div>
-        </div>
+  <!-- ── WHAT TO EXPECT ── -->
+  <section class="expect">
+    <div class="section-head" style="padding-left:0; padding-right:0; border-top:none;">
+      <h2>what to expect</h2>
+      <p>the honest breakdown before you follow</p>
+    </div>
+    <div class="expect-grid">
+      <div class="expect-card" style="--accent:var(--coral)">
+        <div class="expect-num">01</div>
+        <svg class="expect-icon" viewBox="0 0 24 24"><path d="M4 4h16v11l-4 4h-4l-3 3H9v-3H4V4z"/><line x1="9" y1="9" x2="15" y2="9"/><line x1="9" y1="13" x2="13" y2="13"/></svg>
+        <div class="expect-title">Unfiltered Chat Energy</div>
+        <div class="expect-desc">Jokes go hard, humour is edgy, and chat is genuinely unhinged. If that's your thing — welcome home. If not, no pressure.</div>
       </div>
-      <div class="editorial-right">
-        <div class="quote-card">
-          <div class="quote">"I started streaming because I lose games too consistently to keep it to myself."</div>
-          <div class="who">— from the about-me VOD, episode 1</div>
-        </div>
-        <div class="photo-card wide">
-          <div class="photo-fill"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3"/><path d="M5 21c0-4 3-6 7-6s7 2 7 6"/></svg></div>
-          <div class="caption-tag">community night, ep. 198</div>
-        </div>
+      <div class="expect-card" style="--accent:var(--teal)">
+        <div class="expect-num">02</div>
+        <svg class="expect-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        <div class="expect-title">Almost Daily Streams</div>
+        <div class="expect-desc">No fixed schedule — just constant. Almost every day, no pause, only resume. Follow on Twitch for notifications.</div>
+      </div>
+      <div class="expect-card" style="--accent:var(--purple)">
+        <div class="expect-num">03</div>
+        <svg class="expect-icon" viewBox="0 0 24 24"><rect x="2" y="6" width="14" height="12" rx="2"/><path d="M16 10l6-4v12l-6-4"/></svg>
+        <div class="expect-title">Variety — No Commitment</div>
+        <div class="expect-desc">Whatever's in the backlog, whatever chat votes on. FPS, RPGs, just chatting, co-op nights — the schedule is vibes.</div>
+      </div>
+      <div class="expect-card" style="--accent:var(--coral)">
+        <div class="expect-num">04</div>
+        <svg class="expect-icon" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+        <div class="expect-title">TGC — Real Community</div>
+        <div class="expect-desc">ThatGuyPB's Community. The Discord is where TGC actually lives. People stick around. If you're here, you're here to stay.</div>
+      </div>
+      <div class="expect-card" style="--accent:var(--teal)">
+        <div class="expect-num">05</div>
+        <svg class="expect-icon" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3"/><path d="M5 21c0-4 3-6 7-6s7 2 7 6"/></svg>
+        <div class="expect-title">TTS Donations</div>
+        <div class="expect-desc">Every dono goes straight to TTS — your message gets read on stream. You don't have to, but it's always appreciated and always chaotic.</div>
+      </div>
+      <div class="expect-card" style="--accent:var(--purple)">
+        <div class="expect-num">06</div>
+        <svg class="expect-icon" viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        <div class="expect-title">No Pause Only Resume</div>
+        <div class="expect-desc">Lost an entire channel. Started over. Built it back. That's the whole ethos — keep going regardless.</div>
       </div>
     </div>
   </section>
 
-  <!-- ── CHAT SAYS ── -->
-  <section class="testimonials">
-    <div class="section-head" style="padding-left:0; padding-right:0;">
-      <h2>chat says</h2>
-      <p>pulled straight from the community</p>
-    </div>
-    <div class="testi-grid">
-      <div class="quote-card"><div class="quote">LOADING...</div><div class="who">— N/A</div></div>
-      <div class="quote-card"><div class="quote">LOADING...</div><div class="who">— N/A</div></div>
-      <div class="quote-card"><div class="quote">LOADING...</div><div class="who">— N/A</div></div>
-      <div class="quote-card"><div class="quote">LOADING...</div><div class="who">— N/A</div></div>
-      <div class="quote-card"><div class="quote">LOADING...</div><div class="who">— N/A</div></div>
-      <div class="quote-card"><div class="quote">LOADING...</div><div class="who">— N/A</div></div>
+  <!-- ── RULES ── -->
+  <section class="rules-section">
+    <div class="rules-grid">
+      <div class="rules-left">
+        <h3>STREAM<br>RULES</h3>
+        <p>Three rules. That's it.<br>Keep it simple, keep it fun.</p>
+      </div>
+      <div class="rules-right">
+        <div class="rule-item">
+          <div class="rule-num">1</div>
+          <div>
+            <div class="rule-text">Jokes are fine — don't be a genuine dick</div>
+            <div class="rule-sub">Humour is welcome, real malice isn't. Know the difference.</div>
+          </div>
+        </div>
+        <div class="rule-item">
+          <div class="rule-num">2</div>
+          <div>
+            <div class="rule-text">Have a good time</div>
+            <div class="rule-sub">That's the whole point. If you're not, there's a door.</div>
+          </div>
+        </div>
+        <div class="rule-item">
+          <div class="rule-num">3</div>
+          <div>
+            <div class="rule-text">If you're here, you're here to stay</div>
+            <div class="rule-sub">Welcome to TGC. Genuinely.</div>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -1297,14 +1327,125 @@
     </div>
   </section>
 
-  <!-- ── PARTNERS ── -->
-  <section class="sponsors">
-    <div class="sponsors-label">PARTNERS</div>
-    <div class="sponsor-row">
-      <div class="sponsor-item">OPEN</div>
-      <div class="sponsor-item">OPEN</div>
-      <div class="sponsor-item">OPEN</div>
-      <div class="sponsor-item">OPEN</div>
+  <!-- ── TICKER ── -->
+  <div class="ticker" aria-hidden="true">
+    <div class="ticker-inner">
+      <span class="ticker-item">NO PAUSE ONLY RESUME <span>·</span></span>
+      <span class="ticker-item">UNAPOLOGETICALLY MYSELF <span>·</span></span>
+      <span class="ticker-item">WELCOME TO TGC <span>·</span></span>
+      <span class="ticker-item">DONOS ARE TTS <span>·</span></span>
+      <span class="ticker-item">STREAMING ALMOST DAILY <span>·</span></span>
+      <span class="ticker-item">THATGUYPB_ ON TWITCH <span>·</span></span>
+      <span class="ticker-item">134 / 140 FOLLOWERS — TELL A FRIEND <span>·</span></span>
+      <span class="ticker-item">JOKES ARE ON THE EDGY SIDE <span>·</span></span>
+      <span class="ticker-item">IF YOU'RE HERE YOU'RE HERE TO STAY <span>·</span></span>
+      <!-- duplicate for seamless loop -->
+      <span class="ticker-item">NO PAUSE ONLY RESUME <span>·</span></span>
+      <span class="ticker-item">UNAPOLOGETICALLY MYSELF <span>·</span></span>
+      <span class="ticker-item">WELCOME TO TGC <span>·</span></span>
+      <span class="ticker-item">DONOS ARE TTS <span>·</span></span>
+      <span class="ticker-item">STREAMING ALMOST DAILY <span>·</span></span>
+      <span class="ticker-item">THATGUYPB_ ON TWITCH <span>·</span></span>
+      <span class="ticker-item">134 / 140 FOLLOWERS — TELL A FRIEND <span>·</span></span>
+      <span class="ticker-item">JOKES ARE ON THE EDGY SIDE <span>·</span></span>
+      <span class="ticker-item">IF YOU'RE HERE YOU'RE HERE TO STAY <span>·</span></span>
+    </div>
+  </div>
+
+  <!-- ── DONATE STRIP ── -->
+  <section class="donate-strip">
+    <div class="donate-inner">
+      <div class="donate-left">
+        <h3>SUPPORT THE STREAM</h3>
+        <p>Donations aren't required — the stream runs regardless. But if you want to show up on TTS and have your message read live in the most unhinged way possible, this is how.</p>
+        <div class="tts-note">⚡ ALL DONOS GO TO TTS — YOUR MESSAGE GETS READ ON STREAM</div>
+      </div>
+      <div class="donate-right">
+        <a href="https://www.patreon.com/cw/TGCHideout" target="_blank" rel="noopener" class="donate-btn primary">TGC HIDEOUT ON PATREON →</a>
+        <a href="https://twitch.tv/thatguypb_" target="_blank" rel="noopener" class="donate-btn">SUBSCRIBE ON TWITCH ↗</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── STREAM INFO ── -->
+  <section class="stream-info">
+    <div class="section-head" style="padding-left:0; padding-right:0; border-top:1.5px solid var(--ink);">
+      <h2>stream info</h2>
+      <p>everything you need before you show up</p>
+    </div>
+    <div class="stream-info-grid">
+      <div class="si-card">
+        <h4>Schedule</h4>
+        <div class="si-list">
+          <div class="si-row"><span>Frequency</span><span>Almost daily</span></div>
+          <div class="si-row"><span>Notice</span><span>Twitch alerts</span></div>
+          <div class="si-row"><span>Vods</span><span>Stay up on Twitch + YouTube</span></div>
+          <div class="si-row"><span>Platform</span><span>PC — Windows</span></div>
+          <div class="si-row"><span>Language</span><span>English</span></div>
+        </div>
+      </div>
+      <div class="si-card">
+        <h4>Content</h4>
+        <div class="si-list">
+          <div class="si-row"><span>Style</span><span>Variety — no niche</span></div>
+          <div class="si-row"><span>Tone</span><span>Edgy, unfiltered, real</span></div>
+          <div class="si-row"><span>Chat type</span><span>Open — no sub-only</span></div>
+          <div class="si-row"><span>Donations</span><span>TTS enabled</span></div>
+          <div class="si-row"><span>Community</span><span>TGC Discord</span></div>
+        </div>
+      </div>
+      <div class="si-card">
+        <h4>Categories Played</h4>
+        <div id="si-categories" style="margin-top:4px;">
+          <span class="si-tag">Loading…</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SOCIALS ── -->
+  <section class="socials-section">
+    <div class="section-head" style="padding-left:0; padding-right:0; border-top:none;">
+      <h2>find me everywhere</h2>
+      <p>all the links, no algorithm required</p>
+    </div>
+    <div class="socials-grid">
+      <a href="https://twitch.tv/thatguypb_" target="_blank" rel="noopener" class="social-card">
+        <svg class="social-card-icon" viewBox="0 0 24 24"><path d="M4 4h16v11l-4 4h-4l-3 3H9v-3H4V4z"/><line x1="14" y1="8" x2="14" y2="13"/><line x1="10" y1="8" x2="10" y2="13"/></svg>
+        <div class="social-card-name">Twitch</div>
+        <div class="social-card-handle">twitch.tv/thatguypb_</div>
+        <div class="social-card-desc">Live streams almost daily. Follow for notifications. Main channel.</div>
+      </a>
+      <a href="https://www.youtube.com/@HHThatGuyPB" target="_blank" rel="noopener" class="social-card">
+        <svg class="social-card-icon" viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="3"/><path d="M10 9l6 3-6 3V9z"/></svg>
+        <div class="social-card-name">YouTube — Main</div>
+        <div class="social-card-handle">@HHThatGuyPB</div>
+        <div class="social-card-desc">Highlights, clips, and edited content from the stream.</div>
+      </a>
+      <a href="https://www.youtube.com/@ThatGuyPBVods" target="_blank" rel="noopener" class="social-card">
+        <svg class="social-card-icon" viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="3"/><path d="M10 9l6 3-6 3V9z"/></svg>
+        <div class="social-card-name">YouTube — VODs</div>
+        <div class="social-card-handle">@ThatGuyPBVods</div>
+        <div class="social-card-desc">Full VOD archive. Every stream, uncut.</div>
+      </a>
+      <a href="https://www.tiktok.com/@tgc_pb" target="_blank" rel="noopener" class="social-card">
+        <svg class="social-card-icon" viewBox="0 0 24 24"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"/></svg>
+        <div class="social-card-name">TikTok</div>
+        <div class="social-card-handle">@tgc_pb</div>
+        <div class="social-card-desc">Short clips and moments from the community.</div>
+      </a>
+      <a href="https://www.instagram.com/hhthatguypb" target="_blank" rel="noopener" class="social-card">
+        <svg class="social-card-icon" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="0.6"/></svg>
+        <div class="social-card-name">Instagram</div>
+        <div class="social-card-handle">@hhthatguypb</div>
+        <div class="social-card-desc">Updates, behind-the-scenes, and general content.</div>
+      </a>
+      <a href="https://x.com/ThatGuyPB" target="_blank" rel="noopener" class="social-card">
+        <svg class="social-card-icon" viewBox="0 0 24 24"><line x1="4" y1="4" x2="20" y2="20"/><line x1="20" y1="4" x2="4" y2="20"/></svg>
+        <div class="social-card-name">X / Twitter</div>
+        <div class="social-card-handle">@ThatGuyPB</div>
+        <div class="social-card-desc">Stream announcements, thoughts, and community updates.</div>
+      </a>
     </div>
   </section>
 
@@ -1539,7 +1680,6 @@
     const heroCta   = $('hero-cta');
     const ctaHeading= $('cta-heading');
     const ctaBtn    = $('cta-btn');
-    const obsCap    = $('obs-caption');
 
     if(isLive){
       const viewers = Number(stream.viewer_count||0).toLocaleString();
@@ -1555,7 +1695,6 @@
 
       // hero
       if(heroSub) heroSub.textContent = title;
-      if(obsCap)  obsCap.textContent  = game || '1080p · 60fps';
 
       // cta
       if(heroCta){  heroCta.textContent = '🔴 WATCH LIVE NOW →'; heroCta.classList.add('live-cta'); }
@@ -1756,6 +1895,15 @@
         });
       });
     });
+
+    // --- 5. Populate stream-info categories panel ---
+    const siCats = $('si-categories');
+    if(siCats && sorted.length){
+      siCats.innerHTML = sorted.map(([gameId]) => {
+        const name = (gameMap[gameId] || {}).name || 'Unknown';
+        return `<span class="si-tag">${escHtml(name)}</span>`;
+      }).join('');
+    }
   }
   function renderClips(clips){
     const grid = $('clip-grid');
@@ -1778,9 +1926,6 @@
       </div>`).join('');
   }
 
-  /* ═══════════════════════════════════════════════════════════════════
-     RENDER VIDEOS
-     ═══════════════════════════════════════════════════════════════════ */
   /* ═══════════════════════════════════════════════════════════════════
      RENDER VIDEOS  — 3D looping carousel
      ═══════════════════════════════════════════════════════════════════ */
@@ -2019,12 +2164,7 @@
      ═══════════════════════════════════════════════════════════════════ */
   function applyChannel(ch, stream){
     if(!ch) return;
-    const obsCap = $('obs-caption');
-    // show current game when offline, stream handler covers online state
-    if(obsCap && !stream){
-      obsCap.textContent = ch.game_name || '1080p · 60fps';
-    }
-    // top game in fact list (only if no stream data has a better answer)
+    // top game in fact list
     if(ch.game_name && !stream){
       set('fact-category', ch.game_name.length > 12 ? ch.game_name.slice(0,12)+'…' : ch.game_name);
     }
