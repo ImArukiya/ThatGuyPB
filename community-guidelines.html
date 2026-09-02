@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Community Guidelines — ThatGuyPB</title>
+<meta name="description" content="TGC community guidelines — how we keep the stream and Discord a good place to be.">
+<link rel="icon" type="image/png" href="assets/icon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#ECE7DA; --paper-dark:#E1DACB;
+    --ink:#211F1B; --ink-soft:#524E45;
+    --coral:#FF4D6D; --teal:#2A9D8F;
+    --paper-line:rgba(33,31,27,0.14);
+    --purple:#9B6DFF;
+  }
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  html{ scroll-behavior:smooth; }
+  body{
+    background:var(--paper); color:var(--ink);
+    font-family:'Space Grotesk',sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{ color:inherit; text-decoration:none; }
+
+  /* ── nav ── */
+  header{
+    position:sticky; top:0; z-index:200;
+    background:var(--paper); border-bottom:1.5px solid var(--ink);
+  }
+  nav{
+    max-width:1320px; margin:0 auto; padding:14px 40px;
+    display:flex; align-items:center; justify-content:space-between;
+  }
+  .nav-logo{
+    font-family:'Bebas Neue',sans-serif; font-size:22px; letter-spacing:0.04em;
+  }
+  .nav-logo span{ color:var(--coral); }
+  .nav-back{
+    font-family:'Space Mono',monospace; font-size:11px;
+    letter-spacing:0.06em; color:var(--ink-soft);
+    display:flex; align-items:center; gap:6px;
+    transition:color 0.15s;
+  }
+  .nav-back:hover{ color:var(--coral); }
+  .nav-back svg{ width:14px; height:14px; stroke:currentColor; fill:none; stroke-width:2; }
+
+  /* ── hero strip ── */
+  .page-hero{
+    background:var(--ink); color:var(--paper);
+    padding:70px 40px 60px;
+    border-bottom:1.5px solid var(--ink);
+  }
+  .page-hero-inner{ max-width:860px; margin:0 auto; }
+  .page-eyebrow{
+    font-family:'Space Mono',monospace; font-size:10px;
+    letter-spacing:0.12em; color:var(--coral);
+    margin-bottom:12px; display:block;
+  }
+  .page-hero h1{
+    font-family:'Bebas Neue',sans-serif;
+    font-size:clamp(52px,8vw,96px); line-height:0.9;
+    letter-spacing:0.01em;
+  }
+  .page-hero p{
+    font-family:'Space Mono',monospace; font-size:12px;
+    color:rgba(236,231,218,0.5); margin-top:16px; line-height:1.7;
+    max-width:500px;
+  }
+
+  /* ── content ── */
+  .page-content{
+    max-width:860px; margin:0 auto; padding:72px 40px 100px;
+  }
+
+  .section-block{ margin-bottom:56px; }
+  .section-block:last-child{ margin-bottom:0; }
+
+  .block-num{
+    font-family:'Bebas Neue',sans-serif; font-size:13px;
+    letter-spacing:0.12em; color:var(--coral); margin-bottom:6px;
+  }
+  .block-title{
+    font-family:'Bebas Neue',sans-serif; font-size:32px;
+    letter-spacing:0.02em; margin-bottom:16px;
+    border-bottom:1.5px solid var(--ink); padding-bottom:12px;
+  }
+  .block-body p{
+    font-size:14px; color:var(--ink-soft); line-height:1.75;
+    margin-bottom:14px; max-width:680px;
+  }
+  .block-body p:last-child{ margin-bottom:0; }
+  .block-body strong{ color:var(--ink); font-weight:700; }
+
+  .rule-list{ display:flex; flex-direction:column; gap:0; margin-top:8px; }
+  .rule-row{
+    display:flex; align-items:flex-start; gap:16px;
+    padding:16px 0; border-bottom:1px solid var(--paper-line);
+  }
+  .rule-row:last-child{ border-bottom:none; }
+  .rule-n{
+    font-family:'Bebas Neue',sans-serif; font-size:26px;
+    color:var(--coral); line-height:1; flex-shrink:0; width:28px;
+  }
+  .rule-text{ font-size:14px; color:var(--ink-soft); line-height:1.65; }
+  .rule-text b{ display:block; color:var(--ink); font-size:14px; margin-bottom:4px; }
+
+  .callout{
+    background:var(--paper-dark); border-left:3px solid var(--coral);
+    padding:18px 22px; margin:24px 0;
+    font-family:'Space Mono',monospace; font-size:11.5px;
+    line-height:1.7; color:var(--ink-soft);
+  }
+  .callout strong{ color:var(--ink); }
+
+  /* ── footer ── */
+  footer{
+    background:var(--ink); color:var(--paper);
+    padding:28px 40px;
+    display:flex; align-items:center; justify-content:space-between;
+    flex-wrap:wrap; gap:12px;
+  }
+  .foot-left{
+    font-family:'Bebas Neue',sans-serif; font-size:20px;
+    letter-spacing:0.04em; color:rgba(236,231,218,0.2);
+  }
+  .foot-right{
+    font-family:'Space Mono',monospace; font-size:10px;
+    color:rgba(236,231,218,0.25); display:flex; gap:20px; flex-wrap:wrap;
+  }
+  .foot-right a{ transition:color 0.15s; }
+  .foot-right a:hover{ color:rgba(236,231,218,0.6); }
+
+  @media(max-width:640px){
+    nav{ padding:12px 20px; }
+    .page-hero{ padding:50px 20px 44px; }
+    .page-content{ padding:48px 20px 70px; }
+    footer{ padding:20px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <nav>
+    <div class="nav-logo">That<span>Guy</span>PB</div>
+    <a href="/" class="nav-back">
+      <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+      BACK TO SITE
+    </a>
+  </nav>
+</header>
+
+<div class="page-hero">
+  <div class="page-hero-inner">
+    <span class="page-eyebrow">TGC — THATGUYPB'S COMMUNITY</span>
+    <h1>COMMUNITY<br>GUIDELINES</h1>
+    <p>How we keep TGC a good place — in chat, in Discord, everywhere. Short version: don't be a genuine dick. Long version is below.</p>
+  </div>
+</div>
+
+<div class="page-content">
+
+  <div class="section-block">
+    <div class="block-num">00 — OVERVIEW</div>
+    <div class="block-title">The Short Version</div>
+    <div class="block-body">
+      <p>TGC (ThatGuyPB's Community) exists across Twitch chat, Discord, YouTube comments, TikTok, and everywhere else ThatGuyPB content lives. These guidelines cover all of it.</p>
+      <p>The stream is unfiltered, the humour is edgy, and that's the whole vibe. The rules aren't here to sanitise anything — they're here to make sure the chaos stays fun and nobody gets actually hurt by it.</p>
+    </div>
+    <div class="callout"><strong>No Pause Only Resume.</strong> We've been through worse than a bad chat message. Show up, stay real, and keep it going.</div>
+  </div>
+
+  <div class="section-block">
+    <div class="block-num">01 — CORE RULES</div>
+    <div class="block-title">The Actual Rules</div>
+    <div class="rule-list">
+      <div class="rule-row">
+        <div class="rule-n">1</div>
+        <div class="rule-text">
+          <b>Jokes are fine — genuine malice isn't</b>
+          Dark humour, edgy jokes, taking the piss — all fine. That's what TGC is. What isn't fine is real, targeted hatred at a person. Know the difference between a joke and an attack. If you're aiming to actually hurt someone rather than make the room laugh, that's where it ends.
+        </div>
+      </div>
+      <div class="rule-row">
+        <div class="rule-n">2</div>
+        <div class="rule-text">
+          <b>No slurs used as weapons</b>
+          Reclaimed language in certain contexts is one thing. Using slurs to demean, attack, or harass someone — whether it's about race, gender, sexuality, disability, or anything else — is not happening in TGC. Full stop.
+        </div>
+      </div>
+      <div class="rule-row">
+        <div class="rule-n">3</div>
+        <div class="rule-text">
+          <b>Don't bring real-world drama into the stream</b>
+          Politics, religion, genuinely divisive real-world topics — keep them out of chat. It's a stream, not a debate club. If you want to argue about the state of the world, there are better places for that.
+        </div>
+      </div>
+      <div class="rule-row">
+        <div class="rule-n">4</div>
+        <div class="rule-text">
+          <b>No doxxing or personal information sharing</b>
+          Sharing someone's real name, address, phone number, or any other private information — about anyone, not just streamers — is an immediate ban. No exceptions, no context that makes this acceptable.
+        </div>
+      </div>
+      <div class="rule-row">
+        <div class="rule-n">5</div>
+        <div class="rule-text">
+          <b>Don't spam or flood chat</b>
+          Repeating the same message, copypastas during normal conversation, excessive emoji walls — keep it readable. During hype moments it's fine. As a constant tactic to derail conversation, it isn't.
+        </div>
+      </div>
+      <div class="rule-row">
+        <div class="rule-n">6</div>
+        <div class="rule-text">
+          <b>Self-promotion needs to stay in its lane</b>
+          Don't drop your channel link or social handles in chat without asking. In Discord there are channels for this. In chat during a live stream, it comes across as poaching. DM if you want to collab — the answer might even be yes.
+        </div>
+      </div>
+      <div class="rule-row">
+        <div class="rule-n">7</div>
+        <div class="rule-text">
+          <b>Mods have final say</b>
+          If a mod tells you to ease up, ease up. You don't have to agree with the call — you can bring it up after the stream or in Discord. In the moment, the mod's word stands.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-block">
+    <div class="block-num">02 — DISCORD</div>
+    <div class="block-title">Discord Specifics</div>
+    <div class="block-body">
+      <p>The Discord is where TGC actually lives between streams. The same core rules apply, plus a few extras that make sense for an async community:</p>
+      <p><strong>Stay in the right channels.</strong> Game votes go in game votes, clips go in clips, random chaos goes in general. The server is organised for a reason.</p>
+      <p><strong>NSFW content stays in NSFW-marked channels.</strong> Anywhere else and it gets removed and you get warned. Second time is a kick. Third time is a ban.</p>
+      <p><strong>Pinging mods or admins unnecessarily</strong> will get you muted. If it's genuinely urgent, use the right report channel. Don't @ the whole mod team because you're bored.</p>
+      <p><strong>Ban appeals</strong> can be submitted via DM to a mod. Bans aren't handed out lightly — if you got one, something went noticeably wrong. That said, people change and appeals are considered.</p>
+    </div>
+  </div>
+
+  <div class="section-block">
+    <div class="block-num">03 — ENFORCEMENT</div>
+    <div class="block-title">What Happens When Rules Get Broken</div>
+    <div class="block-body">
+      <p>Most enforcement follows a rough ladder: warning → timeout → ban. How fast you move through that ladder depends entirely on what you did and how you handle being told about it.</p>
+      <p>Some things skip straight to a permanent ban. Doxxing, coordinated harassment, and hate speech targeting protected characteristics are instant exits with no appeal window.</p>
+      <p>Bans on Twitch are Twitch's platform and ThatGuyPB's call. Bans in Discord are the mod team's call. They're separate. Getting banned from the Discord doesn't automatically mean banned from stream, and vice versa — though if it's bad enough it usually ends up both.</p>
+    </div>
+    <div class="callout"><strong>If you've been banned and think it was wrong:</strong> DM a mod in Discord or reach out on Twitter/X @ThatGuyPB. Give us your side. We'll look at it.</div>
+  </div>
+
+  <div class="section-block">
+    <div class="block-num">04 — SPIRIT OF TGC</div>
+    <div class="block-title">Why Any of This Matters</div>
+    <div class="block-body">
+      <p>TGC survived losing an entire channel. The community stayed when it had every reason not to. That means something — the people here are genuinely here, not just passers-by.</p>
+      <p>The rules exist to protect that. Not to make the stream safe and boring — it won't ever be — but to make sure that the chaos stays fun rather than becoming something people feel like they have to leave.</p>
+      <p>If you're here, you're TGC. Act like it.</p>
+    </div>
+  </div>
+
+  <div class="section-block">
+    <div class="block-num">05 — UPDATES</div>
+    <div class="block-title">Changes to These Guidelines</div>
+    <div class="block-body">
+      <p>These guidelines can change. If something happens that isn't covered here, or if a rule needs clarifying, this page will be updated. Major changes will be announced in the Discord.</p>
+      <p>Last updated: 2026. Questions? Find us in the Discord or on Twitter/X.</p>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <div class="foot-left">THATGUYPB</div>
+  <div class="foot-right">
+    <a href="community-guidelines.html">Community guidelines</a>
+    <a href="privacy-policy.html">Privacy policy</a>
+    <a href="clip-policy.html">Clip policy</a>
+    <span>© 2026 ThatGuyPB</span>
+  </div>
+</footer>
+
+</body>
+</html>

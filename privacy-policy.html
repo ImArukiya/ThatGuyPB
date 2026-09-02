@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Privacy Policy — ThatGuyPB</title>
+<meta name="description" content="Privacy policy for ThatGuyPB — what data this site collects, how it's used, and your rights.">
+<link rel="icon" type="image/png" href="assets/icon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#ECE7DA; --paper-dark:#E1DACB;
+    --ink:#211F1B; --ink-soft:#524E45;
+    --coral:#FF4D6D; --teal:#2A9D8F;
+    --paper-line:rgba(33,31,27,0.14);
+    --purple:#9B6DFF;
+  }
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  html{ scroll-behavior:smooth; }
+  body{
+    background:var(--paper); color:var(--ink);
+    font-family:'Space Grotesk',sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{ color:inherit; text-decoration:none; }
+
+  /* ── nav ── */
+  header{
+    position:sticky; top:0; z-index:200;
+    background:var(--paper); border-bottom:1.5px solid var(--ink);
+  }
+  nav{
+    max-width:1320px; margin:0 auto; padding:14px 40px;
+    display:flex; align-items:center; justify-content:space-between;
+  }
+  .nav-logo{ font-family:'Bebas Neue',sans-serif; font-size:22px; letter-spacing:0.04em; }
+  .nav-logo span{ color:var(--coral); }
+  .nav-back{
+    font-family:'Space Mono',monospace; font-size:11px;
+    letter-spacing:0.06em; color:var(--ink-soft);
+    display:flex; align-items:center; gap:6px; transition:color 0.15s;
+  }
+  .nav-back:hover{ color:var(--coral); }
+  .nav-back svg{ width:14px; height:14px; stroke:currentColor; fill:none; stroke-width:2; }
+
+  /* ── hero ── */
+  .page-hero{
+    background:var(--ink); color:var(--paper);
+    padding:70px 40px 60px; border-bottom:1.5px solid var(--ink);
+  }
+  .page-hero-inner{ max-width:860px; margin:0 auto; }
+  .page-eyebrow{
+    font-family:'Space Mono',monospace; font-size:10px;
+    letter-spacing:0.12em; color:var(--coral); margin-bottom:12px; display:block;
+  }
+  .page-hero h1{
+    font-family:'Bebas Neue',sans-serif;
+    font-size:clamp(52px,8vw,96px); line-height:0.9; letter-spacing:0.01em;
+  }
+  .page-hero p{
+    font-family:'Space Mono',monospace; font-size:12px;
+    color:rgba(236,231,218,0.5); margin-top:16px; line-height:1.7; max-width:500px;
+  }
+
+  /* ── content ── */
+  .page-content{ max-width:860px; margin:0 auto; padding:72px 40px 100px; }
+  .section-block{ margin-bottom:56px; }
+  .section-block:last-child{ margin-bottom:0; }
+  .block-num{
+    font-family:'Bebas Neue',sans-serif; font-size:13px;
+    letter-spacing:0.12em; color:var(--coral); margin-bottom:6px;
+  }
+  .block-title{
+    font-family:'Bebas Neue',sans-serif; font-size:32px;
+    letter-spacing:0.02em; margin-bottom:16px;
+    border-bottom:1.5px solid var(--ink); padding-bottom:12px;
+  }
+  .block-body p{
+    font-size:14px; color:var(--ink-soft); line-height:1.75;
+    margin-bottom:14px; max-width:680px;
+  }
+  .block-body p:last-child{ margin-bottom:0; }
+  .block-body strong{ color:var(--ink); font-weight:700; }
+
+  .data-table{
+    width:100%; border:1.5px solid var(--ink);
+    border-collapse:collapse; margin-top:16px;
+    font-size:13px;
+  }
+  .data-table th{
+    background:var(--ink); color:var(--paper);
+    font-family:'Space Mono',monospace; font-size:9.5px;
+    letter-spacing:0.08em; text-align:left; padding:12px 16px;
+    font-weight:400;
+  }
+  .data-table td{
+    padding:12px 16px; border-bottom:1px solid var(--paper-line);
+    color:var(--ink-soft); vertical-align:top; line-height:1.55;
+  }
+  .data-table tr:last-child td{ border-bottom:none; }
+  .data-table td:first-child{ color:var(--ink); font-weight:600; width:30%; }
+
+  .callout{
+    background:var(--paper-dark); border-left:3px solid var(--coral);
+    padding:18px 22px; margin:24px 0;
+    font-family:'Space Mono',monospace; font-size:11.5px;
+    line-height:1.7; color:var(--ink-soft);
+  }
+  .callout strong{ color:var(--ink); }
+
+  .third-party-list{ display:flex; flex-direction:column; gap:0; margin-top:8px; }
+  .tp-row{
+    display:flex; align-items:flex-start; gap:0;
+    border-bottom:1px solid var(--paper-line);
+  }
+  .tp-row:last-child{ border-bottom:none; }
+  .tp-name{
+    font-family:'Space Mono',monospace; font-size:10px;
+    letter-spacing:0.04em; color:var(--ink); font-weight:700;
+    padding:14px 16px 14px 0; min-width:160px; flex-shrink:0;
+  }
+  .tp-desc{ font-size:13px; color:var(--ink-soft); padding:14px 0; line-height:1.55; }
+
+  /* ── footer ── */
+  footer{
+    background:var(--ink); color:var(--paper);
+    padding:28px 40px;
+    display:flex; align-items:center; justify-content:space-between;
+    flex-wrap:wrap; gap:12px;
+  }
+  .foot-left{ font-family:'Bebas Neue',sans-serif; font-size:20px; letter-spacing:0.04em; color:rgba(236,231,218,0.2); }
+  .foot-right{
+    font-family:'Space Mono',monospace; font-size:10px;
+    color:rgba(236,231,218,0.25); display:flex; gap:20px; flex-wrap:wrap;
+  }
+  .foot-right a{ transition:color 0.15s; }
+  .foot-right a:hover{ color:rgba(236,231,218,0.6); }
+
+  @media(max-width:640px){
+    nav{ padding:12px 20px; }
+    .page-hero{ padding:50px 20px 44px; }
+    .page-content{ padding:48px 20px 70px; }
+    footer{ padding:20px; }
+    .data-table td:first-child{ width:40%; }
+    .tp-name{ min-width:120px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <nav>
+    <div class="nav-logo">That<span>Guy</span>PB</div>
+    <a href="/" class="nav-back">
+      <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+      BACK TO SITE
+    </a>
+  </nav>
+</header>
+
+<div class="page-hero">
+  <div class="page-hero-inner">
+    <span class="page-eyebrow">THATGUYPB — LEGAL</span>
+    <h1>PRIVACY<br>POLICY</h1>
+    <p>What this site collects, what it doesn't, and how any data is used. Plain language — no legalese walls.</p>
+  </div>
+</div>
+
+<div class="page-content">
+
+  <div class="section-block">
+    <div class="block-num">00 — OVERVIEW</div>
+    <div class="block-title">The Short Version</div>
+    <div class="block-body">
+      <p>This is the personal website of ThatGuyPB, a Twitch streamer. It's a static site hosted on Cloudflare Pages. It does not run any databases, does not have user accounts, and does not collect or store personal data on its own servers.</p>
+      <p>Where third-party services are embedded or loaded — Twitch, Google Fonts, Streamlabs — their own privacy policies apply. Those are listed below.</p>
+      <p><strong>If you're just browsing this site, reading content, and not interacting with any embedded services, essentially no personally identifying data about you is collected by this site.</strong></p>
+    </div>
+  </div>
+
+  <div class="section-block">
+    <div class="block-num">01 — WHAT THIS SITE COLLECTS</div>
+    <div class="block-title">Data Collection</div>
+    <div class="block-body">
+      <p>This site collects the following data directly:</p>
+    </div>
+    <table class="data-table">
+      <thead>
+        <tr><th>TYPE</th><th>WHAT</th><th>WHY</th><th>STORED?</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Cloudflare Analytics</td>
+          <td>Anonymised page view counts, referrers, browser type, country. No IP addresses are stored.</td>
+          <td>To understand roughly how many people visit and from where. No ad targeting, no profiling.</td>
+          <td>By Cloudflare, per their privacy policy. Not accessible as individual records.</td>
+        </tr>
+        <tr>
+          <td>localStorage (browser)</td>
+          <td>Music player position and volume settings (stored entirely in your own browser).</td>
+          <td>To remember where you left the music player widget on the page.</td>
+          <td>Only in your browser. Never sent to any server.</td>
+        </tr>
+        <tr>
+          <td>Twitch API calls</td>
+          <td>This site calls Twitch's API via a Cloudflare Worker proxy to show live stream status, follower counts, and VOD data.</td>
+          <td>To display real-time channel information. The API calls are server-side — your IP is not forwarded to Twitch.</td>
+          <td>Responses are not cached beyond the request. No user data is involved.</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="callout"><strong>No cookies are set by this site</strong> directly. Third-party embeds (Twitch player, Twitch chat) may set their own cookies when they load. You can block these at the browser level.</div>
+  </div>
+
+  <div class="section-block">
+    <div class="block-num">02 — THIRD-PARTY SERVICES</div>
+    <div class="block-title">Third Parties Loaded on This Site</div>
+    <div class="block-body">
+      <p>These services are loaded by or embedded in this page. Each has its own privacy policy which governs how they handle your data.</p>
+    </div>
+    <div class="third-party-list">
+      <div class="tp-row">
+        <div class="tp-name">Twitch</div>
+        <div class="tp-desc">The live stream embed and chat embed load when the channel is live. Twitch may set cookies. Their policy: <a href="https://www.twitch.tv/p/en/legal/privacy-policy/" target="_blank" rel="noopener" style="color:var(--coral); text-decoration:underline;">twitch.tv/p/legal/privacy-policy</a></div>
+      </div>
+      <div class="tp-row">
+        <div class="tp-name">Google Fonts</div>
+        <div class="tp-desc">Fonts (Bebas Neue, Space Grotesk, Space Mono) are loaded from Google's CDN. Google may log requests. Their policy: <a href="https://policies.google.com/privacy" target="_blank" rel="noopener" style="color:var(--coral); text-decoration:underline;">policies.google.com/privacy</a></div>
+      </div>
+      <div class="tp-row">
+        <div class="tp-name">Streamlabs</div>
+        <div class="tp-desc">The donation/tip link points to Streamlabs. Their site handles all donation processing. Their policy: <a href="https://streamlabs.com/privacy" target="_blank" rel="noopener" style="color:var(--coral); text-decoration:underline;">streamlabs.com/privacy</a></div>
+      </div>
+      <div class="tp-row">
+        <div class="tp-name">Patreon</div>
+        <div class="tp-desc">Links to TGC Hideout on Patreon. Patreon handles all subscription data. Their policy: <a href="https://privacy.patreon.com/policies" target="_blank" rel="noopener" style="color:var(--coral); text-decoration:underline;">privacy.patreon.com/policies</a></div>
+      </div>
+      <div class="tp-row">
+        <div class="tp-name">Cloudflare Pages</div>
+        <div class="tp-desc">This site is hosted on Cloudflare Pages. Cloudflare processes traffic at the network level. Their policy: <a href="https://www.cloudflare.com/privacypolicy/" target="_blank" rel="noopener" style="color:var(--coral); text-decoration:underline;">cloudflare.com/privacypolicy</a></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-block">
+    <div class="block-num">03 — CHILDREN</div>
+    <div class="block-title">Age and Audience</div>
+    <div class="block-body">
+      <p>This site is not directed at children under 13. The stream content is intended for a general adult audience and contains mature humour. If you are under 13, please don't use this site.</p>
+      <p>If you believe a child under 13 has somehow submitted personal data via this site, contact us and we'll address it immediately — though given the site has no forms or account systems, this is effectively impossible through normal use.</p>
+    </div>
+  </div>
+
+  <div class="section-block">
+    <div class="block-num">04 — YOUR RIGHTS</div>
+    <div class="block-title">GDPR, CCPA, and Your Rights</div>
+    <div class="block-body">
+      <p>Since this site does not collect personally identifying information directly, most data rights requests (access, deletion, portability) don't apply to data held by this site — because there isn't any.</p>
+      <p>For data held by third-party services listed above, contact those services directly. They each have mechanisms to handle rights requests under GDPR (for EU residents), CCPA (for California residents), and other applicable laws.</p>
+      <p>If you have a question about data and this site specifically, contact via Twitter/X <a href="https://x.com/ThatGuyPB" target="_blank" rel="noopener" style="color:var(--coral);">@ThatGuyPB</a>.</p>
+    </div>
+  </div>
+
+  <div class="section-block">
+    <div class="block-num">05 — LINKS</div>
+    <div class="block-title">External Links</div>
+    <div class="block-body">
+      <p>This site contains links to Twitch, YouTube, TikTok, Instagram, Twitter/X, Patreon, and Streamlabs. Clicking those links takes you to third-party sites governed entirely by their own privacy policies. We have no control over what they collect.</p>
+      <p>We're not responsible for the privacy practices of sites we link to. When you leave this page, you're on their terms.</p>
+    </div>
+  </div>
+
+  <div class="section-block">
+    <div class="block-num">06 — CHANGES</div>
+    <div class="block-title">Updates to This Policy</div>
+    <div class="block-body">
+      <p>If this policy changes materially — for example if analytics or embedded services change — this page will be updated and the date below will reflect it. For significant changes, an announcement will go out in the TGC Discord.</p>
+      <p>Last updated: 2026. Questions? <a href="https://x.com/ThatGuyPB" target="_blank" rel="noopener" style="color:var(--coral);">@ThatGuyPB on X</a> or the Discord.</p>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <div class="foot-left">THATGUYPB</div>
+  <div class="foot-right">
+    <a href="community-guidelines.html">Community guidelines</a>
+    <a href="privacy-policy.html">Privacy policy</a>
+    <a href="clip-policy.html">Clip policy</a>
+    <span>© 2026 ThatGuyPB</span>
+  </div>
+</footer>
+
+</body>
+</html>

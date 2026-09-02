@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Clip Policy — ThatGuyPB</title>
+<meta name="description" content="ThatGuyPB clip policy — what you can do with stream clips, highlights, and VODs.">
+<link rel="icon" type="image/png" href="assets/icon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#ECE7DA; --paper-dark:#E1DACB;
+    --ink:#211F1B; --ink-soft:#524E45;
+    --coral:#FF4D6D; --teal:#2A9D8F;
+    --paper-line:rgba(33,31,27,0.14);
+    --purple:#9B6DFF;
+  }
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  html{ scroll-behavior:smooth; }
+  body{
+    background:var(--paper); color:var(--ink);
+    font-family:'Space Grotesk',sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{ color:inherit; text-decoration:none; }
+
+  /* ── nav ── */
+  header{
+    position:sticky; top:0; z-index:200;
+    background:var(--paper); border-bottom:1.5px solid var(--ink);
+  }
+  nav{
+    max-width:1320px; margin:0 auto; padding:14px 40px;
+    display:flex; align-items:center; justify-content:space-between;
+  }
+  .nav-logo{ font-family:'Bebas Neue',sans-serif; font-size:22px; letter-spacing:0.04em; }
+  .nav-logo span{ color:var(--coral); }
+  .nav-back{
+    font-family:'Space Mono',monospace; font-size:11px;
+    letter-spacing:0.06em; color:var(--ink-soft);
+    display:flex; align-items:center; gap:6px; transition:color 0.15s;
+  }
+  .nav-back:hover{ color:var(--coral); }
+  .nav-back svg{ width:14px; height:14px; stroke:currentColor; fill:none; stroke-width:2; }
+
+  /* ── hero ── */
+  .page-hero{
+    background:var(--ink); color:var(--paper);
+    padding:70px 40px 60px; border-bottom:1.5px solid var(--ink);
+  }
+  .page-hero-inner{ max-width:860px; margin:0 auto; }
+  .page-eyebrow{
+    font-family:'Space Mono',monospace; font-size:10px;
+    letter-spacing:0.12em; color:var(--coral); margin-bottom:12px; display:block;
+  }
+  .page-hero h1{
+    font-family:'Bebas Neue',sans-serif;
+    font-size:clamp(52px,8vw,96px); line-height:0.9; letter-spacing:0.01em;
+  }
+  .page-hero p{
+    font-family:'Space Mono',monospace; font-size:12px;
+    color:rgba(236,231,218,0.5); margin-top:16px; line-height:1.7; max-width:500px;
+  }
+
+  /* ── content ── */
+  .page-content{ max-width:860px; margin:0 auto; padding:72px 40px 100px; }
+  .section-block{ margin-bottom:56px; }
+  .section-block:last-child{ margin-bottom:0; }
+  .block-num{
+    font-family:'Bebas Neue',sans-serif; font-size:13px;
+    letter-spacing:0.12em; color:var(--coral); margin-bottom:6px;
+  }
+  .block-title{
+    font-family:'Bebas Neue',sans-serif; font-size:32px;
+    letter-spacing:0.02em; margin-bottom:16px;
+    border-bottom:1.5px solid var(--ink); padding-bottom:12px;
+  }
+  .block-body p{
+    font-size:14px; color:var(--ink-soft); line-height:1.75;
+    margin-bottom:14px; max-width:680px;
+  }
+  .block-body p:last-child{ margin-bottom:0; }
+  .block-body strong{ color:var(--ink); font-weight:700; }
+
+  /* yes/no permission grid */
+  .permission-grid{
+    display:grid; grid-template-columns:1fr 1fr;
+    gap:1.5px; background:var(--ink); border:1.5px solid var(--ink);
+    margin-top:20px;
+  }
+  .perm-card{
+    background:var(--paper); padding:26px 24px;
+    display:flex; flex-direction:column; gap:14px;
+  }
+  .perm-card-head{
+    display:flex; align-items:center; gap:10px;
+  }
+  .perm-badge{
+    font-family:'Space Mono',monospace; font-size:9px;
+    letter-spacing:0.1em; padding:4px 10px; font-weight:700;
+  }
+  .perm-badge.yes{ background:var(--teal); color:#fff; }
+  .perm-badge.no{ background:var(--coral); color:#fff; }
+  .perm-card-title{
+    font-family:'Bebas Neue',sans-serif; font-size:20px;
+    letter-spacing:0.02em;
+  }
+  .perm-list{ display:flex; flex-direction:column; gap:8px; }
+  .perm-item{
+    display:flex; align-items:flex-start; gap:10px;
+    font-size:13px; color:var(--ink-soft); line-height:1.5;
+  }
+  .perm-dot{
+    width:5px; height:5px; border-radius:50%; flex-shrink:0; margin-top:6px;
+  }
+  .yes .perm-dot{ background:var(--teal); }
+  .no  .perm-dot{ background:var(--coral); }
+
+  .callout{
+    background:var(--paper-dark); border-left:3px solid var(--coral);
+    padding:18px 22px; margin:24px 0;
+    font-family:'Space Mono',monospace; font-size:11.5px;
+    line-height:1.7; color:var(--ink-soft);
+  }
+  .callout strong{ color:var(--ink); }
+
+  .scenario-list{ display:flex; flex-direction:column; gap:0; margin-top:8px; }
+  .scenario-row{
+    display:flex; align-items:flex-start; gap:16px;
+    padding:16px 0; border-bottom:1px solid var(--paper-line);
+  }
+  .scenario-row:last-child{ border-bottom:none; }
+  .scenario-icon{
+    font-family:'Space Mono',monospace; font-size:18px; line-height:1;
+    flex-shrink:0; width:26px; margin-top:2px;
+  }
+  .scenario-text{ font-size:13.5px; color:var(--ink-soft); line-height:1.6; }
+  .scenario-text b{ display:block; color:var(--ink); margin-bottom:3px; font-size:14px; }
+
+  /* ── footer ── */
+  footer{
+    background:var(--ink); color:var(--paper);
+    padding:28px 40px;
+    display:flex; align-items:center; justify-content:space-between;
+    flex-wrap:wrap; gap:12px;
+  }
+  .foot-left{ font-family:'Bebas Neue',sans-serif; font-size:20px; letter-spacing:0.04em; color:rgba(236,231,218,0.2); }
+  .foot-right{
+    font-family:'Space Mono',monospace; font-size:10px;
+    color:rgba(236,231,218,0.25); display:flex; gap:20px; flex-wrap:wrap;
+  }
+  .foot-right a{ transition:color 0.15s; }
+  .foot-right a:hover{ color:rgba(236,231,218,0.6); }
+
+  @media(max-width:700px){
+    .permission-grid{ grid-template-columns:1fr; }
+  }
+  @media(max-width:640px){
+    nav{ padding:12px 20px; }
+    .page-hero{ padding:50px 20px 44px; }
+    .page-content{ padding:48px 20px 70px; }
+    footer{ padding:20px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <nav>
+    <div class="nav-logo">That<span>Guy</span>PB</div>
+    <a href="/" class="nav-back">
+      <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+      BACK TO SITE
+    </a>
+  </nav>
+</header>
+
+<div class="page-hero">
+  <div class="page-hero-inner">
+    <span class="page-eyebrow">THATGUYPB — CONTENT</span>
+    <h1>CLIP<br>POLICY</h1>
+    <p>What you're allowed to do with clips, highlights, and VODs from ThatGuyPB streams. Personal use is almost always fine — commercial use needs a conversation first.</p>
+  </div>
+</div>
+
+<div class="page-content">
+
+  <div class="section-block">
+    <div class="block-num">00 — OVERVIEW</div>
+    <div class="block-title">The Basics</div>
+    <div class="block-body">
+      <p>TGC content — livestreams, clips, highlights, VODs, and any derivative content like compilations — belongs to ThatGuyPB. That said, the community sharing moments from the stream is part of what TGC is. This policy exists to make the line clear: personal sharing is encouraged, commercial exploitation is not.</p>
+      <p><strong>When in doubt, just ask.</strong> Reach out on Discord or Twitter/X. The answer is usually yes with credit.</p>
+    </div>
+  </div>
+
+  <div class="section-block">
+    <div class="block-num">01 — WHAT YOU CAN AND CAN'T DO</div>
+    <div class="block-title">Permissions at a Glance</div>
+    <div class="permission-grid">
+
+      <div class="perm-card yes">
+        <div class="perm-card-head">
+          <span class="perm-badge yes">ALLOWED</span>
+          <div class="perm-card-title">Personal & Community Use</div>
+        </div>
+        <div class="perm-list">
+          <div class="perm-item"><span class="perm-dot"></span>Sharing clips directly on Discord, Twitter/X, Reddit, or anywhere social — no permission needed</div>
+          <div class="perm-item"><span class="perm-dot"></span>Uploading short clips (under ~5 minutes) to personal social accounts with credit to ThatGuyPB</div>
+          <div class="perm-item"><span class="perm-dot"></span>Making personal compilations for fun and sharing them non-commercially</div>
+          <div class="perm-item"><span class="perm-dot"></span>Embedding clips or VODs in blog posts, articles, or fan sites without monetisation</div>
+          <div class="perm-item"><span class="perm-dot"></span>Using clips in non-profit tribute or fan edit videos with clear attribution</div>
+          <div class="perm-item"><span class="perm-dot"></span>Reacting to VODs or clips on your own stream — keep the original audio intact, don't crop out branding</div>
+        </div>
+      </div>
+
+      <div class="perm-card no">
+        <div class="perm-card-head">
+          <span class="perm-badge no">NOT ALLOWED</span>
+          <div class="perm-card-title">Commercial & Exploitative Use</div>
+        </div>
+        <div class="perm-list">
+          <div class="perm-item"><span class="perm-dot"></span>Uploading full VODs or long-form streams to YouTube or any platform and monetising them</div>
+          <div class="perm-item"><span class="perm-dot"></span>Including clips in commercial products, ads, or sponsored content without written permission</div>
+          <div class="perm-item"><span class="perm-dot"></span>Selling compilations or any product that uses TGC content</div>
+          <div class="perm-item"><span class="perm-dot"></span>Using clips out of context to misrepresent ThatGuyPB's views or character</div>
+          <div class="perm-item"><span class="perm-dot"></span>Re-uploading content and presenting it as your own without attribution</div>
+          <div class="perm-item"><span class="perm-dot"></span>Using ThatGuyPB's likeness, name, or branding in merchandise without permission</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section-block">
+    <div class="block-num">02 — SPECIFIC SCENARIOS</div>
+    <div class="block-title">Common Questions Answered</div>
+    <div class="scenario-list">
+      <div class="scenario-row">
+        <div class="scenario-icon">✓</div>
+        <div class="scenario-text">
+          <b>Clip compilations on YouTube (no ads)</b>
+          Fine. Put "ThatGuyPB" in the title or description and link back to the Twitch channel. Don't monetise it.
+        </div>
+      </div>
+      <div class="scenario-row">
+        <div class="scenario-icon">✓</div>
+        <div class="scenario-text">
+          <b>Using a clip in a video essay or analysis</b>
+          Fine under fair use principles — as long as the use is genuinely commentary, criticism, or educational. Don't pad a video with long clip segments just to fill runtime.
+        </div>
+      </div>
+      <div class="scenario-row">
+        <div class="scenario-icon">✓</div>
+        <div class="scenario-text">
+          <b>Reacting to clips on your stream or YouTube</b>
+          Fine. Keep the original audio, include "ThatGuyPB" in the video description with a link. If you're monetised, that's fine as long as the clip is a small portion of your own content.
+        </div>
+      </div>
+      <div class="scenario-row">
+        <div class="scenario-icon">✗</div>
+        <div class="scenario-text">
+          <b>Uploading a full VOD to YouTube with ads on</b>
+          Not allowed. Full VODs are available on the official ThatGuyPB VODs channel. Uploading them elsewhere for profit is taking money that should go to the channel.
+        </div>
+      </div>
+      <div class="scenario-row">
+        <div class="scenario-icon">✗</div>
+        <div class="scenario-text">
+          <b>Using a clip in a paid advertisement or sponsored post</b>
+          Needs written permission first. Reach out via Twitter/X or Discord before you go live with it.
+        </div>
+      </div>
+      <div class="scenario-row">
+        <div class="scenario-icon">?</div>
+        <div class="scenario-text">
+          <b>Something not covered here</b>
+          Ask. The answer is usually yes if it's in good faith. DM on Discord or Twitter/X and describe what you want to do.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-block">
+    <div class="block-num">03 — ATTRIBUTION</div>
+    <div class="block-title">How to Credit Properly</div>
+    <div class="block-body">
+      <p>When sharing or re-posting TGC content, attribution should look something like this:</p>
+      <div class="callout">
+        <strong>Clip from ThatGuyPB</strong> — twitch.tv/thatguypb_<br>
+        YouTube: @HHThatGuyPB · VODs: @ThatGuyPBVods
+      </div>
+      <p>That's it. You don't need to write an essay — just make it clear where the content came from and give people a way to find the original.</p>
+      <p>If you're sharing on a platform that doesn't support links well (TikTok, Instagram Stories), including the name "ThatGuyPB" in text or on screen is enough.</p>
+    </div>
+  </div>
+
+  <div class="section-block">
+    <div class="block-num">04 — MUSIC IN STREAMS</div>
+    <div class="block-title">Third-Party Music on Stream</div>
+    <div class="block-body">
+      <p>ThatGuyPB streams sometimes include third-party music. If you clip or re-upload content that contains third-party music, you may receive copyright claims from the music rights holders — not from ThatGuyPB. That's between you and the rights holder.</p>
+      <p>ThatGuyPB is not responsible for any copyright strikes, content ID matches, or takedowns you receive as a result of re-uploading stream content that includes licensed music. If you're worried about this, mute audio during music sections before re-uploading.</p>
+    </div>
+  </div>
+
+  <div class="section-block">
+    <div class="block-num">05 — ENFORCEMENT</div>
+    <div class="block-title">What Happens if This Policy Is Violated</div>
+    <div class="block-body">
+      <p>For minor or accidental violations — a clip uploaded without credit, a compilation that got monetised by accident — a friendly DM is usually the first step. Fix it and move on.</p>
+      <p>For deliberate commercial exploitation, using content to misrepresent or harass, or repeated violations after being asked to stop, a DMCA takedown request or platform report may be filed.</p>
+      <p>TGC is a community built on good faith. This policy exists because it's needed, not because we're looking for people to go after. Operate in good faith and it won't be a problem.</p>
+    </div>
+  </div>
+
+  <div class="section-block">
+    <div class="block-num">06 — CONTACT</div>
+    <div class="block-title">Questions and Permissions</div>
+    <div class="block-body">
+      <p>To ask about a specific use case, request commercial permission, or report a violation:</p>
+      <p><strong>Twitter / X:</strong> <a href="https://x.com/ThatGuyPB" target="_blank" rel="noopener" style="color:var(--coral);">@ThatGuyPB</a></p>
+      <p><strong>Discord:</strong> TGC server — use the appropriate channel or DM a mod.</p>
+      <p>Responses aren't guaranteed to be instant — the stream comes first — but genuine requests will get a response.</p>
+      <p>Last updated: 2026.</p>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <div class="foot-left">THATGUYPB</div>
+  <div class="foot-right">
+    <a href="community-guidelines.html">Community guidelines</a>
+    <a href="privacy-policy.html">Privacy policy</a>
+    <a href="clip-policy.html">Clip policy</a>
+    <span>© 2026 ThatGuyPB</span>
+  </div>
+</footer>
+
+</body>
+</html>
