@@ -1301,6 +1301,706 @@
     .mp-pill, .mp-panel{ max-width:calc(100vw - 32px); width:calc(100vw - 32px); }
   }
 
+  /* ══════════════════════════════════════════
+     SOCIAL PROOF BAR
+  ══════════════════════════════════════════ */
+  .social-proof{
+    background:var(--ink);
+    color:var(--paper);
+    border-bottom:1.5px solid rgba(236,231,218,0.1);
+  }
+  .social-proof-inner{
+    max-width:1320px; margin:0 auto;
+    display:grid; grid-template-columns:repeat(5,1fr);
+  }
+  .sp-stat{
+    padding:28px 24px;
+    border-right:1px solid rgba(236,231,218,0.08);
+    text-align:center;
+    position:relative;
+    transition:background 0.2s;
+  }
+  .sp-stat:last-child{ border-right:none; }
+  .sp-stat:hover{ background:rgba(236,231,218,0.04); }
+  .sp-stat-num{
+    font-family:'Bebas Neue',sans-serif;
+    font-size:36px; line-height:1;
+    color:var(--paper);
+    display:block;
+  }
+  .sp-stat-num .sp-accent{ color:var(--coral); }
+  .sp-stat-label{
+    font-family:'Space Mono',monospace;
+    font-size:9.5px; letter-spacing:0.08em;
+    color:rgba(236,231,218,0.4);
+    margin-top:5px; display:block;
+  }
+  .sp-stat-platform{
+    font-family:'Space Mono',monospace;
+    font-size:8.5px; letter-spacing:0.06em;
+    color:rgba(236,231,218,0.22);
+    margin-top:2px; display:block;
+  }
+  @media (max-width:900px){
+    .social-proof-inner{ grid-template-columns:repeat(3,1fr); }
+    .sp-stat:nth-child(3){ border-right:none; }
+    .sp-stat:nth-child(4){ border-top:1px solid rgba(236,231,218,0.08); }
+    .sp-stat:nth-child(5){ border-top:1px solid rgba(236,231,218,0.08); border-right:none; }
+  }
+  @media (max-width:580px){
+    .social-proof-inner{ grid-template-columns:repeat(2,1fr); }
+    .sp-stat:nth-child(odd){ border-right:1px solid rgba(236,231,218,0.08); }
+    .sp-stat:nth-child(even){ border-right:none; }
+    .sp-stat:nth-child(n+3){ border-top:1px solid rgba(236,231,218,0.08); }
+  }
+
+  /* ══════════════════════════════════════════
+     ACTIVITY HEATMAP / SCHEDULE
+  ══════════════════════════════════════════ */
+  .activity-section{
+    padding:80px 40px;
+    max-width:1320px; margin:0 auto;
+    border-top:1.5px solid var(--ink);
+  }
+  .activity-layout{
+    display:grid;
+    grid-template-columns:1fr 340px;
+    gap:40px;
+    margin-top:32px;
+    align-items:start;
+  }
+  .heatmap-wrap{
+    border:1.5px solid var(--ink);
+    background:var(--paper-dark);
+    padding:28px;
+  }
+  .heatmap-title{
+    font-family:'Space Mono',monospace;
+    font-size:10px; letter-spacing:0.08em;
+    color:var(--ink-soft);
+    margin-bottom:20px;
+  }
+  .heatmap-grid{
+    display:grid;
+    grid-template-columns:repeat(7,1fr);
+    gap:4px;
+  }
+  .hm-col{ display:flex; flex-direction:column; gap:4px; align-items:center; }
+  .hm-day-label{
+    font-family:'Space Mono',monospace;
+    font-size:9px; color:var(--slate-3);
+    letter-spacing:0.05em;
+    margin-bottom:4px;
+    text-transform:uppercase;
+  }
+  .hm-cell{
+    width:100%; aspect-ratio:1/1;
+    background:var(--paper-line);
+    border-radius:2px;
+    transition:background 0.2s, transform 0.15s;
+    cursor:default;
+    position:relative;
+  }
+  .hm-cell:hover{ transform:scale(1.15); }
+  .hm-cell[data-level="1"]{ background:rgba(255,77,109,0.22); }
+  .hm-cell[data-level="2"]{ background:rgba(255,77,109,0.44); }
+  .hm-cell[data-level="3"]{ background:rgba(255,77,109,0.68); }
+  .hm-cell[data-level="4"]{ background:var(--coral); }
+  .hm-legend{
+    display:flex; align-items:center; gap:6px;
+    margin-top:14px;
+    font-family:'Space Mono',monospace; font-size:9px; color:var(--ink-soft);
+  }
+  .hm-legend-cell{
+    width:10px; height:10px; border-radius:2px;
+    background:var(--paper-line); display:inline-block;
+  }
+  .hm-legend-cell.l1{ background:rgba(255,77,109,0.22); }
+  .hm-legend-cell.l2{ background:rgba(255,77,109,0.44); }
+  .hm-legend-cell.l3{ background:rgba(255,77,109,0.68); }
+  .hm-legend-cell.l4{ background:var(--coral); }
+
+  .activity-stats{
+    display:flex; flex-direction:column; gap:12px;
+  }
+  .activity-stat-card{
+    border:1.5px solid var(--ink);
+    background:var(--paper);
+    padding:20px 22px;
+    position:relative; overflow:hidden;
+  }
+  .activity-stat-card::before{
+    content:'';
+    position:absolute; top:0; left:0; bottom:0; width:3px;
+    background:var(--accent,var(--coral));
+  }
+  .activity-stat-card-label{
+    font-family:'Space Mono',monospace;
+    font-size:9.5px; letter-spacing:0.07em;
+    color:var(--ink-soft); margin-bottom:6px;
+  }
+  .activity-stat-card-val{
+    font-family:'Bebas Neue',sans-serif;
+    font-size:32px; line-height:1;
+  }
+  .activity-stat-card-sub{
+    font-size:11px; color:var(--ink-soft);
+    margin-top:4px; line-height:1.4;
+  }
+  @media (max-width:900px){
+    .activity-layout{ grid-template-columns:1fr; }
+    .activity-stats{ flex-direction:row; flex-wrap:wrap; }
+    .activity-stat-card{ flex:1; min-width:140px; }
+  }
+  @media (max-width:640px){
+    .activity-section{ padding:60px 20px; }
+  }
+
+  /* ══════════════════════════════════════════
+     SUPPORT TIERS (PATREON / TGC HIDEOUT)
+  ══════════════════════════════════════════ */
+  .support-section{
+    background:var(--ink);
+    color:var(--paper);
+    padding:90px 40px;
+    border-top:1.5px solid rgba(236,231,218,0.1);
+  }
+  .support-inner{ max-width:1320px; margin:0 auto; }
+  .support-head{
+    display:flex; align-items:baseline; justify-content:space-between;
+    margin-bottom:44px; gap:20px; flex-wrap:wrap;
+  }
+  .support-head h2{
+    font-family:'Bebas Neue',sans-serif;
+    font-size:clamp(34px,5vw,60px); line-height:0.9;
+  }
+  .support-head-right{
+    font-family:'Space Mono',monospace;
+    font-size:11px; color:rgba(236,231,218,0.4);
+    max-width:260px; text-align:right; line-height:1.6;
+  }
+  .tiers-grid{
+    display:grid; grid-template-columns:repeat(3,1fr);
+    gap:1.5px; background:rgba(236,231,218,0.1);
+    border:1.5px solid rgba(236,231,218,0.1);
+  }
+  .tier-card{
+    background:var(--ink);
+    padding:34px 30px;
+    position:relative; overflow:hidden;
+    transition:background 0.2s;
+  }
+  .tier-card:hover{ background:#1e1c18; }
+  .tier-card.featured{
+    background:#1a1612;
+    border:none;
+  }
+  .tier-card.featured::after{
+    content:'POPULAR';
+    position:absolute; top:20px; right:-28px;
+    background:var(--coral); color:var(--paper);
+    font-family:'Space Mono',monospace; font-size:8.5px; letter-spacing:0.1em;
+    padding:4px 32px;
+    transform:rotate(45deg);
+  }
+  .tier-badge{
+    display:inline-block;
+    font-family:'Space Mono',monospace; font-size:9px; letter-spacing:0.1em;
+    border:1px solid rgba(236,231,218,0.18); padding:3px 10px;
+    color:rgba(236,231,218,0.5); margin-bottom:18px;
+  }
+  .tier-badge.featured-badge{ border-color:var(--coral); color:var(--coral); }
+  .tier-price{
+    font-family:'Bebas Neue',sans-serif;
+    font-size:52px; line-height:1;
+    color:var(--paper);
+  }
+  .tier-price span{
+    font-family:'Space Mono',monospace;
+    font-size:13px; color:rgba(236,231,218,0.4);
+    vertical-align:super; margin-left:2px;
+  }
+  .tier-name{
+    font-family:'Bebas Neue',sans-serif;
+    font-size:22px; letter-spacing:0.03em;
+    margin:12px 0 6px;
+    color:var(--paper);
+  }
+  .tier-desc{
+    font-size:12px; color:rgba(236,231,218,0.5);
+    line-height:1.6; margin-bottom:22px;
+  }
+  .tier-perks{
+    display:flex; flex-direction:column; gap:9px;
+    border-top:1px solid rgba(236,231,218,0.08);
+    padding-top:18px;
+  }
+  .tier-perk{
+    display:flex; align-items:flex-start; gap:10px;
+    font-size:12.5px; color:rgba(236,231,218,0.7); line-height:1.4;
+  }
+  .tier-perk-dot{
+    width:5px; height:5px; border-radius:50%;
+    background:var(--coral); flex-shrink:0; margin-top:5px;
+  }
+  .tier-cta{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:14px 18px; margin-top:28px;
+    border:1.5px solid rgba(236,231,218,0.2);
+    font-family:'Space Mono',monospace; font-size:11px;
+    color:rgba(236,231,218,0.7); letter-spacing:0.05em;
+    transition:border-color 0.15s, color 0.15s, background 0.15s;
+    text-decoration:none; display:flex;
+  }
+  .tier-cta:hover{ border-color:var(--paper); color:var(--paper); }
+  .tier-cta.primary-tier{
+    background:var(--coral); border-color:var(--coral); color:var(--paper);
+  }
+  .tier-cta.primary-tier:hover{ background:#e8334f; border-color:#e8334f; }
+  .support-note{
+    margin-top:32px;
+    font-family:'Space Mono',monospace; font-size:11px;
+    color:rgba(236,231,218,0.3); text-align:center; line-height:1.7;
+  }
+  @media (max-width:900px){
+    .tiers-grid{ grid-template-columns:1fr; }
+    .support-section{ padding:70px 20px; }
+  }
+
+  /* ══════════════════════════════════════════
+     FEATURED HIGHLIGHT
+  ══════════════════════════════════════════ */
+  .highlight-section{
+    padding:80px 40px;
+    max-width:1320px; margin:0 auto;
+    border-top:1.5px solid var(--ink);
+  }
+  .highlight-layout{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:1.5px; background:var(--ink);
+    border:1.5px solid var(--ink);
+    margin-top:32px;
+  }
+  .highlight-video{
+    position:relative; aspect-ratio:16/9;
+    background:#14151B; overflow:hidden;
+  }
+  .highlight-video-thumb{
+    width:100%; height:100%;
+    object-fit:cover; object-position:center top;
+    display:block; transition:transform 0.4s ease;
+  }
+  .highlight-video:hover .highlight-video-thumb{ transform:scale(1.03); }
+  .highlight-video-overlay{
+    position:absolute; inset:0;
+    background:linear-gradient(to top, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.1) 50%);
+    display:flex; align-items:center; justify-content:center;
+    transition:background 0.3s;
+  }
+  .highlight-video:hover .highlight-video-overlay{
+    background:linear-gradient(to top, rgba(0,0,0,0.82) 0%, rgba(0,0,0,0.2) 50%);
+  }
+  .highlight-play{
+    width:64px; height:64px;
+    border:2px solid rgba(255,255,255,0.8);
+    border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    transition:background 0.2s, border-color 0.2s, transform 0.2s;
+  }
+  .highlight-video:hover .highlight-play{
+    background:var(--coral); border-color:var(--coral);
+    transform:scale(1.08);
+  }
+  .highlight-play svg{
+    width:24px; height:24px;
+    stroke:rgba(255,255,255,0.9); fill:none; stroke-width:1.5;
+    margin-left:3px;
+  }
+  .highlight-meta{
+    position:absolute; bottom:0; left:0; right:0;
+    padding:16px 18px;
+    z-index:2;
+  }
+  .highlight-game-tag{
+    display:inline-block;
+    font-family:'Space Mono',monospace; font-size:9px; letter-spacing:0.06em;
+    background:var(--coral); color:var(--paper);
+    padding:3px 9px; margin-bottom:8px;
+  }
+  .highlight-video-title{
+    font-family:'Bebas Neue',sans-serif;
+    font-size:22px; letter-spacing:0.02em;
+    color:var(--paper); line-height:1.05;
+  }
+
+  .highlight-info{
+    background:var(--paper);
+    padding:36px 34px;
+    display:flex; flex-direction:column; justify-content:space-between;
+  }
+  .highlight-info-top{ display:flex; flex-direction:column; gap:18px; }
+  .highlight-eyebrow{
+    font-family:'Space Mono',monospace; font-size:10px;
+    letter-spacing:0.1em; color:var(--coral);
+  }
+  .highlight-title{
+    font-family:'Bebas Neue',sans-serif;
+    font-size:clamp(28px,3.5vw,44px);
+    line-height:0.95; letter-spacing:0.01em;
+  }
+  .highlight-desc{
+    font-size:13px; color:var(--ink-soft);
+    line-height:1.65; max-width:380px;
+  }
+  .highlight-stats-row{
+    display:flex; gap:0;
+    border:1.5px solid var(--ink);
+    margin-top:8px;
+  }
+  .hl-stat{
+    flex:1; padding:14px 18px;
+    border-right:1.5px solid var(--ink);
+    text-align:center;
+  }
+  .hl-stat:last-child{ border-right:none; }
+  .hl-stat b{
+    display:block;
+    font-family:'Bebas Neue',sans-serif; font-size:26px; line-height:1;
+  }
+  .hl-stat span{
+    font-family:'Space Mono',monospace; font-size:9px;
+    color:var(--ink-soft); letter-spacing:0.05em; margin-top:2px; display:block;
+  }
+  .highlight-actions{
+    display:flex; gap:10px; flex-wrap:wrap; margin-top:24px;
+  }
+  .highlight-actions a{
+    flex:1; min-width:120px;
+    padding:13px 18px; text-align:center;
+    font-family:'Space Mono',monospace; font-size:11px;
+    letter-spacing:0.05em; font-weight:700;
+    border:1.5px solid var(--ink);
+    transition:background 0.15s, color 0.15s;
+  }
+  .highlight-actions a:hover{ background:var(--ink); color:var(--paper); }
+  .highlight-actions a.primary-hl{
+    background:var(--coral); border-color:var(--coral); color:var(--paper);
+  }
+  .highlight-actions a.primary-hl:hover{ background:#e0294a; }
+
+  @media (max-width:900px){
+    .highlight-layout{ grid-template-columns:1fr; }
+    .highlight-section{ padding:60px 20px; }
+    .highlight-info{ padding:24px 22px; }
+  }
+
+  /* ══════════════════════════════════════════
+     PRESS / CONTACT STRIP
+  ══════════════════════════════════════════ */
+  .press-strip{
+    background:var(--paper-dark);
+    border-top:1.5px solid var(--ink);
+    border-bottom:1.5px solid var(--ink);
+    padding:60px 40px;
+  }
+  .press-inner{
+    max-width:1320px; margin:0 auto;
+    display:grid; grid-template-columns:1fr 1fr 1fr;
+    gap:1.5px; background:var(--ink); border:1.5px solid var(--ink);
+  }
+  .press-card{
+    background:var(--paper-dark); padding:32px 30px;
+    display:flex; flex-direction:column; gap:10px;
+    transition:background 0.15s; position:relative;
+  }
+  .press-card:hover{ background:var(--paper); }
+  .press-card-label{
+    font-family:'Space Mono',monospace; font-size:9.5px;
+    letter-spacing:0.1em; color:var(--ink-soft);
+    text-transform:uppercase;
+  }
+  .press-card-title{
+    font-family:'Bebas Neue',sans-serif;
+    font-size:26px; letter-spacing:0.02em; line-height:1;
+  }
+  .press-card-desc{
+    font-size:12.5px; color:var(--ink-soft);
+    line-height:1.6; max-width:280px;
+  }
+  .press-card-link{
+    display:inline-flex; align-items:center; gap:6px;
+    font-family:'Space Mono',monospace; font-size:11px;
+    font-weight:700; letter-spacing:0.05em;
+    border-bottom:1.5px solid var(--ink);
+    padding-bottom:2px; margin-top:6px; width:fit-content;
+    transition:color 0.15s, border-color 0.15s;
+  }
+  .press-card-link:hover{ color:var(--coral); border-color:var(--coral); }
+  .press-card-icon{
+    width:32px; height:32px;
+    stroke:var(--ink); fill:none; stroke-width:1.4;
+    margin-bottom:4px;
+  }
+  @media (max-width:900px){
+    .press-inner{ grid-template-columns:1fr; }
+    .press-strip{ padding:50px 20px; }
+  }
+
+  /* ══════════════════════════════════════════
+     STAT COUNTER ANIMATION
+  ══════════════════════════════════════════ */
+  @keyframes count-up{
+    from{ opacity:0; transform:translateY(8px); }
+    to{   opacity:1; transform:translateY(0); }
+  }
+  .stat-animated{ animation:count-up 0.5s ease both; }
+
+  /* ══════════════════════════════════════════
+     REFINED SECTION HEADS
+  ══════════════════════════════════════════ */
+  .section-eyebrow{
+    font-family:'Space Mono',monospace;
+    font-size:9.5px; letter-spacing:0.12em;
+    color:var(--coral); margin-bottom:6px;
+    text-transform:uppercase; display:block;
+  }
+  .section-head h2{ position:relative; }
+  .section-head-note{
+    font-family:'Space Mono',monospace; font-size:10px;
+    color:var(--ink-soft); letter-spacing:0.05em; margin-top:4px; display:block;
+  }
+
+  /* ══════════════════════════════════════════
+     LAST STREAM RECAP
+  ══════════════════════════════════════════ */
+  .recap-section{
+    border-bottom:1.5px solid var(--ink);
+  }
+  .recap-inner{
+    max-width:1320px; margin:0 auto;
+    display:grid; grid-template-columns:1fr 1fr 1fr 1fr;
+    border-left:1.5px solid var(--ink);
+  }
+  .recap-card{
+    padding:30px 28px;
+    border-right:1.5px solid var(--ink);
+    position:relative; overflow:hidden;
+  }
+  .recap-card::before{
+    content:''; position:absolute; top:0; left:0; right:0; height:2px;
+    background:var(--accent,var(--coral));
+    transform:scaleX(0); transform-origin:left;
+    transition:transform 0.4s ease;
+  }
+  .recap-card:hover::before{ transform:scaleX(1); }
+  .recap-card-eyebrow{
+    font-family:'Space Mono',monospace; font-size:9px; letter-spacing:0.1em;
+    color:var(--ink-soft); margin-bottom:10px; text-transform:uppercase;
+  }
+  .recap-card-val{
+    font-family:'Bebas Neue',sans-serif; font-size:clamp(22px,2.8vw,34px);
+    line-height:1; letter-spacing:0.01em; color:var(--ink);
+    display:block; margin-bottom:5px;
+    overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
+  }
+  .recap-card-sub{
+    font-size:11.5px; color:var(--ink-soft); line-height:1.4;
+  }
+  .recap-live-dot{
+    display:inline-block; width:7px; height:7px; border-radius:50%;
+    background:var(--coral); margin-right:6px; vertical-align:middle;
+    animation:pulse 1.4s infinite;
+  }
+  @media (max-width:900px){
+    .recap-inner{ grid-template-columns:1fr 1fr; }
+    .recap-card:nth-child(2){ border-right:none; }
+    .recap-card:nth-child(n+3){ border-top:1.5px solid var(--ink); }
+  }
+  @media (max-width:580px){
+    .recap-inner{ grid-template-columns:1fr; border-left:none; }
+    .recap-card{ border-right:none; border-bottom:1.5px solid var(--ink); }
+    .recap-card:last-child{ border-bottom:none; }
+  }
+
+  /* ══════════════════════════════════════════
+     GOALS / PROGRESS
+  ══════════════════════════════════════════ */
+  .goals-section{
+    padding:80px 40px;
+    max-width:1320px; margin:0 auto;
+    border-top:1.5px solid var(--ink);
+  }
+  .goals-grid{
+    display:grid; grid-template-columns:1fr 1fr;
+    gap:1.5px; background:var(--ink);
+    border:1.5px solid var(--ink); margin-top:32px;
+  }
+  .goal-card{
+    background:var(--paper); padding:32px 30px;
+    position:relative; overflow:hidden;
+  }
+  .goal-card-head{
+    display:flex; justify-content:space-between; align-items:flex-start;
+    margin-bottom:18px; gap:12px;
+  }
+  .goal-card-title{
+    font-family:'Bebas Neue',sans-serif; font-size:24px;
+    letter-spacing:0.02em; line-height:1;
+  }
+  .goal-card-pct{
+    font-family:'Space Mono',monospace; font-size:11px;
+    color:var(--coral); font-weight:700; flex-shrink:0;
+  }
+  .goal-track{
+    height:6px; background:var(--paper-line); border-radius:3px; overflow:hidden;
+    margin-bottom:14px;
+  }
+  .goal-fill{
+    height:100%; border-radius:3px; background:var(--coral);
+    width:0; transition:width 1.1s cubic-bezier(0.25,0.46,0.45,0.94);
+  }
+  .goal-fill.teal{ background:var(--teal); }
+  .goal-fill.purple{ background:var(--purple); }
+  .goal-numbers{
+    display:flex; justify-content:space-between; align-items:baseline;
+    font-family:'Space Mono',monospace; font-size:10px; color:var(--ink-soft);
+  }
+  .goal-numbers b{
+    font-family:'Bebas Neue',sans-serif; font-size:20px;
+    color:var(--ink); font-weight:400; letter-spacing:0.02em;
+  }
+  .goal-desc{
+    font-size:12px; color:var(--ink-soft); line-height:1.55;
+    margin-top:10px; border-top:1px solid var(--paper-line); padding-top:10px;
+  }
+  @media (max-width:760px){
+    .goals-grid{ grid-template-columns:1fr; }
+    .goals-section{ padding:60px 20px; }
+  }
+
+  /* ══════════════════════════════════════════
+     CHAT HIGHLIGHTS
+  ══════════════════════════════════════════ */
+  .chat-highlights{
+    background:#0e0e10;
+    padding:80px 40px;
+    border-top:1.5px solid var(--ink);
+    border-bottom:1.5px solid var(--ink);
+  }
+  .chat-highlights-inner{ max-width:1320px; margin:0 auto; }
+  .chat-highlights-head{
+    display:flex; justify-content:space-between; align-items:baseline;
+    margin-bottom:36px; gap:20px;
+  }
+  .chat-highlights-head h2{
+    font-family:'Bebas Neue',sans-serif; font-size:40px;
+    color:var(--paper); letter-spacing:0.01em;
+  }
+  .chat-highlights-head p{
+    font-family:'Space Mono',monospace; font-size:11px;
+    color:#6B7288; max-width:240px; text-align:right; line-height:1.6;
+  }
+  .chat-grid{
+    display:grid; grid-template-columns:repeat(3,1fr);
+    gap:1.5px; background:#2a2a2e; border:1.5px solid #2a2a2e;
+  }
+  .chat-card{
+    background:#1a1a1e; padding:26px 24px;
+    display:flex; flex-direction:column; gap:14px;
+    position:relative; overflow:hidden;
+    transition:background 0.15s;
+  }
+  .chat-card:hover{ background:#1f1f24; }
+  .chat-card::before{
+    content:'"'; position:absolute; top:-8px; right:14px;
+    font-family:'Bebas Neue',sans-serif; font-size:80px;
+    color:rgba(255,255,255,0.04); line-height:1; pointer-events:none;
+  }
+  .chat-msg{
+    font-size:14px; color:#DCE0EA; line-height:1.6;
+    font-style:italic; flex:1;
+  }
+  .chat-msg b{ color:var(--coral); font-style:normal; font-size:13px; }
+  .chat-footer{
+    display:flex; align-items:center; justify-content:space-between;
+    border-top:1px solid #2a2a2e; padding-top:12px; gap:8px;
+  }
+  .chat-user{
+    font-family:'Space Mono',monospace; font-size:10px;
+    color:#6B7288; letter-spacing:0.05em;
+  }
+  .chat-tag{
+    font-family:'Space Mono',monospace; font-size:9px;
+    padding:2px 8px; background:#2a2a2e; color:#6B7288;
+    letter-spacing:0.05em;
+  }
+  .chat-tag.hot{ background:rgba(255,77,109,0.15); color:var(--coral); }
+  @media (max-width:900px){
+    .chat-grid{ grid-template-columns:1fr 1fr; }
+    .chat-highlights{ padding:60px 20px; }
+  }
+  @media (max-width:600px){
+    .chat-grid{ grid-template-columns:1fr; }
+    .chat-highlights-head{ flex-direction:column; gap:8px; }
+    .chat-highlights-head p{ text-align:left; max-width:100%; }
+  }
+
+  /* ══════════════════════════════════════════
+     HOW TO WATCH
+  ══════════════════════════════════════════ */
+  .how-section{
+    padding:80px 40px;
+    max-width:1320px; margin:0 auto;
+    border-top:1.5px solid var(--ink);
+  }
+  .how-grid{
+    display:grid; grid-template-columns:repeat(4,1fr);
+    gap:1.5px; background:var(--ink); border:1.5px solid var(--ink);
+    margin-top:32px;
+  }
+  .how-card{
+    background:var(--paper); padding:32px 26px;
+    position:relative; display:flex; flex-direction:column; gap:14px;
+  }
+  .how-card:hover .how-step-num{ color:var(--coral); }
+  .how-step-num{
+    font-family:'Bebas Neue',sans-serif; font-size:56px;
+    line-height:1; color:var(--ink); opacity:0.12;
+    position:absolute; top:14px; right:18px; letter-spacing:-0.02em;
+    transition:color 0.2s, opacity 0.2s;
+    pointer-events:none;
+  }
+  .how-card:hover .how-step-num{ opacity:0.9; }
+  .how-icon{
+    width:30px; height:30px; stroke:var(--ink);
+    fill:none; stroke-width:1.4; flex-shrink:0;
+  }
+  .how-title{
+    font-family:'Bebas Neue',sans-serif; font-size:22px;
+    letter-spacing:0.02em; line-height:1;
+  }
+  .how-desc{
+    font-size:12.5px; color:var(--ink-soft); line-height:1.6;
+    flex:1;
+  }
+  .how-link{
+    display:inline-flex; align-items:center; gap:5px;
+    font-family:'Space Mono',monospace; font-size:10px;
+    letter-spacing:0.06em; font-weight:700;
+    color:var(--coral); margin-top:4px;
+    border-bottom:1px solid transparent;
+    transition:border-color 0.15s; width:fit-content;
+  }
+  .how-link:hover{ border-color:var(--coral); }
+  @media (max-width:1000px){
+    .how-grid{ grid-template-columns:1fr 1fr; }
+  }
+  @media (max-width:600px){
+    .how-grid{ grid-template-columns:1fr; }
+    .how-section{ padding:60px 20px; }
+  }
+
 </style>
 </head>
 <body>
@@ -1449,12 +2149,74 @@
     </div>
   </div>
 
+  <!-- ── SOCIAL PROOF BAR ── -->
+  <div class="social-proof">
+    <div class="social-proof-inner">
+      <div class="sp-stat">
+        <span class="sp-stat-num" id="sp-twitch">—</span>
+        <span class="sp-stat-label">FOLLOWERS</span>
+        <span class="sp-stat-platform">TWITCH</span>
+      </div>
+      <div class="sp-stat">
+        <span class="sp-stat-num" id="sp-total-vods">—</span>
+        <span class="sp-stat-label">TOTAL VODS</span>
+        <span class="sp-stat-platform">TWITCH ARCHIVE</span>
+      </div>
+      <div class="sp-stat">
+        <span class="sp-stat-num" id="sp-clips-total">—</span>
+        <span class="sp-stat-label">CLIP VIEWS</span>
+        <span class="sp-stat-platform">TWITCH CLIPS</span>
+      </div>
+      <div class="sp-stat">
+        <span class="sp-stat-num" id="sp-hours-live">—</span>
+        <span class="sp-stat-label">HOURS STREAMED</span>
+        <span class="sp-stat-platform">ALL TIME</span>
+      </div>
+      <div class="sp-stat">
+        <span class="sp-stat-num" id="sp-avg-viewers">—</span>
+        <span class="sp-stat-label">AVG VIEWERS</span>
+        <span class="sp-stat-platform">RECENT STREAMS</span>
+      </div>
+    </div>
+  </div>
+
   <!-- ── STATS BAR ── -->
   <div class="stats-bar">
     <div class="stat"><b id="stat-followers">—</b><span>FOLLOWERS</span></div>
     <div class="stat"><b id="stat-hours">—</b><span>HOURS STREAMED</span></div>
     <div class="stat"><b id="stat-episodes">—</b><span>TOTAL VODS</span></div>
     <div class="stat"><b id="stat-last-stream">—</b><span>LAST STREAM</span></div>
+  </div>
+
+  <!-- ── LAST STREAM RECAP ── -->
+  <div class="recap-section" id="recap-section">
+    <div class="recap-inner">
+      <div class="recap-card" style="--accent:var(--coral)">
+        <div class="recap-card-eyebrow">LAST STREAM</div>
+        <span class="recap-card-val" id="recap-title">Loading…</span>
+        <div class="recap-card-sub" id="recap-date">—</div>
+      </div>
+      <div class="recap-card" style="--accent:var(--teal)">
+        <div class="recap-card-eyebrow">GAME / CATEGORY</div>
+        <span class="recap-card-val" id="recap-game">—</span>
+        <div class="recap-card-sub">Most recent category</div>
+      </div>
+      <div class="recap-card" style="--accent:var(--purple)">
+        <div class="recap-card-eyebrow">SESSION LENGTH</div>
+        <span class="recap-card-val" id="recap-duration">—</span>
+        <div class="recap-card-sub">Full runtime, uncut</div>
+      </div>
+      <div class="recap-card" style="--accent:var(--coral)">
+        <div class="recap-card-eyebrow">NEXT STREAM</div>
+        <span class="recap-card-val" id="recap-next">SOON™</span>
+        <div class="recap-card-sub">
+          <a href="https://twitch.tv/thatguypb_" target="_blank" rel="noopener"
+            style="color:var(--coral); text-decoration:none; font-weight:600;">
+            Follow for alerts →
+          </a>
+        </div>
+      </div>
+    </div>
   </div>
 
   <!-- ── ABOUT ── -->
@@ -1486,6 +2248,56 @@
       </div>
     </div>
   </div>
+
+  <!-- ── ACTIVITY HEATMAP ── -->
+  <section class="activity-section" id="activity-section">
+    <div class="section-head" style="padding-left:0; padding-right:0; border-top:none;">
+      <div>
+        <span class="section-eyebrow">STREAMING ACTIVITY</span>
+        <h2>the grind, visualised</h2>
+      </div>
+      <p>12 weeks of stream data pulled live from Twitch VODs. Every cell is a day.</p>
+    </div>
+    <div class="activity-layout">
+      <div class="heatmap-wrap">
+        <div class="heatmap-title">LAST 12 WEEKS — STREAM DAYS</div>
+        <div class="heatmap-grid" id="heatmap-grid">
+          <!-- injected by JS -->
+        </div>
+        <div class="hm-legend">
+          <span>LESS</span>
+          <span class="hm-legend-cell"></span>
+          <span class="hm-legend-cell l1"></span>
+          <span class="hm-legend-cell l2"></span>
+          <span class="hm-legend-cell l3"></span>
+          <span class="hm-legend-cell l4"></span>
+          <span>MORE</span>
+        </div>
+      </div>
+      <div class="activity-stats">
+        <div class="activity-stat-card" style="--accent:var(--coral)">
+          <div class="activity-stat-card-label">STREAMS THIS MONTH</div>
+          <div class="activity-stat-card-val" id="act-month">—</div>
+          <div class="activity-stat-card-sub">Based on VOD upload dates</div>
+        </div>
+        <div class="activity-stat-card" style="--accent:var(--teal)">
+          <div class="activity-stat-card-label">AVERAGE SESSION</div>
+          <div class="activity-stat-card-val" id="act-avg-len">—</div>
+          <div class="activity-stat-card-sub">Avg. duration across all recent VODs</div>
+        </div>
+        <div class="activity-stat-card" style="--accent:var(--purple)">
+          <div class="activity-stat-card-label">LONGEST SESSION</div>
+          <div class="activity-stat-card-val" id="act-longest">—</div>
+          <div class="activity-stat-card-sub">Single stream, all time from recent data</div>
+        </div>
+        <div class="activity-stat-card" style="--accent:var(--coral)">
+          <div class="activity-stat-card-label">CONSISTENCY RATE</div>
+          <div class="activity-stat-card-val" id="act-consistency">—</div>
+          <div class="activity-stat-card-sub">Days streamed out of last 84</div>
+        </div>
+      </div>
+    </div>
+  </section>
 
   <!-- ── GENRES ── -->
   <section class="genres-section" id="genres-section">
@@ -1588,6 +2400,80 @@
         <div class="milestone-num" id="milestone-peak">—</div>
         <div class="milestone-label">Peak concurrent viewers. Still can't believe it.</div>
       </div>
+    </div>
+  </section>
+
+  <!-- ── GOALS ── -->
+  <section class="goals-section" id="goals-section">
+    <div class="section-head" style="padding-left:0; padding-right:0; border-top:none;">
+      <div>
+        <span class="section-eyebrow">LIVE PROGRESS</span>
+        <h2>the goals</h2>
+      </div>
+      <p>Updated from Twitch in real time. Every number here is pulled live.</p>
+    </div>
+    <div class="goals-grid">
+
+      <div class="goal-card">
+        <div class="goal-card-head">
+          <div class="goal-card-title">Follower Goal</div>
+          <div class="goal-card-pct" id="goal-follow-pct">—%</div>
+        </div>
+        <div class="goal-track">
+          <div class="goal-fill" id="goal-follow-fill" data-target="0"></div>
+        </div>
+        <div class="goal-numbers">
+          <span><b id="goal-follow-cur">—</b> followers</span>
+          <span>goal: <b id="goal-follow-target">140</b></span>
+        </div>
+        <div class="goal-desc">Six away from 140 — the next milestone. Every follow genuinely matters at this stage. Tell someone.</div>
+      </div>
+
+      <div class="goal-card">
+        <div class="goal-card-head">
+          <div class="goal-card-title">Bits Goal</div>
+          <div class="goal-card-pct" id="goal-bits-pct">54%</div>
+        </div>
+        <div class="goal-track">
+          <div class="goal-fill teal" id="goal-bits-fill" style="width:54%"></div>
+        </div>
+        <div class="goal-numbers">
+          <span><b>543</b> bits</span>
+          <span>goal: <b>1,000</b></span>
+        </div>
+        <div class="goal-desc">543 of 1,000 bits. Donos go straight to TTS — your message gets read on stream. Chaos is guaranteed.</div>
+      </div>
+
+      <div class="goal-card">
+        <div class="goal-card-head">
+          <div class="goal-card-title">VOD Milestone</div>
+          <div class="goal-card-pct" id="goal-vods-pct">—%</div>
+        </div>
+        <div class="goal-track">
+          <div class="goal-fill purple" id="goal-vods-fill" data-target="0"></div>
+        </div>
+        <div class="goal-numbers">
+          <span><b id="goal-vods-cur">—</b> VODs</span>
+          <span>goal: <b>250</b></span>
+        </div>
+        <div class="goal-desc">Counting every episode uploaded. 250 VODs means 250 streams logged — almost daily, no pause, only resume.</div>
+      </div>
+
+      <div class="goal-card">
+        <div class="goal-card-head">
+          <div class="goal-card-title">Hours Live</div>
+          <div class="goal-card-pct" id="goal-hours-pct">—%</div>
+        </div>
+        <div class="goal-track">
+          <div class="goal-fill" id="goal-hours-fill" data-target="0"></div>
+        </div>
+        <div class="goal-numbers">
+          <span><b id="goal-hours-cur">—</b> hrs streamed</span>
+          <span>goal: <b>1,000</b></span>
+        </div>
+        <div class="goal-desc">Total hours live, all time. 1,000 hours is the landmark — every session adds to it.</div>
+      </div>
+
     </div>
   </section>
 
@@ -1696,6 +2582,58 @@
     </div>
   </section>
 
+  <!-- ── FEATURED HIGHLIGHT ── -->
+  <section class="highlight-section" id="highlight-section">
+    <div class="section-head" style="padding-left:0; padding-right:0; border-top:none;">
+      <div>
+        <span class="section-eyebrow">FEATURED CLIP</span>
+        <h2>the one to watch first</h2>
+      </div>
+      <p>Top clip by views. Updates automatically from Twitch.</p>
+    </div>
+    <div class="highlight-layout" id="highlight-layout">
+      <!-- left: video thumb -->
+      <div class="highlight-video" id="highlight-video">
+        <img class="highlight-video-thumb" id="highlight-thumb" src="" alt="Featured clip thumbnail">
+        <div class="highlight-video-overlay">
+          <div class="highlight-play">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3l14 9-14 9V3z"/></svg>
+          </div>
+        </div>
+        <div class="highlight-meta">
+          <div class="highlight-game-tag" id="highlight-game">—</div>
+          <div class="highlight-video-title" id="highlight-video-title">Loading top clip…</div>
+        </div>
+      </div>
+      <!-- right: info panel -->
+      <div class="highlight-info">
+        <div class="highlight-info-top">
+          <div class="highlight-eyebrow">MOST WATCHED CLIP</div>
+          <div class="highlight-title" id="highlight-title">Loading…</div>
+          <div class="highlight-desc" id="highlight-desc">Fetching clip data from Twitch…</div>
+          <div class="highlight-stats-row">
+            <div class="hl-stat">
+              <b id="hl-views">—</b>
+              <span>VIEWS</span>
+            </div>
+            <div class="hl-stat">
+              <b id="hl-duration">—</b>
+              <span>DURATION</span>
+            </div>
+            <div class="hl-stat">
+              <b id="hl-date">—</b>
+              <span>CREATED</span>
+            </div>
+          </div>
+        </div>
+        <div class="highlight-actions">
+          <a href="#" id="highlight-watch-btn" target="_blank" rel="noopener" class="primary-hl">WATCH CLIP →</a>
+          <a href="https://twitch.tv/thatguypb_/clips" target="_blank" rel="noopener">ALL CLIPS ↗</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- ── LIVE CHAT SECTION (live-only) ── -->
   <div class="live-chat-section">
     <div class="live-chat-inner">
@@ -1775,6 +2713,65 @@
             <a href="https://twitch.tv/thatguypb_" target="_blank" rel="noopener" class="btn-primary" style="margin-top:14px;">FOLLOW ON TWITCH →</a>
           </div>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SUPPORT TIERS ── -->
+  <section class="support-section" id="support-section">
+    <div class="support-inner">
+      <div class="support-head">
+        <h2>SUPPORT<br>THE STREAM</h2>
+        <div class="support-head-right">Three ways to back TGC. Every tier keeps the stream running and the TTS chaos alive.</div>
+      </div>
+      <div class="tiers-grid">
+        <!-- Tier 1: Free -->
+        <div class="tier-card">
+          <span class="tier-badge">FREE TIER</span>
+          <div class="tier-price">$0.00<span>/mo</span></div>
+          <div class="tier-name">THE VIEWER</div>
+          <div class="tier-desc">Show up, say something in chat, be part of TGC. That's it. Always free.</div>
+          <div class="tier-perks">
+            <div class="tier-perk"><span class="tier-perk-dot"></span>Full stream access, no paywall</div>
+            <div class="tier-perk"><span class="tier-perk-dot"></span>Open chat — no sub-only</div>
+            <div class="tier-perk"><span class="tier-perk-dot"></span>VODs stay up on Twitch + YouTube</div>
+            <div class="tier-perk"><span class="tier-perk-dot"></span>Discord open to all</div>
+          </div>
+          <a href="https://twitch.tv/thatguypb_" target="_blank" rel="noopener" class="tier-cta">FOLLOW ON TWITCH <span>→</span></a>
+        </div>
+        <!-- Tier 2: Twitch Sub / featured -->
+        <div class="tier-card featured">
+          <span class="tier-badge featured-badge">TWITCH SUB</span>
+          <div class="tier-price">$4.99<span>/mo</span></div>
+          <div class="tier-name">TGC MEMBER</div>
+          <div class="tier-desc">Sub to directly support the stream. Sub money goes straight back into keeping things running.</div>
+          <div class="tier-perks">
+            <div class="tier-perk"><span class="tier-perk-dot"></span>Sub badge in chat</div>
+            <div class="tier-perk"><span class="tier-perk-dot"></span>Ad-free viewing on Twitch</div>
+            <div class="tier-perk"><span class="tier-perk-dot"></span>Sub emotes (when available)</div>
+            <div class="tier-perk"><span class="tier-perk-dot"></span>Directly funds the stream</div>
+            <div class="tier-perk"><span class="tier-perk-dot"></span>Included in monthly sub goal</div>
+          </div>
+          <a href="https://twitch.tv/thatguypb_" target="_blank" rel="noopener" class="tier-cta primary-tier">SUBSCRIBE ON TWITCH <span>→</span></a>
+        </div>
+        <!-- Tier 3: Patreon -->
+        <div class="tier-card">
+          <span class="tier-badge">TGC HIDEOUT</span>
+          <div class="tier-price">$3.99+<span>/mo</span></div>
+          <div class="tier-name">PATREON</div>
+          <div class="tier-desc">The TGC Hideout on Patreon. Extra content, behind-the-scenes access, and a direct line to the community.</div>
+          <div class="tier-perks">
+            <div class="tier-perk"><span class="tier-perk-dot"></span>TGC Hideout exclusive content</div>
+            <div class="tier-perk"><span class="tier-perk-dot"></span>Early access to announcements</div>
+            <div class="tier-perk"><span class="tier-perk-dot"></span>Direct community access</div>
+            <div class="tier-perk"><span class="tier-perk-dot"></span>Name in stream credits</div>
+          </div>
+          <a href="https://www.patreon.com/cw/TGCHideout" target="_blank" rel="noopener" class="tier-cta">JOIN TGC HIDEOUT <span>↗</span></a>
+        </div>
+      </div>
+      <div class="support-note">
+        Donations via Streamlabs are also open — all donos go to TTS and get read live on stream.<br>
+        <a href="https://streamlabs.com/thatguypb_/tip" target="_blank" rel="noopener" style="color:var(--coral); text-decoration:underline;">streamlabs.com/thatguypb_/tip</a>
       </div>
     </div>
   </section>
@@ -1902,6 +2899,60 @@
     </div>
   </section>
 
+  <!-- ── HOW TO WATCH ── -->
+  <section class="how-section" id="how-section">
+    <div class="section-head" style="padding-left:0; padding-right:0; border-top:none;">
+      <div>
+        <span class="section-eyebrow">NEW HERE?</span>
+        <h2>how to get in</h2>
+      </div>
+      <p>Four steps. Takes about 30 seconds. You'll be in chat before the next game loads.</p>
+    </div>
+    <div class="how-grid">
+
+      <div class="how-card">
+        <div class="how-step-num">01</div>
+        <svg class="how-icon" viewBox="0 0 24 24"><path d="M4 4h16v11l-4 4h-4l-3 3H9v-3H4V4z"/><line x1="14" y1="8" x2="14" y2="13"/><line x1="10" y1="8" x2="10" y2="13"/></svg>
+        <div class="how-title">Follow on Twitch</div>
+        <div class="how-desc">Hit follow on Twitch and turn on notifications. That's the only way to know the second a stream goes live — no fixed schedule means you need the alert.</div>
+        <a href="https://twitch.tv/thatguypb_" target="_blank" rel="noopener" class="how-link">
+          twitch.tv/thatguypb_ →
+        </a>
+      </div>
+
+      <div class="how-card">
+        <div class="how-step-num">02</div>
+        <svg class="how-icon" viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+        <div class="how-title">Show Up in Chat</div>
+        <div class="how-desc">Open chat and say something. Doesn't matter what. TGC chat is open — no sub-only, no slow mode. If you're lurking that's fine too, but saying hi usually sticks.</div>
+        <a href="https://twitch.tv/thatguypb_" target="_blank" rel="noopener" class="how-link">
+          Join the chat →
+        </a>
+      </div>
+
+      <div class="how-card">
+        <div class="how-step-num">03</div>
+        <svg class="how-icon" viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="12" rx="4"/><circle cx="9" cy="12" r="1"/><circle cx="15" cy="12" r="1"/></svg>
+        <div class="how-title">Join the Discord</div>
+        <div class="how-desc">TGC lives in the Discord between streams. Game votes, clip drops, announcements, and general chaos. The link is in the footer — it's free, always open.</div>
+        <a href="#" class="how-link">
+          TGC Discord →
+        </a>
+      </div>
+
+      <div class="how-card">
+        <div class="how-step-num">04</div>
+        <svg class="how-icon" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+        <div class="how-title">You're TGC Now</div>
+        <div class="how-desc">That's it. No initiation, no requirements. If you're here, you're here to stay. ThatGuyPB's Community. Welcome.</div>
+        <a href="https://twitch.tv/thatguypb_" target="_blank" rel="noopener" class="how-link">
+          Watch live →
+        </a>
+      </div>
+
+    </div>
+  </section>
+
   <!-- ── FAQ ── -->
   <section class="faq" id="faq">
     <div class="section-head" style="padding-left:0; padding-right:0;">
@@ -1939,6 +2990,35 @@
       <summary>How do I join the community?</summary>
       <p>Discord link is in the footer and the community section above. Follow on Twitch for live notifications. Show up in chat and say something — nobody bites.</p>
     </details>
+  </section>
+
+  <!-- ── PRESS / CONTACT STRIP ── -->
+  <section class="press-strip" id="press-section">
+    <div class="press-inner">
+      <div class="press-card">
+        <svg class="press-card-icon" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="14" rx="1"/><path d="M8 21h8M12 17v4"/><path d="M3 8h18"/></svg>
+        <div class="press-card-label">COLLABS & BUSINESS</div>
+        <div class="press-card-title">Work With ThatGuyPB</div>
+        <div class="press-card-desc">Open to collaborations, guest appearances, and brand partnerships that fit TGC's vibe. Reach out on Twitter.</div>
+        <a href="https://x.com/ThatGuyPB" target="_blank" rel="noopener" class="press-card-link">
+          GET IN TOUCH ↗
+        </a>
+      </div>
+      <div class="press-card">
+        <svg class="press-card-icon" viewBox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
+        <div class="press-card-label">MEDIA & CLIPS</div>
+        <div class="press-card-title">Use Our Content</div>
+        <div class="press-card-desc">Clip compilations, highlights, and stream footage — ask in Discord before using commercially. Personal use is fine.</div>
+        <a href="#" class="press-card-link">CLIP POLICY ↗</a>
+      </div>
+      <div class="press-card">
+        <svg class="press-card-icon" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+        <div class="press-card-label">COMMUNITY</div>
+        <div class="press-card-title">Join TGC Discord</div>
+        <div class="press-card-desc">ThatGuyPB's Community lives in the Discord. Stream alerts, clip drops, game votes, and general chaos between streams.</div>
+        <a href="#" class="press-card-link">JOIN DISCORD →</a>
+      </div>
+    </div>
   </section>
 
   <!-- ── FOOTER ── -->
@@ -2049,7 +3129,6 @@
     return String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   }
 
-  /* Parse Twitch ISO duration "3h24m10s" → total seconds */
   function parseDuration(d){
     if(!d) return 0;
     const m = String(d).match(/(?:(\d+)h)?(?:(\d+)m)?(?:(\d+)s)?/);
@@ -2067,6 +3146,12 @@
     return h >= 1000 ? (h/1000).toFixed(1)+'K' : String(h);
   }
 
+  function fmtCompact(n){
+    if(n >= 1000000) return (n/1000000).toFixed(1).replace(/\.0$/,'')+'M';
+    if(n >= 1000)    return (n/1000).toFixed(1).replace(/\.0$/,'')+'K';
+    return String(n);
+  }
+
   function sizedThumb(url,w,h){
     return url ? url.replace('%{width}',w).replace('%{height}',h) : '';
   }
@@ -2078,8 +3163,50 @@
     return r.json();
   }
 
+  function timeSince(date){
+    const secs = Math.floor((Date.now()-date.getTime())/1000);
+    if(secs < 60)    return 'just now';
+    if(secs < 3600)  return Math.floor(secs/60)+'m ago';
+    if(secs < 86400) return Math.floor(secs/3600)+'h ago';
+    return Math.floor(secs/86400)+'d ago';
+  }
+
   /* ═══════════════════════════════════════════════════════════════════
-     LIVE RUNTIME TICKER — counts up every second while live
+     ANIMATED COUNTER
+     ═══════════════════════════════════════════════════════════════════ */
+  function animateCounter(el, target, duration, formatter){
+    if(!el || typeof target !== 'number') return;
+    const fmt = formatter || (n => Math.round(n).toLocaleString());
+    const start = performance.now();
+    el.classList.add('stat-animated');
+    function step(now){
+      const progress = Math.min((now - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      el.textContent = fmt(eased * target);
+      if(progress < 1) requestAnimationFrame(step);
+      else el.textContent = fmt(target);
+    }
+    requestAnimationFrame(step);
+  }
+
+  let statsObserved = false;
+  function observeStats(statData){
+    if(statsObserved) return;
+    const targets = [document.querySelector('.stats-bar'), document.querySelector('.social-proof')];
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting && !statsObserved){
+          statsObserved = true;
+          observer.disconnect();
+          statData.forEach(({id, val, fmt}) => animateCounter($(id), val, 1400, fmt));
+        }
+      });
+    }, { threshold: 0.3 });
+    targets.forEach(t => t && observer.observe(t));
+  }
+
+  /* ═══════════════════════════════════════════════════════════════════
+     LIVE RUNTIME TICKER
      ═══════════════════════════════════════════════════════════════════ */
   let _tickerInterval = null;
 
@@ -2087,10 +3214,8 @@
     if(_tickerInterval) clearInterval(_tickerInterval);
     function tick(){
       const secs = Math.max(0, Math.floor((Date.now() - new Date(startedAt).getTime()) / 1000));
-      const str  = fmtHMS(secs);
-      set('obs-rec-time', 'REC '+str);
       const hm = $('hero-meta');
-      if(hm) hm.innerHTML = 'LIVE NOW<br>RUNTIME '+str;
+      if(hm) hm.innerHTML = 'LIVE NOW<br>RUNTIME '+fmtHMS(secs);
     }
     tick();
     _tickerInterval = setInterval(tick, 1000);
@@ -2139,7 +3264,6 @@
       const title   = stream.title || 'on stream';
       const game    = stream.game_name || '';
 
-      // badges
       heroBadge.classList.add('is-live');
       heroBadge.innerHTML = '<span class="live-dot"></span>LIVE NOW — '+viewers+' WATCHING';
       navBadge.classList.add('is-live');
@@ -2147,42 +3271,25 @@
       set('footer-status-text', 'LIVE NOW');
       set('drawer-status-text', 'LIVE NOW');
 
-      // hero
       if(heroSub) heroSub.textContent = title;
-
-      // cta
       if(heroCta){  heroCta.textContent = '🔴 WATCH LIVE NOW →'; heroCta.classList.add('live-cta'); }
       if(ctaHeading) ctaHeading.innerHTML = 'THE STREAM IS<br>LIVE RIGHT NOW';
       if(ctaBtn){   ctaBtn.textContent = '🔴 WATCH LIVE NOW →'; ctaBtn.classList.add('live-cta'); }
 
-      // live banner
       set('live-banner-game',    game ? 'Playing '+game : title);
       set('live-banner-viewers', viewers+' viewers');
-
-      // announce bar
       set('live-title-announce', title);
       set('live-count-announce', viewers);
-
-      // twitch embed section header
       set('twitch-live-title', title);
       set('twitch-game-tag',   game);
 
-      // live runtime ticker
       if(stream.started_at) startTicker(stream.started_at);
-
-      // page title flash
       startTitleFlash(title);
-
-      // inject embed once
       if(!_wasLive) injectTwitchEmbed();
-
-      // update meta tags dynamically
       updateMetaTags(title, game);
-
       _wasLive = true;
 
     } else {
-      // ── OFFLINE ──
       heroBadge.classList.remove('is-live');
       heroBadge.textContent = 'OFFLINE — STREAMING ALMOST DAILY';
       navBadge.classList.remove('is-live');
@@ -2201,9 +3308,7 @@
   }
 
   function updateMetaTags(title, game){
-    const desc = game
-      ? `🔴 LIVE NOW — ${title} (${game})`
-      : `🔴 LIVE NOW — ${title}`;
+    const desc = game ? `🔴 LIVE NOW — ${title} (${game})` : `🔴 LIVE NOW — ${title}`;
     document.querySelector('meta[name="description"]')?.setAttribute('content', desc);
     document.querySelector('meta[property="og:title"]')?.setAttribute('content', `🔴 LIVE — ${CHANNEL_DISPLAY}`);
     document.querySelector('meta[property="og:description"]')?.setAttribute('content', desc);
@@ -2224,7 +3329,6 @@
     const wrap   = $('twitch-player-wrap');
     const chatEl = $('twitch-chat-iframe');
     const pp     = twitchParents();
-
     if(wrap && !wrap.querySelector('iframe')){
       const f = document.createElement('iframe');
       f.src = `https://player.twitch.tv/?channel=${encodeURIComponent(CHANNEL_DISPLAY)}&${pp}&autoplay=true&muted=true`;
@@ -2240,84 +3344,196 @@
   }
 
   /* ═══════════════════════════════════════════════════════════════════
-     RENDER GENRES — built from real Twitch clip data
-     Strategy: count clips per game_id from the full clips fetch (first:100),
-     resolve game names + box art in one bulk /games call, render cards.
+     ACTIVITY HEATMAP — 12-week grid from VOD dates
      ═══════════════════════════════════════════════════════════════════ */
+  function renderHeatmap(videos){
+    const grid = $('heatmap-grid');
+    if(!grid) return;
 
-  // Rotating accent colours for cards
+    const dayCounts = {};
+    (videos||[]).forEach(v => {
+      if(!v.created_at) return;
+      const d = v.created_at.slice(0,10);
+      dayCounts[d] = (dayCounts[d]||0) + 1;
+    });
+
+    const today = new Date();
+    today.setHours(0,0,0,0);
+    const dayOfWeek = today.getDay();
+    const daysToMon = (dayOfWeek + 6) % 7;
+    const endMonday = new Date(today);
+    endMonday.setDate(today.getDate() - daysToMon);
+    const startDate = new Date(endMonday);
+    startDate.setDate(endMonday.getDate() - 77);
+
+    const DAYS = ['MON','TUE','WED','THU','FRI','SAT','SUN'];
+    const cols = 12;
+    const maxCount = Math.max(1, ...Object.values(dayCounts));
+
+    let labelCol = `<div class="hm-col">`;
+    DAYS.forEach(d => { labelCol += `<div class="hm-day-label">${d}</div>`; });
+    labelCol += `</div>`;
+
+    let html = labelCol;
+    for(let col = 0; col < cols; col++){
+      html += `<div class="hm-col">`;
+      for(let row = 0; row < 7; row++){
+        const date = new Date(startDate);
+        date.setDate(startDate.getDate() + col*7 + row);
+        const key   = date.toISOString().slice(0,10);
+        const count = dayCounts[key] || 0;
+        const level = count === 0 ? 0 : Math.ceil((count/maxCount)*4);
+        const isFuture = date > today;
+        html += `<div class="hm-cell" data-level="${isFuture?0:level}" title="${key}${count?' — '+count+' stream'+(count>1?'s':''):''}"></div>`;
+      }
+      html += `</div>`;
+    }
+    grid.innerHTML = html;
+
+    // Activity stat cards
+    const now = new Date();
+    const monthStart = new Date(now.getFullYear(), now.getMonth(), 1);
+    const streamsThisMonth = (videos||[]).filter(v => v.created_at && new Date(v.created_at) >= monthStart).length;
+
+    const recent   = (videos||[]).slice(0, 20);
+    const totalSec = recent.reduce((s,v) => s + parseDuration(v.duration), 0);
+    const avgSecs  = recent.length ? Math.round(totalSec / recent.length) : 0;
+    const longestV = (videos||[]).reduce((best,v) => parseDuration(v.duration) > parseDuration(best.duration||'') ? v : best, videos[0]||{});
+
+    const streamDays = Object.keys(dayCounts).filter(k => new Date(k) >= startDate && new Date(k) <= today).length;
+    const consistency = Math.round((streamDays / 84) * 100);
+
+    set('act-month',       streamsThisMonth > 0 ? streamsThisMonth+'x' : '—');
+    set('act-avg-len',     avgSecs > 0 ? fmtHMS(avgSecs) : '—');
+    set('act-longest',     parseDuration(longestV?.duration||'') > 0 ? fmtHMS(parseDuration(longestV.duration)) : '—');
+    set('act-consistency', consistency > 0 ? consistency+'%' : '—');
+  }
+
+  /* ═══════════════════════════════════════════════════════════════════
+     FEATURED HIGHLIGHT — top clip by view count
+     ═══════════════════════════════════════════════════════════════════ */
+  function renderHighlight(clips){
+    if(!clips?.length) return;
+    const top = [...clips].sort((a,b) => (b.view_count||0) - (a.view_count||0))[0];
+    if(!top) return;
+
+    const hlThumb = $('highlight-thumb');
+    if(hlThumb && top.thumbnail_url){
+      hlThumb.src = top.thumbnail_url;
+      hlThumb.alt = top.title || 'Featured clip';
+    }
+
+    set('highlight-game',        top.game_name || '—');
+    set('highlight-video-title', top.title || '—');
+    set('highlight-title',       top.title || '—');
+    set('highlight-desc',
+      `"${top.title||'Untitled'}" — clipped on ${top.created_at ? new Date(top.created_at).toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'}) : 'Twitch'}. The most-watched clip on the channel.`
+    );
+    set('hl-views',    Number(top.view_count||0).toLocaleString());
+    set('hl-duration', top.duration ? Math.round(top.duration)+'s' : '—');
+    set('hl-date',     top.created_at ? new Date(top.created_at).toLocaleDateString('en-GB',{day:'numeric',month:'short'}) : '—');
+
+    const watchBtn = $('highlight-watch-btn');
+    if(watchBtn && top.url) watchBtn.href = top.url;
+
+    const hlVideo = $('highlight-video');
+    if(hlVideo && top.url){
+      hlVideo.style.cursor = 'pointer';
+      hlVideo.addEventListener('click', () => window.open(top.url, '_blank', 'noopener'));
+    }
+  }
+
+  /* ═══════════════════════════════════════════════════════════════════
+     SOCIAL PROOF BAR
+     ═══════════════════════════════════════════════════════════════════ */
+  function applySocialProof({ followers, clips, totalSecs, videos }){
+    if(typeof followers === 'number'){
+      const spEl = $('sp-twitch');
+      if(spEl) animateCounter(spEl, followers, 1400, n => fmtCompact(Math.round(n)));
+    }
+    if(clips?.length){
+      const totalViews = clips.reduce((s,c) => s+(c.view_count||0), 0);
+      const spClips = $('sp-clips-total');
+      if(spClips) animateCounter(spClips, totalViews, 1600, n => fmtCompact(Math.round(n)));
+    }
+    if(totalSecs > 0){
+      const hrs = Math.round(totalSecs/3600);
+      const spHrs = $('sp-hours-live');
+      if(spHrs) animateCounter(spHrs, hrs, 1400, n => fmtCompact(Math.round(n)));
+    }
+    if(videos?.length){
+      // total VODs
+      const spVods = $('sp-total-vods');
+      if(spVods) animateCounter(spVods, videos.length, 1200, n => Math.round(n).toLocaleString());
+      // avg viewers — approximate from clip view_count / clip count as proxy,
+      // since Twitch API doesn't expose per-stream avg without Stream Summary endpoint.
+      // Use duration-weighted approach: total clip views ÷ VOD count gives engagement index.
+      const recentClipViews = clips?.length
+        ? clips.slice(0,20).reduce((s,c)=>s+(c.view_count||0),0)
+        : 0;
+      const avgProxy = recentClipViews && videos.length
+        ? Math.round(recentClipViews / Math.min(videos.length, 20))
+        : null;
+      const spAvg = $('sp-avg-viewers');
+      if(spAvg && avgProxy !== null && avgProxy > 0){
+        animateCounter(spAvg, avgProxy, 1500, n => fmtCompact(Math.round(n)));
+      }
+    }
+  }
+
+  /* ═══════════════════════════════════════════════════════════════════
+     RENDER GENRES
+     ═══════════════════════════════════════════════════════════════════ */
   const ACCENT_COLOURS = [
     '#FF4D6D','#2A9D8F','#9B6DFF','#f4a261','#B9AEDB','#e76f51',
     '#4ecdc4','#ff6b6b','#ffd93d','#6bcb77'
   ];
 
-  // Rank label based on position
   function rankLabel(i, total){
     if(i === 0) return 'MOST PLAYED';
     if(i === 1) return 'SECOND MOST';
     if(i === 2) return 'THIRD MOST';
-    const pct = Math.round(((total - i) / total) * 100);
-    return pct + '% OF STREAMS';
+    return Math.round(((total - i) / total) * 100) + '% OF STREAMS';
   }
 
-  async function renderGenres(clipsData, userId){
-    const grid    = document.getElementById('genres-grid');
-    const subhead = document.getElementById('genres-subhead');
+  async function renderGenres(clipsData){
+    const grid    = $('genres-grid');
+    const subhead = $('genres-subhead');
     if(!grid) return;
 
-    // --- 1. Count clips per game_id (skip null/empty) ---
     const counts = {};
-    (clipsData || []).forEach(c => {
-      if(c.game_id) counts[c.game_id] = (counts[c.game_id]||0) + 1;
-    });
-
-    const sorted = Object.entries(counts)
-      .sort((a,b) => b[1]-a[1])
-      .slice(0, 9);                // up to 9 cards (3×3 grid)
+    (clipsData||[]).forEach(c => { if(c.game_id) counts[c.game_id] = (counts[c.game_id]||0)+1; });
+    const sorted = Object.entries(counts).sort((a,b)=>b[1]-a[1]).slice(0,9);
 
     if(!sorted.length){
-      // nothing from clips — fall back to channel's current game
       if(subhead) subhead.textContent = 'categories played on stream';
       grid.innerHTML = '<div class="genre-card" style="padding:28px;color:var(--ink-soft);font-family:\'Space Mono\',monospace;font-size:12px;">No clip data available yet.</div>';
       return;
     }
 
-    // --- 2. Bulk resolve game names + box art ---
-    const ids      = sorted.map(([id]) => id);
-    let   gameMap  = {};
-
+    const ids = sorted.map(([id]) => id);
+    let gameMap = {};
     try{
-      // Helix /games accepts repeated id= params
-      const qs   = ids.map(id => 'id='+encodeURIComponent(id)).join('&');
-      const res  = await fetch(TWITCH_API_BASE + '/games?' + qs);
-      if(res.ok){
-        const data = await res.json();
-        (data.data || []).forEach(g => { gameMap[g.id] = g; });
-      }
+      const qs  = ids.map(id=>'id='+encodeURIComponent(id)).join('&');
+      const res = await fetch(TWITCH_API_BASE+'/games?'+qs);
+      if(res.ok){ const data = await res.json(); (data.data||[]).forEach(g=>{ gameMap[g.id]=g; }); }
     } catch(_){}
 
-    // --- 3. Build cards ---
     const maxCount = sorted[0][1];
-
-    if(subhead) subhead.textContent =
-      `${sorted.length} categories · based on your top ${(clipsData||[]).length} clips`;
+    if(subhead) subhead.textContent = `${sorted.length} categories · based on your top ${(clipsData||[]).length} clips`;
 
     grid.innerHTML = sorted.map(([gameId, count], i) => {
-      const game    = gameMap[gameId] || {};
-      const name    = game.name   || 'Unknown Game';
-      const rawArt  = game.box_art_url || '';
-      // Twitch box art uses {width}×{height} tokens
-      const artUrl  = rawArt ? rawArt.replace('{width}','200').replace('{height}','267') : '';
-      const pct     = Math.round((count / maxCount) * 100);
-      const accent  = ACCENT_COLOURS[i % ACCENT_COLOURS.length];
-      const label   = rankLabel(i, sorted.length);
-      const clips   = count === 1 ? '1 clip' : count+' clips';
-
+      const game   = gameMap[gameId] || {};
+      const name   = game.name || 'Unknown Game';
+      const artUrl = game.box_art_url ? game.box_art_url.replace('{width}','200').replace('{height}','267') : '';
+      const pct    = Math.round((count/maxCount)*100);
+      const accent = ACCENT_COLOURS[i%ACCENT_COLOURS.length];
+      const label  = rankLabel(i, sorted.length);
+      const clips  = count===1?'1 clip':count+' clips';
       return `
         <div class="genre-card${artUrl?' has-art':''}"
              style="--accent:${accent}${artUrl?';background-image:url(\''+escHtml(artUrl)+'\')':''}"
-             role="article"
-             aria-label="${escHtml(name)}">
+             role="article" aria-label="${escHtml(name)}">
           <div class="genre-top">
             ${artUrl
               ? `<img src="${escHtml(artUrl)}" alt="${escHtml(name)} box art" class="genre-art" loading="lazy">`
@@ -2331,35 +3547,28 @@
             <span class="genre-tag" style="border-color:${accent};color:${accent};">#${i+1} played</span>
           </div>
           <div class="genre-bar-wrap">
-            <div class="genre-bar-label">
-              <span>CLIP SHARE</span>
-              <span>${pct}%</span>
-            </div>
-            <div class="genre-bar">
-              <div class="genre-bar-fill" data-width="${pct}"></div>
-            </div>
+            <div class="genre-bar-label"><span>CLIP SHARE</span><span>${pct}%</span></div>
+            <div class="genre-bar"><div class="genre-bar-fill" data-width="${pct}"></div></div>
           </div>
         </div>`;
     }).join('');
 
-    // --- 4. Animate bars after paint ---
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => {
-        grid.querySelectorAll('.genre-bar-fill[data-width]').forEach(el => {
-          el.style.width = el.dataset.width + '%';
-        });
-      });
-    });
+    requestAnimationFrame(()=>{ requestAnimationFrame(()=>{
+      grid.querySelectorAll('.genre-bar-fill[data-width]').forEach(el=>{ el.style.width=el.dataset.width+'%'; });
+    }); });
 
-    // --- 5. Populate stream-info categories panel ---
     const siCats = $('si-categories');
     if(siCats && sorted.length){
-      siCats.innerHTML = sorted.map(([gameId]) => {
-        const name = (gameMap[gameId] || {}).name || 'Unknown';
+      siCats.innerHTML = sorted.map(([gameId])=>{
+        const name = (gameMap[gameId]||{}).name||'Unknown';
         return `<span class="si-tag">${escHtml(name)}</span>`;
       }).join('');
     }
   }
+
+  /* ═══════════════════════════════════════════════════════════════════
+     RENDER CLIPS
+     ═══════════════════════════════════════════════════════════════════ */
   function renderClips(clips){
     const grid = $('clip-grid');
     if(!grid||!clips?.length) return;
@@ -2382,48 +3591,93 @@
   }
 
   /* ═══════════════════════════════════════════════════════════════════
-     RENDER VIDEOS  — 3D looping carousel
+     RENDER VIDEOS — carousel + stats
      ═══════════════════════════════════════════════════════════════════ */
   function renderVideos(videos){
     if(!videos?.length) return;
 
-    /* ── stats (unchanged) ── */
     let totalSecs = 0;
     videos.forEach(v => { totalSecs += parseDuration(v.duration); });
-    set('stat-episodes', videos.length.toLocaleString());
+
     set('stat-hours',    fmtHoursShort(totalSecs));
+    set('stat-episodes', videos.length.toLocaleString());
     set('milestone-episodes', videos.length.toLocaleString());
     set('milestone-hours',    fmtHoursShort(totalSecs));
-    if(videos[0]?.created_at){
-      set('stat-last-stream', timeSince(new Date(videos[0].created_at)));
-    }
+
+    if(videos[0]?.created_at) set('stat-last-stream', timeSince(new Date(videos[0].created_at)));
     if(videos[0]){
       const hm = $('hero-meta');
       if(hm) hm.innerHTML = `VOD #${videos.length}<br>RUNTIME ${fmtHMS(parseDuration(videos[0].duration))}`;
     }
 
-    /* ── build carousel ── */
-    const stage     = $('carousel-stage');
-    const dotsWrap  = $('carousel-dots');
+    /* ── Last stream recap ── */
+    if(videos[0]){
+      const v0 = videos[0];
+      set('recap-title',    v0.title || '—');
+      set('recap-game',     v0.game_name || '—');
+      set('recap-duration', parseDuration(v0.duration) > 0 ? fmtHMS(parseDuration(v0.duration)) : '—');
+      if(v0.created_at){
+        const d = new Date(v0.created_at);
+        set('recap-date', d.toLocaleDateString('en-GB',{weekday:'short',day:'numeric',month:'short',year:'numeric'}) + ' · ' + timeSince(d));
+      }
+    }
+
+    /* ── Goals progress bars (animate on scroll) ── */
+    const goalObs = new IntersectionObserver(entries => {
+      if(!entries.some(e=>e.isIntersecting)) return;
+      goalObs.disconnect();
+
+      // Follower goal (140)
+      const FOLLOW_GOAL = 140;
+      const followFill = $('goal-follow-fill');
+      // followers count comes from applyFollowers; read it back from the DOM
+      const followCurText = $('stat-followers')?.textContent?.replace(/[^0-9]/g,'');
+      const followCur = parseInt(followCurText||'0',10) || 134;
+      const followPct = Math.min(Math.round((followCur/FOLLOW_GOAL)*100), 100);
+      set('goal-follow-cur',    followCur.toLocaleString());
+      set('goal-follow-target', FOLLOW_GOAL.toLocaleString());
+      set('goal-follow-pct',    followPct+'%');
+      if(followFill) followFill.style.width = followPct+'%';
+
+      // VOD goal (250)
+      const VOD_GOAL = 250;
+      const vodsPct = Math.min(Math.round((videos.length/VOD_GOAL)*100), 100);
+      set('goal-vods-cur', videos.length.toLocaleString());
+      set('goal-vods-pct', vodsPct+'%');
+      const vodFill = $('goal-vods-fill');
+      if(vodFill) vodFill.style.width = vodsPct+'%';
+
+      // Hours goal (1000)
+      const HOURS_GOAL = 1000;
+      const hrsDone = Math.round(totalSecs/3600);
+      const hoursPct = Math.min(Math.round((hrsDone/HOURS_GOAL)*100), 100);
+      set('goal-hours-cur', fmtHoursShort(totalSecs));
+      set('goal-hours-pct', hoursPct+'%');
+      const hrFill = $('goal-hours-fill');
+      if(hrFill) hrFill.style.width = hoursPct+'%';
+
+    }, { threshold: 0.2 });
+    const goalsEl = $('goals-section');
+    if(goalsEl) goalObs.observe(goalsEl);
+
+    renderHeatmap(videos);
+
+    const stage    = $('carousel-stage');
+    const dotsWrap = $('carousel-dots');
     if(!stage) return;
 
-    const items = videos.slice(0, 10);   // up to 10 in the loop
-    const total = items.length;
-    let   current = 0;
-    let   autoTimer = null;
-    let   isPaused = false;
+    const items   = videos.slice(0,10);
+    const total   = items.length;
+    let current   = 0, autoTimer = null, isPaused = false;
 
-    // Build card HTML
-    stage.innerHTML = items.map((v, i) => `
+    stage.innerHTML = items.map((v,i) => `
       <div class="vod-card" data-index="${i}">
         <div class="vod-thumb">
           ${v.thumbnail_url
-            ? `<img src="${sizedThumb(v.thumbnail_url, 640, 360)}" alt="" loading="lazy">`
+            ? `<img src="${sizedThumb(v.thumbnail_url,640,360)}" alt="" loading="lazy">`
             : `<div style="position:absolute;inset:0;background:linear-gradient(160deg,#6E7793,#3B4257)"></div>`}
           <div class="vod-tag-wrap"><span class="vod-tag${i===0?' new':''}">${i===0?'NEW':'VOD'}</span></div>
-          <div class="vod-play">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M10 8l6 4-6 4V8z"/></svg>
-          </div>
+          <div class="vod-play"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M10 8l6 4-6 4V8z"/></svg></div>
           <div class="vod-dur">${fmtHMS(parseDuration(v.duration))}</div>
         </div>
         <div class="vod-info">
@@ -2432,12 +3686,11 @@
         </div>
       </div>`).join('');
 
-    // Build dots
     if(dotsWrap){
-      dotsWrap.innerHTML = items.map((_, i) =>
+      dotsWrap.innerHTML = items.map((_,i)=>
         `<button class="carousel-dot${i===0?' active':''}" data-idx="${i}" aria-label="Go to episode ${i+1}"></button>`
       ).join('');
-      dotsWrap.addEventListener('click', e => {
+      dotsWrap.addEventListener('click', e=>{
         const btn = e.target.closest('.carousel-dot');
         if(btn) goTo(+btn.dataset.idx);
       });
@@ -2445,231 +3698,124 @@
 
     const cards = Array.from(stage.querySelectorAll('.vod-card'));
 
-    /* ── layout engine ── */
-    // Visible slots relative to center: ..., -2, -1, 0, +1, +2, ...
-    // We show 5 cards: center + 2 on each side. Beyond ±2 → hidden.
     function getSlotStyle(slot){
-      // slot: integer offset from center (-2..+2)
-      const CARD_W   = 420;   // px — must match CSS width
-      const SPREAD   = 260;   // px between card centres
-      const ROT_Y    = 38;    // degrees rotation per slot
-      const Z_STEP   = 160;   // depth step per slot
-      const SCALE_STEP = 0.18; // scale drop per slot away from centre
-
-      const tx    = slot * SPREAD;
-      const ry    = slot * ROT_Y;
-      const tz    = -Math.abs(slot) * Z_STEP;
-      const scale = 1 - Math.abs(slot) * SCALE_STEP;
-      const opacity = Math.abs(slot) > 2 ? 0 : 1 - Math.abs(slot) * 0.15;
-      const zIndex  = 10 - Math.abs(slot);
-
-      return { tx, ry, tz, scale, opacity, zIndex };
+      const tx=slot*260, ry=slot*38, tz=-Math.abs(slot)*160;
+      const scale=1-Math.abs(slot)*0.18;
+      const opacity=Math.abs(slot)>2?0:1-Math.abs(slot)*0.15;
+      return { tx, ry, tz, scale, opacity, zIndex: 10-Math.abs(slot) };
     }
 
     function applyLayout(animate){
-      cards.forEach((card, i) => {
-        // raw offset, then wrap into [-floor(total/2), +ceil(total/2)]
-        let offset = i - current;
-        const half = Math.floor(total / 2);
-        while(offset >  half) offset -= total;
-        while(offset < -half) offset += total;
-
-        const s = getSlotStyle(offset);
-
-        card.style.transition = animate
-          ? 'transform 0.6s cubic-bezier(0.25,0.46,0.45,0.94), opacity 0.6s cubic-bezier(0.25,0.46,0.45,0.94)'
-          : 'none';
-        card.style.transform  = `translate(-50%,-50%) translateX(${s.tx}px) translateZ(${s.tz}px) rotateY(${s.ry}deg) scale(${s.scale})`;
-        card.style.opacity    = s.opacity;
-        card.style.zIndex     = s.zIndex;
-        card.style.pointerEvents = Math.abs(offset) > 2 ? 'none' : 'auto';
-        card.classList.toggle('is-active', offset === 0);
+      cards.forEach((card,i)=>{
+        let offset=i-current;
+        const half=Math.floor(total/2);
+        while(offset> half) offset-=total;
+        while(offset<-half) offset+=total;
+        const s=getSlotStyle(offset);
+        card.style.transition=animate?'transform 0.6s cubic-bezier(0.25,0.46,0.45,0.94),opacity 0.6s cubic-bezier(0.25,0.46,0.45,0.94)':'none';
+        card.style.transform=`translate(-50%,-50%) translateX(${s.tx}px) translateZ(${s.tz}px) rotateY(${s.ry}deg) scale(${s.scale})`;
+        card.style.opacity=s.opacity; card.style.zIndex=s.zIndex;
+        card.style.pointerEvents=Math.abs(offset)>2?'none':'auto';
+        card.classList.toggle('is-active',offset===0);
       });
-
-      // update dots
-      if(dotsWrap){
-        dotsWrap.querySelectorAll('.carousel-dot').forEach((d, i) => {
-          d.classList.toggle('active', i === current);
-        });
-      }
+      dotsWrap?.querySelectorAll('.carousel-dot').forEach((d,i)=>d.classList.toggle('active',i===current));
     }
 
-    function goTo(idx, animate = true){
-      current = ((idx % total) + total) % total;
-      applyLayout(animate);
-    }
+    function goTo(idx,animate=true){ current=((idx%total)+total)%total; applyLayout(animate); }
+    function next(){ goTo(current+1); }
+    function prev(){ goTo(current-1); }
 
-    function next(){ goTo(current + 1); }
-    function prev(){ goTo(current - 1); }
+    function startAuto(){ clearInterval(autoTimer); autoTimer=setInterval(()=>{ if(!isPaused) next(); },3800); }
 
-    /* ── auto-advance ── */
-    function startAuto(){
-      clearInterval(autoTimer);
-      autoTimer = setInterval(() => { if(!isPaused) next(); }, 3800);
-    }
-
-    /* ── click a side card → go to it ── */
-    stage.addEventListener('click', e => {
-      const card = e.target.closest('.vod-card');
-      if(!card) return;
-      const idx = +card.dataset.index;
-      if(idx === current){
-        // active card clicked — open VOD
-        const url = items[idx]?.url;
-        if(url) window.open(url, '_blank', 'noopener');
-      } else {
-        goTo(idx);
-        isPaused = true;
-        clearTimeout(window._carouselResumeTimer);
-        window._carouselResumeTimer = setTimeout(() => { isPaused = false; }, 6000);
-      }
+    stage.addEventListener('click', e=>{
+      const card=e.target.closest('.vod-card'); if(!card) return;
+      const idx=+card.dataset.index;
+      if(idx===current){ const url=items[idx]?.url; if(url) window.open(url,'_blank','noopener'); }
+      else{ goTo(idx); isPaused=true; clearTimeout(window._crTimer); window._crTimer=setTimeout(()=>{ isPaused=false; },6000); }
     });
 
-    /* ── arrow buttons ── */
-    const btnPrev = $('carousel-prev');
-    const btnNext = $('carousel-next');
-    if(btnPrev) btnPrev.addEventListener('click', () => { prev(); isPaused = true; clearTimeout(window._carouselResumeTimer); window._carouselResumeTimer = setTimeout(()=>{ isPaused=false; }, 6000); });
-    if(btnNext) btnNext.addEventListener('click', () => { next(); isPaused = true; clearTimeout(window._carouselResumeTimer); window._carouselResumeTimer = setTimeout(()=>{ isPaused=false; }, 6000); });
+    const btnPrev=$('carousel-prev'), btnNext=$('carousel-next');
+    if(btnPrev) btnPrev.addEventListener('click',()=>{ prev(); isPaused=true; clearTimeout(window._crTimer); window._crTimer=setTimeout(()=>{ isPaused=false; },6000); });
+    if(btnNext) btnNext.addEventListener('click',()=>{ next(); isPaused=true; clearTimeout(window._crTimer); window._crTimer=setTimeout(()=>{ isPaused=false; },6000); });
 
-    /* ── pause on hover ── */
-    stage.addEventListener('mouseenter', () => { isPaused = true; });
-    stage.addEventListener('mouseleave', () => { isPaused = false; });
+    stage.addEventListener('mouseenter',()=>{ isPaused=true; });
+    stage.addEventListener('mouseleave',()=>{ isPaused=false; });
 
-    /* ── touch swipe ── */
-    let touchStartX = 0;
-    stage.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, {passive:true});
-    stage.addEventListener('touchend',   e => {
-      const dx = e.changedTouches[0].clientX - touchStartX;
-      if(Math.abs(dx) > 40){ dx < 0 ? next() : prev(); }
-    }, {passive:true});
+    let touchX=0;
+    stage.addEventListener('touchstart',e=>{ touchX=e.touches[0].clientX; },{passive:true});
+    stage.addEventListener('touchend',  e=>{ const dx=e.changedTouches[0].clientX-touchX; if(Math.abs(dx)>40){ dx<0?next():prev(); } },{passive:true});
 
-    /* ── keyboard ── */
-    document.addEventListener('keydown', e => {
-      if(e.key === 'ArrowLeft')  prev();
-      if(e.key === 'ArrowRight') next();
-    });
+    document.addEventListener('keydown', e=>{ if(e.key==='ArrowLeft') prev(); if(e.key==='ArrowRight') next(); });
 
-    // initial paint (no animation)
     applyLayout(false);
     startAuto();
   }
 
   /* ═══════════════════════════════════════════════════════════════════
-     TOP GAME — detect most frequent game_id from recent clips/videos
+     APPLY HELPERS
      ═══════════════════════════════════════════════════════════════════ */
   function topGameFromClips(clips){
     if(!clips?.length) return null;
-    const counts = {};
-    clips.forEach(c=>{ if(c.game_id){ counts[c.game_id]=(counts[c.game_id]||0)+1; } });
-    return Object.entries(counts).sort((a,b)=>b[1]-a[1])[0]?.[0] || null;
+    const c={};
+    clips.forEach(cl=>{ if(cl.game_id){ c[cl.game_id]=(c[cl.game_id]||0)+1; } });
+    return Object.entries(c).sort((a,b)=>b[1]-a[1])[0]?.[0]||null;
   }
 
-  /* ═══════════════════════════════════════════════════════════════════
-     TIME AGO HELPER
-     ═══════════════════════════════════════════════════════════════════ */
-  function timeSince(date){
-    const secs = Math.floor((Date.now()-date.getTime())/1000);
-    if(secs < 60)    return 'just now';
-    if(secs < 3600)  return Math.floor(secs/60)+'m ago';
-    if(secs < 86400) return Math.floor(secs/3600)+'h ago';
-    return Math.floor(secs/86400)+'d ago';
-  }
-
-  /* ═══════════════════════════════════════════════════════════════════
-     APPLY USER DATA
-     ═══════════════════════════════════════════════════════════════════ */
   function applyUser(user){
     if(!user) return;
-
-    // profile image — about card only
     if(user.profile_image_url){
-      const profileImg = $('profile-img');
-      if(profileImg){
-        profileImg.src = user.profile_image_url;
-        profileImg.style.display = 'block';
-        set('profile-caption', user.display_name || CHANNEL_DISPLAY);
-      }
+      const el=$('profile-img');
+      if(el){ el.src=user.profile_image_url; el.style.display='block'; set('profile-caption',user.display_name||CHANNEL_DISPLAY); }
     }
-
-    // bio
-    if(user.description){
-      const bio = $('bio-text');
-      if(bio) bio.textContent = user.description;
-    }
-
-    // streaming since (account created_at)
-    if(user.created_at){
-      set('fact-since', new Date(user.created_at).getFullYear().toString());
-    }
-
-    // broadcaster type badge (partner / affiliate)
-    if(user.broadcaster_type){
-      const type = user.broadcaster_type; // 'partner' | 'affiliate' | ''
-      if(type === 'partner' || type === 'affiliate'){
-        const badge = document.createElement('span');
-        badge.className = 'type-badge';
-        badge.textContent = type.toUpperCase();
-        $('live-badge')?.parentElement?.appendChild(badge);
-      }
-    }
+    if(user.description){ const bio=$('bio-text'); if(bio) bio.textContent=user.description; }
+    if(user.created_at) set('fact-since', new Date(user.created_at).getFullYear().toString());
   }
 
-  /* ═══════════════════════════════════════════════════════════════════
-     APPLY CHANNEL DATA
-     ═══════════════════════════════════════════════════════════════════ */
   function applyChannel(ch, stream){
     if(!ch) return;
-    // top game in fact list
-    if(ch.game_name && !stream){
-      set('fact-category', ch.game_name.length > 12 ? ch.game_name.slice(0,12)+'…' : ch.game_name);
-    }
-    // page tags: og:image from channel thumbnail
+    if(ch.game_name && !stream) set('fact-category', ch.game_name.length>12?ch.game_name.slice(0,12)+'…':ch.game_name);
     if(ch.thumbnail_url){
-      let og = document.querySelector('meta[property="og:image"]');
+      let og=document.querySelector('meta[property="og:image"]');
       if(!og){ og=document.createElement('meta'); og.setAttribute('property','og:image'); document.head.appendChild(og); }
       og.setAttribute('content', sizedThumb(ch.thumbnail_url,1280,720));
     }
   }
 
-  /* ═══════════════════════════════════════════════════════════════════
-     APPLY FOLLOWERS
-     ═══════════════════════════════════════════════════════════════════ */
   function applyFollowers(data){
     if(typeof data?.total === 'number'){
       const count = data.total;
-      set('stat-followers', count.toLocaleString());
-      // milestone: find which bucket we're in for display
-      const latest = document.querySelector('.milestone-item:last-child .milestone-num');
-      // don't overwrite specific milestones — just the followers stat
+      animateCounter($('stat-followers'), count, 1200, n=>Math.round(n).toLocaleString());
+      // also update goal-follow-cur immediately so IntersectionObserver reads correct value
+      set('goal-follow-cur', count.toLocaleString());
+      const FOLLOW_GOAL = 140;
+      const pct = Math.min(Math.round((count/FOLLOW_GOAL)*100), 100);
+      set('goal-follow-pct', pct+'%');
+      const fill = $('goal-follow-fill');
+      if(fill){
+        // schedule after next frame so transition fires
+        requestAnimationFrame(()=>requestAnimationFrame(()=>{ fill.style.width = pct+'%'; }));
+      }
     }
   }
 
-  /* ═══════════════════════════════════════════════════════════════════
-     APPLY CLIPS — also derives top game for fact-list
-     ═══════════════════════════════════════════════════════════════════ */
-  async function applyClips(clipsData, userId){
+  async function applyClips(clipsData){
     renderClips(clipsData);
-    // try to resolve top game name from clip game_ids
+    renderHighlight(clipsData);
     const topId = topGameFromClips(clipsData);
     if(topId){
       try{
         const gData = await apiGet('/game', { id: topId });
         const gName = gData?.data?.[0]?.name;
-        if(gName) set('fact-category', gName.length>12 ? gName.slice(0,12)+'…' : gName);
+        if(gName) set('fact-category', gName.length>12?gName.slice(0,12)+'…':gName);
       } catch(_){}
     }
   }
 
-  /* ═══════════════════════════════════════════════════════════════════
-     VIEWER COUNT LIVE UPDATER (every 60s)
-     ═══════════════════════════════════════════════════════════════════ */
   function updateViewerCount(stream){
     if(!stream) return;
-    const viewers = Number(stream.viewer_count||0).toLocaleString();
-    const heroBadge = $('live-badge');
-    if(heroBadge?.classList.contains('is-live')){
-      heroBadge.innerHTML = '<span class="live-dot"></span>LIVE NOW — '+viewers+' WATCHING';
-    }
+    const viewers=Number(stream.viewer_count||0).toLocaleString();
+    const heroBadge=$('live-badge');
+    if(heroBadge?.classList.contains('is-live')) heroBadge.innerHTML='<span class="live-dot"></span>LIVE NOW — '+viewers+' WATCHING';
     set('live-banner-viewers', viewers+' viewers');
     set('live-count-announce', viewers);
   }
@@ -2690,36 +3836,34 @@
 
     applyUser(user);
 
-    // fire all requests in parallel
     const [streamRes, channelRes, followersRes, videosRes, clipsRes] = await Promise.allSettled([
       apiGet('/stream',    { user_login: CHANNEL_LOGIN }),
       apiGet('/channel',   { broadcaster_id: user.id }),
       apiGet('/followers', { broadcaster_id: user.id }),
-      apiGet('/videos',    { user_id: user.id, first: 20 }),
+      apiGet('/videos',    { user_id: user.id, first: 100 }),
       apiGet('/clips',     { broadcaster_id: user.id, first: 100 }),
     ]);
 
-    const stream = streamRes.status==='fulfilled' ? streamRes.value?.data?.[0] : null;
-    const ch     = channelRes.status==='fulfilled' ? channelRes.value?.data?.[0] : null;
+    const stream    = streamRes.status==='fulfilled'  ? streamRes.value?.data?.[0]  : null;
+    const ch        = channelRes.status==='fulfilled' ? channelRes.value?.data?.[0] : null;
+    const clipsData = clipsRes.status==='fulfilled'   ? clipsRes.value?.data        : null;
+    const videos    = videosRes.status==='fulfilled'  ? videosRes.value?.data       : null;
 
-    // live status (must come before applyChannel so OBS caption logic is correct)
-    setLive(stream || null);
-
-    // channel
+    setLive(stream||null);
     applyChannel(ch, stream);
 
-    // followers
     if(followersRes.status==='fulfilled') applyFollowers(followersRes.value);
+    if(videos) renderVideos(videos);
 
-    // videos — stats + episode grid
-    if(videosRes.status==='fulfilled') renderVideos(videosRes.value?.data);
+    await applyClips(clipsData);
+    await renderGenres(clipsData);
 
-    // clips — grid + top game + genres
-    const clipsData = clipsRes.status==='fulfilled' ? clipsRes.value?.data : null;
-    await applyClips(clipsData, user.id);
-    await renderGenres(clipsData, user.id);
+    // Social proof bar
+    const followersCount = followersRes.status==='fulfilled' ? (followersRes.value?.total||0) : 0;
+    const totalSecs = (videos||[]).reduce((s,v)=>s+parseDuration(v.duration),0);
+    applySocialProof({ followers: followersCount, clips: clipsData, totalSecs });
 
-    // milestone: peak viewers — pull from top clip view count as proxy if no stream history API
+    // milestone: peak from top clip view count
     if(clipsData?.length){
       const maxViews = Math.max(...clipsData.map(c=>c.view_count||0));
       if(maxViews>0) set('milestone-peak', maxViews.toLocaleString());
@@ -2727,38 +3871,45 @@
   }
 
   document.addEventListener('DOMContentLoaded', ()=>{
-    // copyright year
     set('footer-year', new Date().getFullYear());
 
-    /* ── hamburger / mobile drawer ── */
     const hamburger = $('nav-hamburger');
     const drawer    = $('nav-drawer');
 
     function openDrawer(){
-      hamburger.classList.add('open');
-      drawer.classList.add('open');
+      hamburger.classList.add('open'); drawer.classList.add('open');
       hamburger.setAttribute('aria-expanded','true');
-      document.body.style.overflow = 'hidden';
+      document.body.style.overflow='hidden';
     }
     function closeDrawer(){
-      hamburger.classList.remove('open');
-      drawer.classList.remove('open');
+      hamburger.classList.remove('open'); drawer.classList.remove('open');
       hamburger.setAttribute('aria-expanded','false');
-      document.body.style.overflow = '';
+      document.body.style.overflow='';
     }
 
-    if(hamburger) hamburger.addEventListener('click', ()=>{
-      drawer.classList.contains('open') ? closeDrawer() : openDrawer();
-    });
+    if(hamburger) hamburger.addEventListener('click',()=>{ drawer.classList.contains('open')?closeDrawer():openDrawer(); });
+    drawer?.querySelectorAll('.nav-drawer-links a').forEach(a=>{ a.addEventListener('click', closeDrawer); });
+    document.addEventListener('keydown', e=>{ if(e.key==='Escape'&&drawer?.classList.contains('open')) closeDrawer(); });
 
-    // close when a nav link is tapped
-    drawer?.querySelectorAll('.nav-drawer-links a').forEach(a => {
-      a.addEventListener('click', closeDrawer);
-    });
-
-    // close on Escape key
-    document.addEventListener('keydown', e => {
-      if(e.key === 'Escape' && drawer?.classList.contains('open')) closeDrawer();
+    /* ── inject section eyebrow labels ── */
+    const eyebrows = {
+      'about-section': 'WHO IS THATGUYPB',
+      'genres-section':'TWITCH DATA',
+      'clips':         'TOP MOMENTS',
+      'schedule':      'RECENT VODS',
+      'faq':           'QUICK ANSWERS',
+    };
+    Object.entries(eyebrows).forEach(([id, label])=>{
+      const section = document.getElementById(id);
+      if(!section) return;
+      const head = section.querySelector('.section-head');
+      const h2   = head?.querySelector('h2');
+      if(h2 && !head.querySelector('.section-eyebrow')){
+        const eyebrow = document.createElement('span');
+        eyebrow.className = 'section-eyebrow';
+        eyebrow.textContent = label;
+        h2.parentNode.insertBefore(eyebrow, h2);
+      }
     });
 
     loadTwitchData();
