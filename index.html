@@ -3419,7 +3419,7 @@
     const pp     = twitchParents();
     if(wrap && !wrap.querySelector('iframe')){
       const f = document.createElement('iframe');
-      f.src = `https://player.twitch.tv/?channel=${encodeURIComponent(CHANNEL_DISPLAY)}&${pp}&autoplay=true&muted=true`;
+      f.src = `https://player.twitch.tv/?channel=${encodeURIComponent(CHANNEL_LOGIN)}&${pp}&autoplay=true&muted=true`;
       f.title = 'Twitch Live Player';
       f.setAttribute('allowfullscreen','');
       f.setAttribute('allow','autoplay; fullscreen');
@@ -3427,7 +3427,7 @@
       wrap.appendChild(f);
     }
     if(chatEl && !chatEl.src){
-      chatEl.src = `https://www.twitch.tv/embed/${encodeURIComponent(CHANNEL_DISPLAY)}/chat?${pp}&darkpopout`;
+      chatEl.src = `https://www.twitch.tv/embed/${encodeURIComponent(CHANNEL_LOGIN)}/chat?${pp}&darkpopout`;
     }
   }
 
